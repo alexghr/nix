@@ -50,8 +50,12 @@
     curl
     pciutils
     git
+    gnome3.adwaita-icon-theme
   ];
 
+  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  programs.dconf.enable = true;
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -69,6 +73,9 @@
   services.xserver = {
     videoDrivers = [ "nvidia" ];
     enable = true;
+    screenSection = ''
+      Option "metamodes" "3840x1600_144 +0+0 {AllowGSYNCCompatible=On}"
+    '';
     #displayManager.sddm.enable = true;
     #desktopManager.plasma5.enable = true;
     displayManager.lightdm.enable = true;
@@ -102,6 +109,8 @@
       firefox
       filezilla
       bitwarden
+
+      gnomeExtensions.dash-to-dock
     ];
   };
 }
