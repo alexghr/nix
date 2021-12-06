@@ -79,7 +79,12 @@
   home-manager.useGlobalPkgs = true;
 
   home-manager.users.ag = { pkgs, ... }: {
-    programs.bash.enable = true;
+    programs.bash = {
+      enable = true;
+      bashrcExtra = ''
+        source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+      '';
+    };
     home.packages = with pkgs; [
       nodejs-16_x
       nodePackages.node2nix
