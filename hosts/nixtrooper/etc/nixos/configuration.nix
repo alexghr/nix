@@ -59,12 +59,20 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+  
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    powerManagement.enable = true;
+    nvidiaSettings = true;
+  };
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
     enable = true;
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
+    #displayManager.sddm.enable = true;
+    #desktopManager.plasma5.enable = true;
+    displayManager.lightdm.enable = true;
+    desktopManager.gnome.enable = true;
   };
 
   sound.enable = true;
