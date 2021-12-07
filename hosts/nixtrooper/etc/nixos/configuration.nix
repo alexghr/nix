@@ -116,6 +116,8 @@
       nodejs-16_x
       nodePackages.node2nix
       tmux
+      jq
+      xclip
 
       vscode
       slack
