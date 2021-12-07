@@ -100,15 +100,22 @@
   home-manager.useGlobalPkgs = true;
 
   home-manager.users.ag = { pkgs, ... }: {
+    # https://matthewrhone.dev/nixos-npm-globally
+    home.sessionVariables = {
+      NPM_PREFIX = "~/.npm-packages";
+      PATH = "$PATH:$NPM_PREFIX/bin";
+    };
     programs.bash = {
       enable = true;
       bashrcExtra = ''
         source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+        
       '';
     };
     home.packages = with pkgs; [
       nodejs-16_x
       nodePackages.node2nix
+      tmux
 
       vscode
       slack
@@ -121,7 +128,7 @@
 
       gnomeExtensions.dash-to-dock
       gnome.gnome-tweak-tool
-    ] ++ builtins.attrValues (import ./npm {});
+    ];
   };
 }
 
