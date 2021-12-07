@@ -121,7 +121,7 @@
 
       gnomeExtensions.dash-to-dock
       gnome.gnome-tweak-tool
-    ];
+    ] ++ builtins.attrValues (import ./npm {});
   };
 }
 
