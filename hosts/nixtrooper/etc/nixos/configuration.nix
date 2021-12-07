@@ -128,6 +128,8 @@
 
       gnomeExtensions.dash-to-dock
       gnome.gnome-tweak-tool
+
+      desktop-file-utils
     ];
   };
 }
