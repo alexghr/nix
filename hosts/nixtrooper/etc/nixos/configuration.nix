@@ -65,7 +65,7 @@
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "curses";
+    pinentryFlavor = "gnome3";
     # enableSSHSupport = true;
   };
 
