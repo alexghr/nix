@@ -145,6 +145,8 @@
       tmux
       jq
       xclip
+      imagemagick
+      bc
 
       vscode
       slack
