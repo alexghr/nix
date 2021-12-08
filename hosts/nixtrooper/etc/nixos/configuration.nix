@@ -50,7 +50,6 @@
     curl
     pciutils
     usbutils
-    git
     gnome3.adwaita-icon-theme
     pinentry-gnome
     pinentry
@@ -104,7 +103,9 @@
     home.sessionVariables = {
       NPM_PREFIX = "~/.npm-packages";
       PATH = "$PATH:$NPM_PREFIX/bin";
+      EDITOR = "vim";
     };
+
     home.shellAliases = {
       ls = "ls --color=auto";
       ll = "ls -laF";
@@ -139,6 +140,41 @@
         set_ps1
       '';
     };
+
+    programs.git = {
+      enable = true;
+      userName = "Alex Gherghisan";
+      userEmail = null; # intentionally left blank
+      signing = null; # intentionally left blank
+
+      aliases = {
+        st = "status --short --branch";
+        ax = "add --update";
+        ct = "commit";
+        cta = "commit --amend";
+        lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches --remotes --tags";
+        ck = "checkout";
+        get = "fetch --all --prune";
+        rb  = "rebase";
+        rbi = "rebase --interactive";
+        rbc = "rebase --continue";
+        rba = "rebase --abort";
+        aa = "add --all";
+        staged = "diff --cached";
+        pushf = "push --force-with-lease";
+        sha = "rev-parse HEAD";
+        mu = "merge --ff-only @{u}";
+        ru = "rebase --interactive @{u}";
+      };
+
+      extraConfig = {
+        init.defaultBranch = "main";
+        push.default = "current";
+        rerere.enabled = true;
+        commit.gpgsign = true;
+      };
+    };
+
     home.packages = with pkgs; [
       nodejs-16_x
       nodePackages.node2nix
