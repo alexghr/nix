@@ -59,7 +59,7 @@
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
   programs.dconf.enable = true;
-  
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -69,7 +69,7 @@
     pinentryFlavor = "curses";
     # enableSSHSupport = true;
   };
-  
+
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     powerManagement.enable = true;
@@ -105,11 +105,38 @@
       NPM_PREFIX = "~/.npm-packages";
       PATH = "$PATH:$NPM_PREFIX/bin";
     };
+    home.shellAliases = {
+      ls = "ls --color=auto";
+      ll = "ls -laF";
+      grep = "grep --color=auto";
+
+      tmux = "tmux -2u";
+
+      df = "df -x squashfs";
+      open = "xdg-open";
+
+      # Typos!
+      gti = "git";
+      gt = "git";
+      gi = "git";
+    };
+
     programs.bash = {
       enable = true;
       bashrcExtra = ''
         source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
-        
+
+        function set_ps1() {
+          info=""
+          git_branch=$(git branch --show-current 2> /dev/null)
+          if [ $? == 0 ]; then
+            info="$info \[\e[97m\](\[\e[96m\]$git_branch\[\e[97m\])\[\e[39m\]"
+          fi
+          PS1="\[\033[01;32m\][\t]\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]$info\[\033[00m\]$ "
+        }
+
+        PROMPT_COMMAND=set_ps1
+        set_ps1
       '';
     };
     home.packages = with pkgs; [
