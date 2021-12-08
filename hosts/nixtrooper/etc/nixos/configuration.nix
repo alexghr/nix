@@ -175,10 +175,59 @@
       };
     };
 
+    programs.tmux = {
+      enable = true;
+      terminal = "screen-256color";
+      shell = "$SHELL";
+      prefix = "C-s";
+      escapeTime = 100;
+      baseIndex = 1;
+
+      extraConfig = ''
+        set -g mouse on
+
+        set -g set-titles on
+        set -g set-titles-string "#T"
+
+        set -g status-bg black
+        set -g status-fg white
+        set -g status-left ""
+        set -g status-right "#[fg=green]#H"
+        set-window-option -g window-status-current-style bg=red
+
+        # Windows
+        bind-key -n F1 select-window -t 1
+        bind-key -n F2 select-window -t 2
+        bind-key -n F3 select-window -t 3
+        bind-key -n F4 select-window -t 4
+        bind-key -n F5 select-window -t 5
+        bind-key -n F6 select-window -t 6
+        bind-key -n F7 select-window -t 7
+        bind-key -n F8 select-window -t 8
+
+        bind-key -n M-1 select-window -t 1
+        bind-key -n M-2 select-window -t 2
+        bind-key -n M-3 select-window -t 3
+        bind-key -n M-4 select-window -t 4
+        bind-key -n M-5 select-window -t 5
+        bind-key -n M-6 select-window -t 6
+        bind-key -n M-7 select-window -t 7
+        bind-key -n M-8 select-window -t 8
+
+        bind C-s select-pane -t :.+
+        bind , command-prompt 'rename-window %%'
+
+        bind y run-shell "tmux save-buffer - | xclip -sel clip"
+
+        bind '%' split-window -h -c '#{pane_current_path}'  # Split panes horizontal
+        bind '"' split-window -v -c '#{pane_current_path}'  # Split panes vertically
+        bind c new-window -c '#{pane_current_path}' # Create new window
+      '';
+    };
+
     home.packages = with pkgs; [
       nodejs-16_x
       nodePackages.node2nix
-      tmux
       jq
       xclip
       imagemagick
