@@ -247,6 +247,7 @@
       gnome.gnome-tweak-tool
 
       desktop-file-utils
+      obs-studio
     ];
   };
 }
