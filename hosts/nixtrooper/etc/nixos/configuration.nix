@@ -241,6 +241,7 @@
       kitty
       tdesktop # telegram
       #whatsapp-for-linux
+      gimp-with-plugins
 
       gnomeExtensions.dash-to-dock
       gnome.gnome-tweak-tool
