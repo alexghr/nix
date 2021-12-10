@@ -46,6 +46,8 @@
 
   services.fstrim.enable = true;
 
+  services.openssh.enable = true;
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -250,6 +252,7 @@
 
       desktop-file-utils
       obs-studio
+      wineFull
     ];
   };
 }
