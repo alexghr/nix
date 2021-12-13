@@ -151,12 +151,22 @@
       '';
     };
 
+    programs.alacritty = {
+      enable = true;
+      settings = {
+        # thanks to https://gist.github.com/danluu/a4e93468ae48a79440d654a29bf2048b
+        key_bindings = [
+          { key = "F"; mods = "ALT"; chars = "\\x1bf"; }
+          { key = "B"; mods = "ALT"; chars = "\\x1bb"; }
+        ];
+      };
+    };
+
     home.packages = with pkgs; [
       nodejs-16_x
       jq
       imagemagick
       bc
-      alacritty
     ];
   };
 
