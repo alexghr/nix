@@ -23,6 +23,7 @@
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
 
+  programs.bash.enableCompletion = true;
   home-manager.users.ag = { pkgs, ... }: {
     # https://matthewrhone.dev/nixos-npm-globally
     home.sessionVariables = {
