@@ -28,7 +28,7 @@
     # https://matthewrhone.dev/nixos-npm-globally
     home.sessionVariables = {
       NPM_PREFIX = "~/.npm-packages";
-      PATH = "$PATH:$NPM_PREFIX/bin";
+      PATH = "$PATH:$NPM_PREFIX/bin:~/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin";
       EDITOR = "vim";
     };
 
