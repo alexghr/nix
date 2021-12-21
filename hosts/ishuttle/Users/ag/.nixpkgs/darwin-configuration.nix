@@ -167,6 +167,8 @@
       jq
       imagemagick
       bc
+      ripgrep
+      bat
     ];
   };
 
