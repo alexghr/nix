@@ -246,7 +246,7 @@
       '';
     };
 
-    home.packages = with pkgs; [
+    home.packages = let patchedObs = pkgs.obs-studio.override { ffmpeg = pkgs.ffmpeg-full; }; in with pkgs; [
       nodejs-16_x
       nodePackages.node2nix
       jq
@@ -272,8 +272,13 @@
       gnome.gnome-tweak-tool
 
       desktop-file-utils
-      obs-studio
+      #obs-studio
       wineFull
+      cabextract # needed to patch AoE4
+      steam
+      nv-codec-headers
+      ffmpeg-full
+      patchedObs
     ];
   };
 }
