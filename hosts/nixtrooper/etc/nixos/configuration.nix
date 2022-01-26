@@ -279,6 +279,11 @@
       nv-codec-headers
       ffmpeg-full
       patchedObs
+
+      ripgrep
+      python3Full
+      
+      v4l-utils
     ];
   };
 }
