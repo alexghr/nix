@@ -55,16 +55,19 @@
     alsa.support32Bit = true;
     pulse.enable = false;
   };
+
   environment.systemPackages = with pkgs; [
     vim
     wget
     curl
     pciutils
     usbutils
+    tree
     gnome3.adwaita-icon-theme
     pinentry-gnome
     pinentry
     pinentry-curses
+    ntfs3g
   ];
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
