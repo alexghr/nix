@@ -265,6 +265,10 @@
       gimp-with-plugins
 
       gnomeExtensions.dash-to-dock
+      gnomeExtensions.brightness-control-using-ddcutil #gnome-ddc-brightness-control
+      gnomeExtensions.hue-lights
+      gnomeExtensions.tray-icons-reloaded
+      gnomeExtensions.nordvpn-connect
       gnome.gnome-tweak-tool
 
       desktop-file-utils
