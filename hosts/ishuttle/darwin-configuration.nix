@@ -8,6 +8,8 @@
     <home-manager/nix-darwin>
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   # link home.packages to /Applications so that Spotlight can find them
   system.build.applications = pkgs.lib.mkForce (pkgs.buildEnv {
     name = "applications";
@@ -169,15 +171,14 @@
       bc
       ripgrep
       bat
+      ngrok
+      vim
+      wget
+      curl
+      gnupg
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    curl
-    gnupg
-  ];
   programs.zsh.enable = true;
 
   # Auto upgrade nix package and the daemon service.
