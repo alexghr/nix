@@ -64,6 +64,7 @@
       # don't forget to set a password
       isNormalUser = true;
       extraGroups = [ "wheel" ];
+      openssh.authorizedKeys.keys = builtins.filter builtins.isString (builtins.split "\n" (builtins.readFile (builtins.fetchurl "https://github.com/alexghr.keys")));
     };
   };
 
