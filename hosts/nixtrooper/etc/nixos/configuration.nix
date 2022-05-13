@@ -4,6 +4,16 @@
 
 { config, pkgs, ... }:
 
+let oldNixpkgs = import (builtins.fetchGit {
+  # Descriptive name to make the store path easier to identify
+  name = "old-nixpkgs";
+  url = "https://github.com/nixos/nixpkgs/";
+  # Commit hash for nixos-unstable as of 2018-09-12
+  # `git ls-remote https://github.com/nixos/nixpkgs nixos-unstable`
+  ref = "refs/heads/master";
+  rev = "84cf00f98031e93f389f1eb93c4a7374a33cc0a9";
+}) {}; in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -26,7 +36,9 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
 
-     kernelPackages = pkgs.linuxPackages_latest;
+     #kernelPackages = pkgs.linuxPackages_latest;
+     # hoping Kernel 5.10 will resolve my random reboots (Ryzen issue)
+     kernelPackages = pkgs.linuxPackages_5_10;
      supportedFilesystems = [ "btrfs" ];
   };
 
@@ -38,10 +50,13 @@
     wireless.enable = false;
 
     useDHCP = false;
-    interfaces.enp4s0.useDHCP = true;
     interfaces.enp5s0.useDHCP = true;
 
     firewall.enable = true;
+    firewall.allowedTCPPorts = [
+      3000 # default Next.js development port
+      6000 # default Firefox debug server
+    ];
   };
 
   services.fstrim.enable = true;
@@ -56,6 +71,18 @@
     pulse.enable = false;
   };
 
+  nix = {
+    package = pkgs.nix_2_7;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 30d";
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -68,6 +95,18 @@
     pinentry
     pinentry-curses
     ntfs3g
+    automake
+    #autoconf
+    oldNixpkgs.autoconf
+    gcc
+    libjpeg
+    mozjpeg
+
+    dnsutils
+    lm_sensors
+    mprime
+
+    android-tools
   ];
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
@@ -113,7 +152,7 @@
 
   users.users.ag = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "video"  ];
   };
 
   home-manager.useUserPackages = true;
@@ -263,6 +302,7 @@
       tdesktop # telegram
       #whatsapp-for-linux
       gimp-with-plugins
+      libreoffice
 
       gnomeExtensions.dash-to-dock
       gnomeExtensions.brightness-control-using-ddcutil #gnome-ddc-brightness-control
@@ -282,9 +322,27 @@
 
       ripgrep
       python3Full
-      
+
       v4l-utils
+
+      vlc
+      chromium
+
+      inkscape
+      discord
+      libguestfs
+
+      unzip
+      ngrok
+
+      google-chrome
+      gnumake
     ];
+  };
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
   };
 }
 
