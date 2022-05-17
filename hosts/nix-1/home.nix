@@ -129,7 +129,7 @@
   programs.bash = {
     enable = true;
     bashrcExtra = ''
-      source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+      source /etc/profiles/per-user/ag/etc/profile.d/hm-session-vars.sh
 
       function set_ps1() {
         info=""
