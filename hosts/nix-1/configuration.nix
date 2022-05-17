@@ -72,6 +72,19 @@
     enable = true;
     permitRootLogin = "no";
     passwordAuthentication = false;
+    extraConfig = ''
+      StreamLocalBindUnlink yes
+    '';
+  };
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = false;
+    enableExtraSocket = true;
+  };
+  
+  programs.ssh = {
+    startAgent = true;
   };
 
   # Open ports in the firewall.
