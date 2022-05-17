@@ -1,6 +1,39 @@
 {
   "nodes": {
+    "arion": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1650749368,
+        "narHash": "sha256-7IkC36TevslnDnUo9FgL4R28Ak1MSR1/Hh3b4Jw+3MQ=",
+        "owner": "hercules-ci",
+        "repo": "arion",
+        "rev": "cd962c840e55eec5768ff59bb8e48deafc5d2d9c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "ref": "master",
+        "repo": "arion",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1601906239,
+        "narHash": "sha256-P1jBYbYeFswig/0FKbgh+BpVhh9iurD3m0T2ae4gdx8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c2bb4af48d26ed091e5674394bacbf8d488c7939",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1652559422,
         "narHash": "sha256-jPVTNImBTUIFdtur+d4IVot6eXmsvtOcBm0TzxmhWPk=",
@@ -18,7 +51,8 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "arion": "arion",
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
