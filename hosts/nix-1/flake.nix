@@ -22,6 +22,23 @@
             podman.defaultNetwork.dnsname.enable = true;
           };
           users.users.ag.extraGroups = ["podman"];
+
+          services.restic.backups.b2 = {
+            passwordFile = "/var/restic/password.txt";
+            environmentFile = "/var/restic/b2.env";
+            repository = "b2:backups-alexghr-me:/nix-1/";
+            paths = [
+              "/home"
+              "/etc"
+              "/var"
+            ];
+
+            extraBackupArgs = [
+              "--exclude /var/log"
+            ];
+
+            initialize = true;
+          };
         })
       ];
     };
