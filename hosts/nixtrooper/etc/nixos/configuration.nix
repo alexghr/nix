@@ -119,7 +119,18 @@ let oldNixpkgs = import (builtins.fetchGit {
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "gnome3";
-    # enableSSHSupport = true;
+    enableSSHSupport = true;
+    enableExtraSocket = true;
+  };
+  programs.ssh = {
+    extraConfig = ''
+      Host *.alexghr.me
+        ForwardAgent yes
+        RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
+
+      Host *.home
+        ForwardAgent yes
+    '';
   };
 
   hardware = {
