@@ -60,6 +60,7 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    vimPlugins.vim-nix
     wget
     git
   ];
