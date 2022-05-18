@@ -13,6 +13,7 @@
         arion.nixosModules.arion
         ./configuration.nix
         ({ pkgs, ... }: {
+          nix.registry.nixpkgs.flake = nixpkgs;
           home-manager.useUserPackages = true;
           home-manager.users.ag = import ./home.nix;
 
