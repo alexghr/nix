@@ -37,7 +37,6 @@ let oldNixpkgs = import (builtins.fetchGit {
     loader.efi.canTouchEfiVariables = true;
 
      #kernelPackages = pkgs.linuxPackages_latest;
-     # hoping Kernel 5.10 will resolve my random reboots (Ryzen issue)
      kernelPackages = pkgs.linuxPackages_5_10;
      supportedFilesystems = [ "btrfs" ];
   };
@@ -105,8 +104,9 @@ let oldNixpkgs = import (builtins.fetchGit {
     dnsutils
     lm_sensors
     mprime
-
+   
     android-tools
+    parted
   ];
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
@@ -333,12 +333,12 @@ let oldNixpkgs = import (builtins.fetchGit {
 
       ripgrep
       python3Full
-
+      
       v4l-utils
 
       vlc
       chromium
-
+      
       inkscape
       discord
       libguestfs
@@ -354,6 +354,41 @@ let oldNixpkgs = import (builtins.fetchGit {
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
+  };
+
+  
+  services.restic.backups.b2 = {
+    passwordFile = "/var/restic/password.txt";
+    environmentFile = "/var/restic/b2.env";
+    repository = "b2:backups-alexghr-me:/nixtrooper/";
+    paths = [
+      "/"
+    ];
+
+    extraBackupArgs = [
+      "--exclude /var/log"
+      "--exclude /var/run"
+      "--exclude /var/cache"
+      "--exclude /var/tmp"
+      "--exclude /nix"
+      "--exclude /opt"
+      "--exclude /usr"
+      "--exclude /bin"
+      "--exclude /sbin"
+      "--exclude /run"
+      "--exclude /proc"
+      "--exclude /dev"
+      "--exclude /boot"
+      "--exclude /sys"
+      "--exclude /tmp"
+      "--exclude **/cache"
+      "--exclude **/.cache"
+    ];
+
+    initialize = true;
+    timerConfig = {
+      OnCalendar = "20:56";
+    };
   };
 }
 
