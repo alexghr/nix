@@ -63,6 +63,8 @@
     vimPlugins.vim-nix
     wget
     git
+    k3s
+    kubectl
   ];
 
   # List services that you want to enable:
@@ -101,5 +103,9 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
 
+
+  services.k3s.enable = true;
+  services.k3s.role = "server";
+  #services.k3s.extraFlags
 }
 
