@@ -65,6 +65,8 @@
     git
     k3s
     kubectl
+    dnsutils
+    lsof
   ];
 
   # List services that you want to enable:
