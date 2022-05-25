@@ -56,6 +56,12 @@
   hardware.pulseaudio.enable = false;
   sound.enable = true;
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/" ];
+    interval = "weekly";
+  };
+
   nix = {
     package = pkgs.nixVersions.nix_2_8;
     extraOptions = ''

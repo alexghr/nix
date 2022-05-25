@@ -19,71 +19,32 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  services.btrfs.autoScrub = {
-    enable = true;
-    fileSystems = [ "/" ];
-    interval = "monthly";
-  };
-
   fileSystems."/" =
-    { device = "/dev/nvme0n1p2";
+    { device = "/dev/nvme0n1p3";
       fsType = "btrfs";
       options = [ "subvol=@" ] ++ commonMountOptions;
     };
 
-  fileSystems."/root" =
-    { device = "/dev/nvme0n1p2";
-      fsType = "btrfs";
-      options = [ "subvol=root" ] ++ commonMountOptions;
-    };
-
   fileSystems."/home" =
-    { device = "/dev/nvme0n1p2";
+    { device = "/dev/nvme0n1p3";
       fsType = "btrfs";
       options = [ "subvol=home" ] ++ commonMountOptions;
     };
 
-  fileSystems."/etc" =
-    { device = "/dev/nvme0n1p2";
-      fsType = "btrfs";
-      options = [ "subvol=etc" ] ++ commonMountOptions;
-    };
-
-  fileSystems."/var/db" =
-    { device = "/dev/nvme0n1p2";
-      fsType = "btrfs";
-      options = [ "subvol=db" ] ++ commonMountOptions;
-    };
-
-  fileSystems."/srv" =
-    { device = "/dev/nvme0n1p2";
-      fsType = "btrfs";
-      options = [ "subvol=srv" ] ++ commonMountOptions;
-    };
-
-  fileSystems."/opt" =
-    { device = "/dev/nvme0n1p2";
-      fsType = "btrfs";
-      options = [ "subvol=opt" ] ++ commonMountOptions;
-    };
-
   fileSystems."/nix" =
-    { device = "/dev/nvme0n1p2";
+    { device = "/dev/nvme0n1p3";
       fsType = "btrfs";
       options = [ "subvol=nix" ] ++ commonMountOptions;
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/nvme0n1p2";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=boot" ] ++ commonMountOptions;
-    };
-
   fileSystems."/boot/efi" =
     { device = "/dev/nvme0n1p1";
-      fsType = "fat";
+      fsType = "fat32";
     };
+
+  swapDevices = [
+    { device = "/dev/nvme0n1p2"; }
+  ];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
