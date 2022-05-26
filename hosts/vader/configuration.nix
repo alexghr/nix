@@ -49,12 +49,13 @@
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+    audio.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    pulse.enable = false;
+    pulse.enable = true;
   };
   hardware.pulseaudio.enable = false;
-  sound.enable = true;
+  #sound.enable = true;
 
   services.btrfs.autoScrub = {
     enable = true;
@@ -147,7 +148,7 @@
 
   users.users."${username}" = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "pipewire" "audio" "video" ];
   };
 
   home-manager.useUserPackages = true;
