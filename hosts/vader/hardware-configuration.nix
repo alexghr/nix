@@ -6,7 +6,7 @@
   "noatime"
   "ssd"
   "discard=async"
-  "space_cache=1"
+  "space_cache=v1"
 ]; in
 
 {
@@ -28,18 +28,18 @@
   fileSystems."/home" =
     { device = "/dev/nvme0n1p3";
       fsType = "btrfs";
-      options = [ "subvol=home" ] ++ commonMountOptions;
+      options = [ "subvol=@home" ] ++ commonMountOptions;
     };
 
   fileSystems."/nix" =
     { device = "/dev/nvme0n1p3";
       fsType = "btrfs";
-      options = [ "subvol=nix" ] ++ commonMountOptions;
+      options = [ "subvol=@nix" ] ++ commonMountOptions;
     };
 
-  fileSystems."/boot/efi" =
+  fileSystems."/boot" =
     { device = "/dev/nvme0n1p1";
-      fsType = "fat32";
+      fsType = "vfat";
     };
 
   swapDevices = [
