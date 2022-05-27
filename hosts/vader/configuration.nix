@@ -140,6 +140,7 @@
     lm_sensors
     android-tools
     parted
+    cachix
 
     gnomeExtensions.appindicator
   ];

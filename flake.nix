@@ -14,6 +14,7 @@
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModule
+          ./modules/cachix
           ./hosts/vader/configuration.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
@@ -26,6 +27,7 @@
         modules = [
           home-manager.nixosModule
           arion.nixosModules.arion
+          ./modules/cachix
           ./hosts/nix-1/configuration.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
