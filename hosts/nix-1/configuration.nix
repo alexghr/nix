@@ -67,6 +67,7 @@
     kubectl
     dnsutils
     lsof
+    cachix
   ];
 
   # List services that you want to enable:
