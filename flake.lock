@@ -1,5 +1,24 @@
 {
   "nodes": {
+    "arion": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1652893939,
+        "narHash": "sha256-hBZHQzkAYImw7Kr4BZmsLJFUeTzU7nR4v7irmRUqyBo=",
+        "owner": "hercules-ci",
+        "repo": "arion",
+        "rev": "bd3e2fe4e372d0b5f965f25f27c5eb7c1a618c4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "ref": "master",
+        "repo": "arion",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -22,6 +41,20 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1601906239,
+        "narHash": "sha256-P1jBYbYeFswig/0FKbgh+BpVhh9iurD3m0T2ae4gdx8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c2bb4af48d26ed091e5674394bacbf8d488c7939",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1653593450,
         "narHash": "sha256-k4BLTxcOMtFlVcQ3kethZ1ihQLHJ3Fx6+5EVgawE+iU=",
         "owner": "NixOS",
@@ -37,8 +70,9 @@
     },
     "root": {
       "inputs": {
+        "arion": "arion",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
