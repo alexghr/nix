@@ -15,6 +15,9 @@
         modules = [
           home-manager.nixosModule
           ./hosts/vader/configuration.nix
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+          })
         ];
       };
 
@@ -26,32 +29,6 @@
           ./hosts/nix-1/configuration.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
-            home-manager.useUserPackages = true;
-            home-manager.users.ag = import ./hosts/nix-1/home.nix;
-
-            virtualisation = {
-              podman.enable = true;
-              podman.dockerCompat = true;
-              podman.defaultNetwork.dnsname.enable = true;
-            };
-            users.users.ag.extraGroups = ["podman"];
-
-            services.restic.backups.b2 = {
-              passwordFile = "/var/restic/password.txt";
-              environmentFile = "/var/restic/b2.env";
-              repository = "b2:backups-alexghr-me:/nix-1/";
-              paths = [
-                "/home"
-                "/etc"
-                "/var"
-              ];
-
-              extraBackupArgs = [
-                "--exclude /var/log"
-              ];
-
-              initialize = true;
-            };
           })
         ];
       };

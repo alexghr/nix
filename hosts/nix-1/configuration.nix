@@ -51,7 +51,7 @@
 
   users.users.ag = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "podman" ];
     openssh.authorizedKeys.keys = builtins.filter builtins.isString (builtins.split "\n" (builtins.readFile (pkgs.fetchurl {
       url = "https://github.com/alexghr.keys";
       sha256 = "sha256-JfAZgyo8CNBmik7qW93OP2yjnRa4XS81hx4kr+wfTTM=";
@@ -86,7 +86,7 @@
     enableSSHSupport = false;
     enableExtraSocket = true;
   };
-  
+
   programs.ssh = {
     startAgent = true;
   };
@@ -115,5 +115,31 @@
   services.k3s.enable = true;
   services.k3s.role = "server";
   #services.k3s.extraFlags
+
+  home-manager.useUserPackages = true;
+  home-manager.users.ag = import ./home.nix;
+
+  virtualisation = {
+    podman.enable = true;
+    podman.dockerCompat = true;
+    podman.defaultNetwork.dnsname.enable = true;
+  };
+
+  services.restic.backups.b2 = {
+    passwordFile = "/var/restic/password.txt";
+    environmentFile = "/var/restic/b2.env";
+    repository = "b2:backups-alexghr-me:/nix-1/";
+    paths = [
+      "/home"
+      "/etc"
+      "/var"
+    ];
+
+    extraBackupArgs = [
+      "--exclude /var/log"
+    ];
+
+    initialize = true;
+  };
 }
 
