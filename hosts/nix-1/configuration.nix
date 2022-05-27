@@ -37,7 +37,7 @@
   networking.interfaces.enp7s0.useDHCP = true;
 
   nix = {
-    package = pkgs.nix_2_7;
+    package = pkgs.nixVersions.nix_2_7;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
