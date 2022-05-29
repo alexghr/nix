@@ -22,5 +22,6 @@
     gnumake
     automake
     autoconf
+    compsize
   ];
 }
