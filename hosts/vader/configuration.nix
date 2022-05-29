@@ -141,5 +141,11 @@
     enable = true;
     dockerCompat = true;
   };
+
+  alexghr.restic.b2 = {
+    enable = true;
+    bucket = "alexghr-backup";
+    when = "09:00";
+  };
 }
 

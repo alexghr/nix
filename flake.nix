@@ -9,14 +9,18 @@
   inputs.arion.url = "github:hercules-ci/arion/master";
 
   outputs = { self, nixpkgs, home-manager, arion }: {
+    nixosModules =  builtins.listToAttrs (map (x: {
+      name = x;
+      value = import (./modules + "/${x}");
+    })
+    (builtins.attrNames (builtins.readDir ./modules)));
+
     nixosConfigurations = {
       vader = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModule
-          ./modules/cachix
-          ./modules/system-packages.nix
-          ./modules/home-manager.nix
+          { imports = builtins.attrValues self.nixosModules; }
           ./hosts/vader/configuration.nix
           ./users/ag.nix
           ({ pkgs, ... }: {
@@ -30,9 +34,7 @@
         modules = [
           home-manager.nixosModule
           arion.nixosModules.arion
-          ./modules/cachix
-          ./modules/system-packages.nix
-          ./modules/home-manager.nix
+          { imports = builtins.attrValues self.nixosModules; }
           ./hosts/nix-1/configuration.nix
           ./users/ag.nix
           ({ pkgs, ... }: {
