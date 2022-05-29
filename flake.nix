@@ -15,7 +15,10 @@
         modules = [
           home-manager.nixosModule
           ./modules/cachix
+          ./modules/system-packages.nix
+          ./modules/home-manager.nix
           ./hosts/vader/configuration.nix
+          ./users/ag.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
           })
@@ -28,7 +31,9 @@
           home-manager.nixosModule
           arion.nixosModules.arion
           ./modules/cachix
+          ./modules/home-manager.nix
           ./hosts/nix-1/configuration.nix
+          ./users/ag.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
           })

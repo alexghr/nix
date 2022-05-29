@@ -117,9 +117,6 @@
   services.k3s.role = "server";
   #services.k3s.extraFlags
 
-  home-manager.useUserPackages = true;
-  home-manager.users.ag = import ./home.nix;
-
   virtualisation = {
     podman.enable = true;
     podman.dockerCompat = true;

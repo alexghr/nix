@@ -97,7 +97,6 @@
     '';
   };
 
-
   hardware = {
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -141,21 +140,20 @@
     android-tools
     parted
     cachix
+    gnumake
+    unzip
+    ripgrep
+    jq
+    bc
 
     gnomeExtensions.appindicator
+    gnomeExtensions.dash-to-dock
+    gnomeExtensions.hue-lights
+    gnomeExtensions.tray-icons-reloaded
+    gnome.gnome-tweaks
   ];
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
-
-  users.users."${username}" = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "pipewire" "audio" "video" ];
-  };
-
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
-
-  home-manager.users.ag = import ./home.nix { inherit username; };
 
   virtualisation.podman = {
     enable = true;
