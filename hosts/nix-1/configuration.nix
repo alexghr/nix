@@ -49,25 +49,9 @@
     };
   };
 
-  users.users.ag = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "podman" ];
-    openssh.authorizedKeys.keys = builtins.filter builtins.isString (builtins.split "\n" (builtins.readFile (pkgs.fetchurl {
-      url = "https://github.com/alexghr.keys";
-      sha256 = "sha256-JfAZgyo8CNBmik7qW93OP2yjnRa4XS81hx4kr+wfTTM=";
-    })));
-  };
-
   environment.systemPackages = with pkgs; [
-    vim
-    vimPlugins.vim-nix
-    wget
-    git
     k3s
     kubectl
-    dnsutils
-    lsof
-    cachix
   ];
 
   # List services that you want to enable:

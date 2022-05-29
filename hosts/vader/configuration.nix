@@ -9,6 +9,23 @@
       ./hardware-configuration.nix
     ];
 
+  hardware = {
+    enableAllFirmware = true;
+    pulseaudio.enable = false; # uses pipewire instead
+
+    nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      powerManagement.enable = true;
+      nvidiaSettings = true;
+    };
+
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -29,9 +46,6 @@
     supportedFilesystems = [ "btrfs" ];
   };
 
-  hardware.enableAllFirmware = true;
-  nixpkgs.config.allowUnfree = true;
-
   networking = {
     hostName = "vader";
     wireless.enable = false;
@@ -43,25 +57,7 @@
     firewall.allowedTCPPorts = [];
   };
 
-  services.fstrim.enable = true;
-  services.openssh.enable = true;
-
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    audio.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-  hardware.pulseaudio.enable = false;
-  #sound.enable = true;
-
-  services.btrfs.autoScrub = {
-    enable = true;
-    fileSystems = [ "/" ];
-    interval = "weekly";
-  };
+  nixpkgs.config.allowUnfree = true;
 
   nix = {
     package = pkgs.nixVersions.nix_2_8;
@@ -75,7 +71,6 @@
     };
   };
 
-  #services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
   programs.dconf.enable = true;
 
   programs.gnupg.agent = {
@@ -97,18 +92,18 @@
     '';
   };
 
-  hardware = {
-    nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-      powerManagement.enable = true;
-      nvidiaSettings = true;
-    };
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
-  };
+  environment.systemPackages = with pkgs; [
+    pinentry
+    pinentry-curses
+    ntfs3g
+    lm_sensors
+    android-tools
+    gnomeExtensions.appindicator
+    gnomeExtensions.dash-to-dock
+    gnomeExtensions.hue-lights
+    gnomeExtensions.tray-icons-reloaded
+    gnome.gnome-tweaks
+  ];
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
@@ -122,38 +117,25 @@
     desktopManager.gnome.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    curl
-    pciutils
-    usbutils
-    tree
-    pinentry
-    pinentry-curses
-    ntfs3g
-    automake
-    autoconf
-    gcc
-    dnsutils
-    lm_sensors
-    android-tools
-    parted
-    cachix
-    gnumake
-    unzip
-    ripgrep
-    jq
-    bc
+  services.udev.packages = [pkgs.gnome3.gnome-settings-daemon];
 
-    gnomeExtensions.appindicator
-    gnomeExtensions.dash-to-dock
-    gnomeExtensions.hue-lights
-    gnomeExtensions.tray-icons-reloaded
-    gnome.gnome-tweaks
-  ];
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/" ];
+    interval = "weekly";
+  };
 
-  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  services.fstrim.enable = true;
+  services.openssh.enable = true;
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   virtualisation.podman = {
     enable = true;

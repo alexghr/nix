@@ -31,6 +31,7 @@
           home-manager.nixosModule
           arion.nixosModules.arion
           ./modules/cachix
+          ./modules/system-packages.nix
           ./modules/home-manager.nix
           ./hosts/nix-1/configuration.nix
           ./users/ag.nix

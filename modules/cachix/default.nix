@@ -1,5 +1,4 @@
 
-# WARN: this file will get overwritten by $ cachix use <name>
 { pkgs, lib, ... }:
 
 let
@@ -9,5 +8,6 @@ let
   imports = lib.mapAttrsToList toImport (lib.filterAttrs filterCaches (builtins.readDir folder));
 in {
   inherit imports;
+  environment.systemPackages = [pkgs.cachix];
   nix.binaryCaches = ["https://cache.nixos.org/"];
 }
