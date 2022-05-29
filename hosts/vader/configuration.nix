@@ -54,7 +54,9 @@
     interfaces.enp5s0.useDHCP = true;
 
     firewall.enable = true;
-    firewall.allowedTCPPorts = [];
+    firewall.allowedTCPPorts = [
+      3000
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;
