@@ -23,5 +23,6 @@
     automake
     autoconf
     compsize
+    neofetch
   ];
 }
