@@ -111,10 +111,8 @@
     videoDrivers = [ "nvidia" ];
     enable = true;
     screenSection = ''
-      Option "metamodes" "3840x1600_144 +0+0 {AllowGSYNCCompatible=On}"
+      Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
     '';
-    #displayManager.sddm.enable = true;
-    #desktopManager.plasma5.enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
