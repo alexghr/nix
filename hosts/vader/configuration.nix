@@ -105,6 +105,7 @@
     gnomeExtensions.hue-lights
     gnomeExtensions.tray-icons-reloaded
     gnome.gnome-tweaks
+    yubikey-manager
   ];
 
   services.xserver = {
@@ -136,6 +137,8 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  services.pcscd.enable = true;
 
   virtualisation.podman = {
     enable = true;
