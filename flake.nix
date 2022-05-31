@@ -6,9 +6,7 @@
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.arion.url = "github:hercules-ci/arion/master";
-
-  outputs = { self, nixpkgs, home-manager, arion }: {
+  outputs = { self, nixpkgs, home-manager }: {
     nixosModules =  builtins.listToAttrs (map (x: {
       name = x;
       value = import (./modules + "/${x}");
@@ -33,7 +31,6 @@
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModule
-          arion.nixosModules.arion
           { imports = builtins.attrValues self.nixosModules; }
           ./hosts/nix-1/configuration.nix
           ./users/ag.nix
