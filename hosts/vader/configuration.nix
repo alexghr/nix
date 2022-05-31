@@ -104,8 +104,10 @@
     gnomeExtensions.dash-to-dock
     gnomeExtensions.hue-lights
     gnomeExtensions.tray-icons-reloaded
+    gnomeExtensions.gamemode
     gnome.gnome-tweaks
     yubikey-manager
+    gamemode
   ];
 
   services.xserver = {
