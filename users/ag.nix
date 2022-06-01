@@ -29,7 +29,6 @@ let
     libreoffice
     bitwarden
 
-    steam
     obs-studio
     winePackages.full
     ffmpeg-full

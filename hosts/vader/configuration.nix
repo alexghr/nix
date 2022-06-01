@@ -108,7 +108,12 @@
     gnome.gnome-tweaks
     yubikey-manager
     gamemode
+    dxvk
   ];
+
+  programs.steam = {
+    enable = true;
+  };
 
   services.xserver = {
     videoDrivers = [ "nvidia" ];
