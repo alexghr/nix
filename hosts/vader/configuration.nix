@@ -17,6 +17,7 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       powerManagement.enable = true;
       nvidiaSettings = true;
+      modesetting.enable = true;
     };
 
     opengl = {
@@ -109,6 +110,7 @@
     yubikey-manager
     gamemode
     dxvk
+    xwayland
   ];
 
   programs.steam = {
@@ -122,6 +124,7 @@
       Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
     '';
     displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = true;
     desktopManager.gnome.enable = true;
   };
 
