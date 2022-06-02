@@ -20,7 +20,6 @@ let
     tdesktop
 
     vscode
-    kitty
     xclip
 
     desktop-file-utils
@@ -197,6 +196,32 @@ in {
         let g:solarized_termcolors=256
         colorscheme solarized
       '';
+    };
+
+    programs.alacritty = {
+      enable = true;
+      settings = {
+        window = {
+          padding = { x = 4; y = 8; };
+          decorations = "full";
+          opacity = 1;
+          startup_mode = "Windowed";
+          title = "Alacritty";
+          dynamic_title = true;
+          gtk_theme_variant = "None"; # pick the system's default
+        };
+
+        font = {
+          size = 12;
+          use_thin_strokes = true;
+        };
+
+        cursor = {
+          style = "Block";
+        };
+
+        live_config_reload = true;
+      };
     };
   };
 }
