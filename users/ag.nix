@@ -199,7 +199,7 @@ in {
     };
 
     programs.alacritty = {
-      enable = true;
+      enable = config.services.xserver.enable;
       settings = {
         window = {
           padding = { x = 4; y = 8; };
