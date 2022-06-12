@@ -6,6 +6,8 @@ let
     imagemagick
     v4l-utils
     libguestfs
+    kubectl
+    kubeseal
   ];
   desktopPackages = with pkgs; [
     firefox
