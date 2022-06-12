@@ -211,9 +211,16 @@ in {
           gtk_theme_variant = "None"; # pick the system's default
         };
 
-        font = {
+        font = let victorMono = style: {
+          family = "Victor Mono";
+          inherit style;
+        }; in {
           size = 12;
           use_thin_strokes = true;
+          normal = victorMono "Regular";
+          bold = victorMono "Bold";
+          italic = victorMono "Italic";
+          bold_italic = victorMono "Bold Italic";
         };
 
         cursor = {

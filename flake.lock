@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "alexghr-nixpkgs": {
+      "locked": {
+        "lastModified": 1655048105,
+        "narHash": "sha256-X9jae2JIzGqSVQg5h46cW1gi/spMNyiDjeM4Z7N+OGU=",
+        "owner": "alexghr",
+        "repo": "nixpkgs",
+        "rev": "a0949701ad34fd6bb865f13278532889c34c3cb5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexghr",
+        "ref": "alexghr/build/update-victor-mono-1.5.3",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -39,6 +55,7 @@
     },
     "root": {
       "inputs": {
+        "alexghr-nixpkgs": "alexghr-nixpkgs",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }
