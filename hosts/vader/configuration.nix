@@ -12,6 +12,7 @@
   hardware = {
     enableAllFirmware = true;
     pulseaudio.enable = false; # uses pipewire instead
+    bluetooth.enable = true;
 
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -127,6 +128,8 @@
     displayManager.gdm.wayland = true;
     desktopManager.gnome.enable = true;
   };
+
+  services.blueman.enable = true;
 
   services.udev.packages = [pkgs.gnome3.gnome-settings-daemon];
 
