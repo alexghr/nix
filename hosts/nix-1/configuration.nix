@@ -66,6 +66,9 @@
     '';
   };
 
+  # this comes with SSH jail by default
+  services.fail2ban.enable = true;
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = false;
@@ -77,9 +80,9 @@
   };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 6443 ];
 
-  networking.firewall.interfaces.enp7s0.allowedTCPPorts = [6443];
+  #networking.firewall.interfaces.enp7s0.allowedTCPPorts = [6443];
   networking.firewall.trustedInterfaces = [
     "flannel.1"
     "cni0"
