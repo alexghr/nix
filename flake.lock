@@ -57,7 +57,28 @@
       "inputs": {
         "alexghr-nixpkgs": "alexghr-nixpkgs",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "vscode-server": "vscode-server"
+      }
+    },
+    "vscode-server": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1655399221,
+        "narHash": "sha256-dGGY+Cv48a3InBgoHSHHMiaLji/EVp9pHWwJcaQhpdw=",
+        "owner": "alexghr",
+        "repo": "nixos-vscode-server",
+        "rev": "167e9136057892710d1184f5d44ac0e6c093dfd1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexghr",
+        "repo": "nixos-vscode-server",
+        "type": "github"
       }
     }
   },

@@ -153,6 +153,8 @@
 
   services.pcscd.enable = true;
 
+  services.vscode-server.enable = true;
+
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
