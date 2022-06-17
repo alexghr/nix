@@ -4,12 +4,15 @@ let
   packages = with pkgs; [
     nodejs-16_x
     imagemagick
-    v4l-utils
-    libguestfs
     kubectl
     kubeseal
-  ];
-  desktopPackages = with pkgs; [
+  ] ++ (if pkgs.stdenv.isLinux then [
+    v4l-utils
+    libguestfs
+  ] else []);
+
+  enableGuiPackages = pkgs.stdenv.isDarwin || config.services.xserver.enable;
+  guiPackages = if pkgs.stdenv.isLinux then with pkgs; [
     firefox
     chromium
     google-chrome
@@ -33,14 +36,19 @@ let
     obs-studio
     winePackages.full
     ffmpeg-full
-  ];
+  ] else [];
+
   vimPlugins = with pkgs.vimPlugins; [
     vim-nix
     vim-colors-solarized
   ];
+
 in {
   users.users."${username}" = {
+    home = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
+  } // (if pkgs.stdenv.isLinux then {
     isNormalUser = true;
+
     extraGroups = ["wheel"]
       ++ (if config.services.pipewire.enable then ["pipewire" "audio" "video"] else [])
       ++ (if config.virtualisation.podman.enable then ["podman"] else []);
@@ -49,15 +57,15 @@ in {
       url = "https://github.com/alexghr.keys";
       sha256 = "sha256-JfAZgyo8CNBmik7qW93OP2yjnRa4XS81hx4kr+wfTTM=";
     })));
-  };
+  } else {});
 
   home-manager.users."${username}" = {
 
     home.username = username;
-    home.homeDirectory = "/home/${username}";
+    home.homeDirectory = config.users.users."${username}".home;
     home.stateVersion = "21.11";
 
-    home.packages = packages ++ (if config.services.xserver.enable then desktopPackages else []);
+    home.packages = packages ++ (if enableGuiPackages then guiPackages else []);
 
     home.sessionVariables = {
       NPM_PREFIX = "~/.npm-packages";
@@ -201,7 +209,7 @@ in {
     };
 
     programs.alacritty = {
-      enable = config.services.xserver.enable;
+      enable = enableGuiPackages;
       settings = {
         window = {
           padding = { x = 4; y = 8; };

@@ -64,7 +64,15 @@
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModule
+          ./modules/home-manager
+          ./modules/cachix
+          ./modules/system
           ./hosts/ishuttle/darwin-configuration.nix
+          ./users/ag.nix
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+            fonts.fonts = [pkgs.victor-mono];
+          })
         ];
       };
     };

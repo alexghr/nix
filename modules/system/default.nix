@@ -7,22 +7,23 @@
     vim
     wget
     curl
-    pciutils
-    usbutils
-    dnsutils
-    lsof
     tree
-    parted
     unzip
     ripgrep
     bat
     jq
     bc
-    gcc
     gnumake
     automake
     autoconf
-    compsize
     neofetch
-  ];
+  ] ++ (if pkgs.stdenv.isLinux then [
+    dnsutils
+    lsof
+    pciutils
+    usbutils
+    parted
+    compsize
+    gcc
+  ] else []);
 }
