@@ -7,7 +7,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    package = pkgs.nixVersions.nix_2_8;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -32,5 +32,6 @@
 
   environment.systemPackages = with pkgs; [
     pinentry
+    gnupg
   ];
 }
