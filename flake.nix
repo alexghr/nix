@@ -4,13 +4,16 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
   inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
 
+  inputs.darwin.url = "github:lnl7/nix-darwin";
+  inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.vscode-server.url = "github:alexghr/nixos-vscode-server";
   inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, alexghr-nixpkgs, home-manager, vscode-server }: {
+  outputs = { self, nixpkgs, alexghr-nixpkgs, darwin, home-manager, vscode-server }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -52,6 +55,16 @@
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
           })
+        ];
+      };
+    };
+
+    darwinConfigurations = {
+      ishuttle = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          home-manager.darwinModule
+          ./hosts/ishuttle/darwin-configuration.nix
         ];
       };
     };

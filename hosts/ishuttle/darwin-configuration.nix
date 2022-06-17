@@ -4,10 +4,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    <home-manager/nix-darwin>
-  ];
-
   nixpkgs.config.allowUnfree = true;
 
   # link home.packages to /Applications so that Spotlight can find them
