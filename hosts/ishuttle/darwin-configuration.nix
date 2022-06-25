@@ -32,6 +32,7 @@
 
   environment.systemPackages = with pkgs; [
     pinentry
+    pinentry_mac
     gnupg
   ];
 }
