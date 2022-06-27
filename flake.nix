@@ -14,7 +14,7 @@
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, alexghr-nixpkgs, darwin, home-manager, vscode-server }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
