@@ -17,6 +17,7 @@
     automake
     autoconf
     neofetch
+    python3
   ] ++ (if pkgs.stdenv.isLinux then [
     dnsutils
     lsof
