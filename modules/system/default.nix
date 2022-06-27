@@ -18,6 +18,7 @@
     autoconf
     neofetch
     python3
+    nix-index
   ] ++ (if pkgs.stdenv.isLinux then [
     dnsutils
     lsof
