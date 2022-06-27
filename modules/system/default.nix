@@ -19,6 +19,8 @@
     neofetch
     python3
     nix-index
+    zip
+    unzip
   ] ++ (if pkgs.stdenv.isLinux then [
     dnsutils
     lsof
