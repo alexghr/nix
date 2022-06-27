@@ -27,5 +27,6 @@
     parted
     compsize
     gcc
+    binutils
   ] else []);
 }
