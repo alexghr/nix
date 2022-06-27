@@ -112,6 +112,7 @@
     gamemode
     dxvk
     xwayland
+    pkgs.unstable.ledger-live-desktop
   ];
 
   programs.steam = {
@@ -131,7 +132,10 @@
 
   services.blueman.enable = true;
 
-  services.udev.packages = [pkgs.gnome3.gnome-settings-daemon];
+  services.udev.packages = [
+    pkgs.gnome3.gnome-settings-daemon
+    pkgs.unstable.ledger-udev-rules
+  ];
 
   services.btrfs.autoScrub = {
     enable = true;

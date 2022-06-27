@@ -2,6 +2,7 @@
   description = "Manage my Nix-based machines";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
 
   inputs.darwin.url = "github:lnl7/nix-darwin";
@@ -26,8 +27,8 @@
     (builtins.attrNames (builtins.readDir ./modules)));
 
     nixosConfigurations = {
-      vader = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      vader = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
+        inherit system;
         modules = [
           home-manager.nixosModule
           { imports = builtins.attrValues self.nixosModules; }
@@ -36,7 +37,12 @@
           vscode-server.nixosModule
           # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
           ({ config, pkgs, ...}: {
-            nixpkgs.overlays = [self.overlays.alexghrNixpkgs];
+            nixpkgs.overlays = [
+              self.overlays.alexghrNixpkgs
+              (final: prev: {
+                unstable = nixpkgs-unstable.legacyPackages."${system}";
+              })
+            ];
           })
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
