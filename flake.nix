@@ -14,7 +14,10 @@
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server }: {
+  inputs.agenix.url = "github:ryantm/agenix";
+  inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server, agenix }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -31,6 +34,7 @@
         inherit system;
         modules = [
           home-manager.nixosModule
+          agenix.nixosModule
           { imports = builtins.attrValues self.nixosModules; }
           ./hosts/vader/configuration.nix
           ./users/ag.nix

@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 let
+  githubSshKeys = import ../lib/github-ssh-keys.nix { inherit pkgs; };
   username = "ag";
   packages = with pkgs; [
     nodejs-16_x
@@ -53,10 +54,10 @@ in {
       ++ (if config.services.pipewire.enable then ["pipewire" "audio" "video"] else [])
       ++ (if config.virtualisation.podman.enable then ["podman"] else []);
 
-    openssh.authorizedKeys.keys = builtins.filter builtins.isString (builtins.split "\n" (builtins.readFile (pkgs.fetchurl {
-      url = "https://github.com/alexghr.keys";
+    openssh.authorizedKeys.keys = githubSshKeys {
+      username = "alexghr";
       sha256 = "sha256-JfAZgyo8CNBmik7qW93OP2yjnRa4XS81hx4kr+wfTTM=";
-    })));
+    };
   } else {});
 
   home-manager.users."${username}" = {

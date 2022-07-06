@@ -165,8 +165,10 @@
     dockerCompat = true;
   };
 
+  age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
   alexghr.restic.b2 = {
     enable = true;
+    passwordFile = config.age.secrets.restic-b2-password.path;
     bucket = "alexghr-backup";
     when = "09:00";
   };
