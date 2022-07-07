@@ -123,6 +123,7 @@ in {
         push.default = "current";
         rerere.enabled = true;
         commit.gpgsign = true;
+        safe.directory = "/etc/nixos";
       };
     };
 
