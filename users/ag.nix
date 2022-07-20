@@ -45,13 +45,6 @@ let
   ];
 
 in {
-  age.secrets.ag-npmrc = {
-    file = ../secrets/ag.npmrc.age;
-    owner = username;
-    group = "users";
-    # path = "${config.users.users.ag.home}/.npmrc";
-  };
-
   users.users."${username}" = {
     home = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
   } // (if pkgs.stdenv.isLinux then {
@@ -94,10 +87,6 @@ in {
       gti = "git";
       gt = "git";
       gi = "git";
-    };
-
-    home.file.".npmrc" = {
-      source = hm.config.lib.file.mkOutOfStoreSymlink config.age.secrets.ag-npmrc.path;
     };
 
     # Let Home Manager install and manage itself.

@@ -172,5 +172,15 @@
     bucket = "alexghr-backup";
     when = "09:00";
   };
+
+  age.secrets.ag-npmrc = {
+    file = ../../secrets/ag.npmrc.age;
+    owner = "ag";
+    group = "users";
+  };
+
+  alexghr.nodejs.ag = {
+    npmrc = config.age.secrets.ag-npmrc.path;
+  };
 }
 

@@ -1,6 +1,10 @@
-{ config, ... }:
+{ config, lib, ... }: {
+  imports = [
+    ./nodejs.nix
+  ];
 
-{
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
+  config = {
+    home-manager.useUserPackages = true;
+    home-manager.useGlobalPkgs = true;
+  };
 }
