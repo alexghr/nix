@@ -110,7 +110,7 @@
     podman.defaultNetwork.dnsname.enable = true;
   };
 
-  alexghr.restic.b2 = {
+  alexghr.b2-backup = {
     enable = true;
     bucket = "alexghr-backup";
     when = "00:05";

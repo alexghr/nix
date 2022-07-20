@@ -166,7 +166,7 @@
   };
 
   age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
-  alexghr.restic.b2 = {
+  alexghr.b2-backup = {
     enable = true;
     passwordFile = config.age.secrets.restic-b2-password.path;
     bucket = "alexghr-backup";

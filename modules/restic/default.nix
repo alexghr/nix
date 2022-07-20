@@ -1,9 +1,8 @@
 { config, pkgs, lib, ...}: let
-  cfg = config.alexghr.restic.b2;
-  backupName = "b2";
+  cfg = config.alexghr.b2-backup;
 in with lib; {
-  options.alexghr.restic."${backupName}" = {
-    enable = mkEnableOption "restic configuration";
+  options.alexghr.b2-backup = {
+    enable = mkEnableOption "backup configuration";
 
     bucket =  mkOption {
       type = types.str;
@@ -72,7 +71,7 @@ in with lib; {
   };
 
   config = mkIf cfg.enable {
-    services.restic.backups."${backupName}" = {
+    services.restic.backups.b2 = {
       passwordFile = cfg.passwordFile;
       environmentFile = cfg.environmentFile;
       repository = "b2:${cfg.bucket}:${cfg.bucketPath}";
