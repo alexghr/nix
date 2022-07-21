@@ -69,7 +69,7 @@ in {
     home.packages = packages ++ (if enableGuiPackages then guiPackages else []);
 
     home.sessionVariables = {
-      NPM_PREFIX = "~/.npm-packages";
+      NPM_PREFIX = "$HOME/.npm-packages";
       PATH = "$PATH:$NPM_PREFIX/bin";
       EDITOR = "vim";
     };
