@@ -3,7 +3,6 @@ let
   githubSshKeys = import ../lib/github-ssh-keys.nix { inherit pkgs; };
   username = "ag";
   packages = with pkgs; [
-    nodejs-16_x
     imagemagick
     kubectl
     kubeseal

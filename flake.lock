@@ -7,15 +7,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1652712410,
-        "narHash": "sha256-hMJ2TqLt0DleEnQFGUHK9sV2aAzJPU8pZeiZoqRozbE=",
-        "owner": "ryantm",
+        "lastModified": 1652747504,
+        "narHash": "sha256-0FnoUBia9EYeDlg/XcPf043Tl/5RneSUaZ6IMsBYreY=",
+        "owner": "montchr",
         "repo": "agenix",
-        "rev": "7e5e58b98c3dcbf497543ff6f22591552ebfe65b",
+        "rev": "36d70a4a1d0f1aaab60bd70c88c9010d9cc7abe8",
         "type": "github"
       },
       "original": {
-        "owner": "ryantm",
+        "owner": "montchr",
+        "ref": "darwin-support",
         "repo": "agenix",
         "type": "github"
       }
