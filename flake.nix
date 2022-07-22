@@ -14,7 +14,7 @@
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.agenix.url = "github:ryantm/agenix";
+  inputs.agenix.url = "github:montchr/agenix/darwin-support";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = { self, nixpkgs, nixpkgs-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server, agenix }: {
@@ -74,6 +74,7 @@
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModule
+          agenix.darwinModule
           ./modules/home-manager
           ./modules/cachix
           ./modules/system

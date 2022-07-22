@@ -39,4 +39,15 @@
   home-manager.users.ag.programs.bash.bashrcExtra = pkgs.lib.mkAfter ''
     export PATH="/etc/profiles/per-user/$USER/bin:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin:$PATH"
   '';
+
+  age.secrets.ag-npmrc = {
+    file = ../../secrets/ag.npmrc.age;
+    owner = "ag";
+    group = "staff";
+  };
+
+  alexghr.nodejs.ag = {
+    package = pkgs.nodejs-18_x;
+    npmrc = config.age.secrets.ag-npmrc.path;
+  };
 }
