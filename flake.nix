@@ -87,5 +87,9 @@
         ];
       };
     };
+
+    packages.aarch64-darwin.pnpm = import ./packages/pnpm.nix {
+      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+    };
   };
 }
