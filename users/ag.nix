@@ -70,7 +70,7 @@ in {
 
     home.sessionVariables = {
       NPM_PREFIX = "$HOME/.npm-packages";
-      PATH = "$PATH:$NPM_PREFIX/bin";
+      PATH = "$PATH:$NPM_PREFIX/bin:$HOME/.corepack";
       EDITOR = "vim";
     };
 
