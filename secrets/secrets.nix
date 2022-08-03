@@ -11,5 +11,6 @@ let
 
 in  {
   "vader.restic-b2-password.age".publicKeys = agSshKeys ++ [vaderHostKey];
+  "vader.tailscale.age".publicKeys = agSshKeys ++ [vaderHostKey];
   "ag.npmrc.age".publicKeys = agSshKeys ++ [vaderHostKey ishuttleHostKey];
 }
