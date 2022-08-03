@@ -6,6 +6,7 @@ let
     imagemagick
     kubectl
     kubeseal
+    ngrok
   ] ++ (if pkgs.stdenv.isLinux then [
     v4l-utils
     libguestfs
