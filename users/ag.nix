@@ -184,6 +184,10 @@ in {
 
         function set_ps1() {
           info=""
+          if [ -n "$IN_NIX_SHELL" ]; then
+            info="$info \[\e[97m\](\[\e[96m\]nix\[\e[97m\])\[\e[39m\]"
+          fi
+
           git_branch=$(git branch --show-current 2> /dev/null)
           if [ $? == 0 ]; then
             info="$info \[\e[97m\](\[\e[96m\]$git_branch\[\e[97m\])\[\e[39m\]"
