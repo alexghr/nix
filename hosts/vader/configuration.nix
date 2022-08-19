@@ -215,8 +215,11 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey file:${config.age.secrets.ag-npmrc.path}
+      ${tailscale}/bin/tailscale up -authkey file:${config.age.secrets.ag-npmrc.path} --advertise-exit-node
     '';
   };
+
+  # enable IP forwarding so this machine can be a Tailscale exit node
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 }
 
