@@ -33,12 +33,6 @@
       vader = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          home-manager.nixosModule
-          agenix.nixosModule
-          { imports = builtins.attrValues self.nixosModules; }
-          ./hosts/vader/configuration.nix
-          ./users/ag.nix
-          vscode-server.nixosModule
           # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
           ({ config, pkgs, ...}: {
             nixpkgs.overlays = [
@@ -48,6 +42,12 @@
               })
             ];
           })
+          home-manager.nixosModule
+          agenix.nixosModule
+          { imports = builtins.attrValues self.nixosModules; }
+          ./hosts/vader/configuration.nix
+          ./users/ag.nix
+          vscode-server.nixosModule
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
             fonts.fonts = [pkgs.alexghrNixpkgs.victor-mono];
@@ -55,9 +55,17 @@
         ];
       };
 
-      nix-1 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      nix-1 = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
+        inherit system;
         modules = [
+          ({ config, pkgs, ...}: {
+            nixpkgs.overlays = [
+              self.overlays.alexghrNixpkgs
+              (final: prev: {
+                unstable = nixpkgs-unstable.legacyPackages."${system}";
+              })
+            ];
+          })
           home-manager.nixosModule
           { imports = builtins.attrValues self.nixosModules; }
           ./hosts/nix-1/configuration.nix
@@ -70,9 +78,17 @@
     };
 
     darwinConfigurations = {
-      ishuttle = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
+      ishuttle = let system = "aarch64-darwin"; in darwin.lib.darwinSystem {
+        inherit system;
         modules = [
+          ({ config, pkgs, ...}: {
+            nixpkgs.overlays = [
+              self.overlays.alexghrNixpkgs
+              (final: prev: {
+                unstable = nixpkgs-unstable.legacyPackages."${system}";
+              })
+            ];
+          })
           home-manager.darwinModule
           agenix.darwinModule
           ./modules/home-manager

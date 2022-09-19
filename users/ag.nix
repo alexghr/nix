@@ -37,6 +37,8 @@ let
     obs-studio
     winePackages.full
     ffmpeg-full
+
+    unstable.thunderbird
   ] else [];
 
   vimPlugins = with pkgs.vimPlugins; [
