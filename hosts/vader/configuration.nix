@@ -81,7 +81,6 @@
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "gnome3";
     enableSSHSupport = true;
     enableExtraSocket = true;
   };
@@ -104,12 +103,7 @@
     ntfs3g
     lm_sensors
     android-tools
-    gnomeExtensions.appindicator
-    gnomeExtensions.dash-to-dock
-    gnomeExtensions.hue-lights
-    gnomeExtensions.tray-icons-reloaded
-    gnomeExtensions.gamemode
-    gnome.gnome-tweaks
+    latte-dock
     yubikey-manager
     gamemode
     dxvk
@@ -128,15 +122,13 @@
     screenSection = ''
       Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
     '';
-    displayManager.gdm.enable = true;
-    displayManager.gdm.wayland = true;
-    desktopManager.gnome.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
   };
 
   services.blueman.enable = true;
 
   services.udev.packages = [
-    pkgs.gnome3.gnome-settings-daemon
     pkgs.unstable.ledger-udev-rules
   ];
 
