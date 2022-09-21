@@ -253,6 +253,11 @@ in {
         ];
       };
     };
+
+    services.gpg-agent = {
+      maxCacheTtl = 604800;
+      defaultCacheTtl = 604800;
+    };
   };
 }
 
