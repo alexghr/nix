@@ -50,6 +50,7 @@
 
   networking = {
     hostName = "vader";
+    networkmanager.enable = true;
     wireless.enable = false;
 
     useDHCP = false;
