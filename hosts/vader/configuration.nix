@@ -105,7 +105,6 @@
     ntfs3g
     lm_sensors
     android-tools
-    latte-dock
     yubikey-manager
     gamemode
     dxvk
@@ -124,8 +123,18 @@
     screenSection = ''
       Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
     '';
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
+    displayManager.defaultSession = "none+i3";
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu
+        i3status
+        i3lock
+        dunst
+      ];
+    };
+
+    desktopManager.xterm.enable = true;
   };
 
   services.blueman.enable = true;
