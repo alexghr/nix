@@ -131,6 +131,9 @@
         i3status
         i3lock
         dunst
+        shutter
+        maim
+        simplescreenrecorder
       ];
     };
 
