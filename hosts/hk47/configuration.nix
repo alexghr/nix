@@ -18,11 +18,11 @@
 
     loader = {
       grub.enable = false;
-      generic-extlinux-compatible.enable = true;
+      generic-extlinux-compatible.enable = false;
       raspberryPi = {
         enable = true;
         version = 4;
-        uboot.enable = true;
+        #uboot.enable = true;
         firmwareConfig = ''
           gpu_mem=256
         '';
@@ -58,15 +58,7 @@
     ];
   };
 
-  users = {
-    mutableUsers = true;
-    users.ag = {
-      # don't forget to set a password
-      isNormalUser = true;
-      extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys = builtins.filter builtins.isString (builtins.split "\n" (builtins.readFile (builtins.fetchurl "https://github.com/alexghr.keys")));
-    };
-  };
+  users.mutableUsers = true;
 
   environment.systemPackages = with pkgs; [vim raspberrypi-eeprom libraspberrypi];
 

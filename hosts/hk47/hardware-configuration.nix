@@ -6,10 +6,6 @@
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
-      # requires
-      # nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware
-      # before running install
-      <nixos-hardware/raspberry-pi/4>
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" ];

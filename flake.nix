@@ -17,7 +17,9 @@
   inputs.agenix.url = "github:montchr/agenix/darwin-support";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server, agenix }: {
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server, agenix, nixos-hardware }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -30,6 +32,22 @@
     (builtins.attrNames (builtins.readDir ./modules)));
 
     nixosConfigurations = {
+      hk47 = let system = "aarch64-linux"; in nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          home-manager.nixosModule
+          agenix.nixosModule
+          { imports = builtins.attrValues self.nixosModules; }
+          nixos-hardware.nixosModules.raspberry-pi-4
+          ./hosts/hk47/configuration.nix
+          ./users/ag.nix
+          vscode-server.nixosModule
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+          })
+        ];
+      };
+
       vader = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
