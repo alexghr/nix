@@ -51,7 +51,7 @@
 
   networking = {
     hostName = "vader";
-    networkmanager.enable = true;
+    networkmanager.enable = false;
     wireless.enable = false;
 
     useDHCP = false;
@@ -63,6 +63,9 @@
       allowedTCPPorts = [3000];
       allowedUDPPorts = [ config.services.tailscale.port ];
     };
+
+    # change this to enable Tailscale to act as an exit node
+    firewall.checkReversePath = "loose";
   };
 
   nixpkgs.config.allowUnfree = true;
