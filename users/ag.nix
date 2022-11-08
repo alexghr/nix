@@ -288,6 +288,9 @@ in {
       maxCacheTtl = 604800;
       defaultCacheTtl = 604800;
     };
+
+    programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true;
   };
 }
 
