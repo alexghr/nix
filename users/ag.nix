@@ -6,10 +6,12 @@ let
     imagemagick
     kubectl
     kubeseal
-    ngrok
   ] ++ (if pkgs.stdenv.isLinux then [
     v4l-utils
     libguestfs
+  ] else [])
+  ++ (if pkgs.config.allowUnfree then [
+    ngrok
   ] else []);
 
   enableGuiPackages = pkgs.stdenv.isDarwin || config.services.xserver.enable;
