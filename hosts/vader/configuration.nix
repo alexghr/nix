@@ -37,6 +37,7 @@
   system.stateVersion = "21.11"; # Did you read the comment?
 
   time.timeZone = "Europe/London";
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   # Use the systemd-boot EFI boot loader.
   boot = {
