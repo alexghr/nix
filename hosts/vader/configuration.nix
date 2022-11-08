@@ -116,6 +116,7 @@
     pkgs.unstable.ledger-live-desktop
     tailscale
     sshfs
+    pcmanfm
   ];
 
   programs.steam = {
