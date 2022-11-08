@@ -54,7 +54,8 @@ in {
 
     extraGroups = ["wheel"]
       ++ (if config.services.pipewire.enable then ["pipewire" "audio" "video"] else [])
-      ++ (if config.virtualisation.podman.enable then ["podman"] else []);
+      ++ (if config.virtualisation.podman.enable then ["podman"] else [])
+      ++ (if config.virtualisation.lxd.enable then ["lxd"] else []);
 
     openssh.authorizedKeys.keys = githubSshKeys {
       username = "alexghr";

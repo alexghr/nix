@@ -115,6 +115,7 @@
     xwayland
     pkgs.unstable.ledger-live-desktop
     tailscale
+    sshfs
   ];
 
   programs.steam = {
@@ -177,6 +178,8 @@
     dockerSocket.enable = true;
     dockerCompat = true;
   };
+
+  virtualisation.lxd.enable = true;
 
   age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
   alexghr.b2-backup = {
