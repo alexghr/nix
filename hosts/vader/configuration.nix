@@ -181,6 +181,7 @@
   };
 
   virtualisation.lxd.enable = true;
+  virtualisation.lxc.lxcfs.enable = true;
 
   age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
   alexghr.b2-backup = {
