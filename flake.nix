@@ -1,7 +1,7 @@
 {
   description = "Manage my Nix-based machines";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
 
@@ -11,7 +11,7 @@
   inputs.vscode-server.url = "github:alexghr/nixos-vscode-server";
   inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.home-manager.url = "github:nix-community/home-manager/release-22.05";
+  inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.agenix.url = "github:montchr/agenix/darwin-support";
