@@ -174,6 +174,8 @@
 
   services.vscode-server.enable = true;
 
+  services.fwupd.enable = true;
+
   virtualisation.podman = {
     enable = true;
     dockerSocket.enable = true;
