@@ -9,5 +9,5 @@ let
 in {
   inherit imports;
   environment.systemPackages = [pkgs.cachix];
-  nix.binaryCaches = ["https://cache.nixos.org/"];
+  nix.settings.substituters = ["https://cache.nixos.org/"];
 }
