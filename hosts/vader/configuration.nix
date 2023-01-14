@@ -47,6 +47,7 @@
 
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "btrfs" ];
+    enableContainers = false;
   };
 
   networking = {
