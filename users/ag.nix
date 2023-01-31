@@ -286,6 +286,15 @@ in {
       };
     };
 
+    programs.i3status = if config.services.xserver.enable && config.services.xserver.windowManager.i3.enable then {
+      enable = true;
+      modules = {
+        ipv6.enable = false;
+        "wireless _first_".enable = false;
+        "battery all".enable = false;
+      };
+    } else {};
+
     services.gpg-agent = {
       maxCacheTtl = 604800;
       defaultCacheTtl = 604800;
