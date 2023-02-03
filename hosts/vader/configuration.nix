@@ -125,6 +125,8 @@
   };
 
   services.xserver = {
+    layout = "us";
+    xkbOptions="compose:menu";
     videoDrivers = [ "nvidia" ];
     enable = true;
     screenSection = ''
@@ -233,7 +235,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey file:${config.age.secrets.ag-npmrc.path} --advertise-exit-node
+      ${tailscale}/bin/tailscale up --auth-key file:${config.age.secrets.tailscale.path} --advertise-exit-node
     '';
   };
 
