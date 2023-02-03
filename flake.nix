@@ -96,7 +96,7 @@
     };
 
     darwinConfigurations = {
-      ishuttle = let system = "aarch64-darwin"; in darwin.lib.darwinSystem {
+      mackey = let system = "aarch64-darwin"; in darwin.lib.darwinSystem {
         inherit system;
         modules = [
           ({ config, pkgs, ...}: {
@@ -112,7 +112,7 @@
           ./modules/home-manager
           ./modules/cachix
           ./modules/system
-          ./hosts/ishuttle/darwin-configuration.nix
+          ./hosts/mackey/darwin-configuration.nix
           ./users/ag.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;

@@ -31,24 +31,12 @@ to Backblaze. See my custom [restic module] for that
 ## Hosts
 
 The [./hosts] directory contains the configuration files for my machines.
-I name all of my machines after Star Trek* characters.
-
-Multiple configurations could be applied to the same machine. That's because
-I dual boot sometimes.
-
-Current computers:
 
 - 🖥️ [vader] - Main NixOS install
-- 💻 [ishuttle] - A macbook running [nix-darwin] & [home-manager]
+- 💻 [mackey] - A macbook running [nix-darwin] & [home-manager]
 - <img alt="raspi" src="./.github/img/raspi.png" style="height:1.5em;vertical-align:middle"/> [hk47] -
   A Raspberry Pi 4B in my closet. Mainly runs the Unifi controller
 - 🖥️ [nix-1] - A Hetzner VPS. Runs k3s
-- 💀 [stormtrooper] - First time I installed Nix on WSL. Mostly to experiment.
-  Preceded [nixtrooper]
-- 💀 [wsltrooper] - Second time I installed Nix on WSL to test Flakes
-- 💀 [nixtrooper] - First NixOS install on bare metal. Preceded [vader]
-
-*😝
 
 ## System management
 
@@ -76,16 +64,16 @@ $ sudo nixos-rebuild switch --flake github:alexghr/nix#$(hostname)
 
 ## Todo
 
-- [ ] remove stale hosts
-- [ ] migrate other machines to Flakes
-- [ ] setup CI (update flakes, push derivations to cachix, etc)
+- [x] remove stale hosts
+- [x] migrate other machines to Flakes
+- [x] setup CI (update flakes, push derivations to cachix, etc)
 
 [original Tweag Flakes intro]: https://www.tweag.io/blog/2020-07-31-nixos-flakes/
 [nix-configs]: https://github.com/stars/alexghr/lists/nix-configs
 [restic module]: ./modules/restic/default.nix
 [./hosts]: ./hosts
 [vader]: ./hosts/vader/configuration.nix
-[ishuttle]: ./hosts/ishuttle/darwin-configuration.nix
+[mackey]: ./hosts/mackey/darwin-configuration.nix
 [hk47]: ./hosts/hk47/configuration.nix
 [nix-1]: ./hosts/nix-1/configuration.nix
 [stormtrooper]: ./hosts/stormtrooper

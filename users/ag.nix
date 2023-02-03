@@ -286,7 +286,7 @@ in {
       };
     };
 
-    programs.i3status = if config.services.xserver.enable && config.services.xserver.windowManager.i3.enable then {
+    programs.i3status = if pkgs.stdenv.isLinux && config.services.xserver.enable && config.services.xserver.windowManager.i3.enable then {
       enable = true;
       modules = {
         ipv6.enable = false;

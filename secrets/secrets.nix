@@ -5,12 +5,13 @@ let
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFCcOm5bv/HZtyaavJ0xBFvZJ6fLfuUxhtFj1UU7YXfi"
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAuq8bF17JoN3KO6t82wUywW3jv/hUeFwRS/USIO7Poh"
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGRFqPVU7jQOdCVJJKj8+nDs1gLeHhz7+7qptzkI0bta"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcqnrGwHDkQPUcSOZnLEd7Y7kMxaiTkIL0uz/P2YDaV"
    ];
   vaderHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPNJ1Zg00liAoGjy1wN2OEHLgU2Lcs2zALHh1nGYj9al";
-  ishuttleHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3M+lxgC98YtdTe6y7zMi5wP4ZKYJL5Yq1UAq4HN/VI";
+  mackeyHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGMGuXCcUtBZmwfNVX99zG01uqnaXJFndNwePt3uMGLi";
 
 in  {
   "vader.restic-b2-password.age".publicKeys = agSshKeys ++ [vaderHostKey];
   "vader.tailscale.age".publicKeys = agSshKeys ++ [vaderHostKey];
-  "ag.npmrc.age".publicKeys = agSshKeys ++ [vaderHostKey ishuttleHostKey];
+  "ag.npmrc.age".publicKeys = agSshKeys ++ [vaderHostKey mackeyHostKey];
 }
