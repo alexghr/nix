@@ -124,6 +124,8 @@
     enable = true;
   };
 
+  services.dbus.enable = true;
+
   services.xserver = {
     layout = "us";
     xkbOptions="compose:menu";
