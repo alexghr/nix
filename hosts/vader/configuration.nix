@@ -52,11 +52,8 @@
 
   networking = {
     hostName = "vader";
-    networkmanager.enable = false;
+    networkmanager.enable = true;
     wireless.enable = false;
-
-    useDHCP = false;
-    interfaces.enp5s0.useDHCP = true;
 
     firewall = {
       enable = true;
