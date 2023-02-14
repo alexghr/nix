@@ -101,12 +101,14 @@
     '';
   };
 
+  programs.adb.enable = true;
+  users.users.ag.extraGroups = ["adbusers"];
+
   environment.systemPackages = with pkgs; [
     pinentry
     pinentry-curses
     ntfs3g
     lm_sensors
-    android-tools
     yubikey-manager
     gamemode
     dxvk
