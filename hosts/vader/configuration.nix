@@ -69,7 +69,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    package = pkgs.nixVersions.nix_2_8;
+    package = pkgs.nixVersions.nix_2_12;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
