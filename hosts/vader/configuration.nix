@@ -34,7 +34,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -47,7 +47,7 @@
 
     kernelPackages = pkgs.linuxPackages_6_1;
     supportedFilesystems = [ "btrfs" ];
-    enableContainers = false;
+    enableContainers = true;
   };
 
   networking = {
