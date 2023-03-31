@@ -302,6 +302,8 @@ in {
 
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
+
+    programs.vscode.enable = enableGuiPackages;
   };
 }
 
