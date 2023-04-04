@@ -8,7 +8,7 @@
   inputs.darwin.url = "github:lnl7/nix-darwin";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.vscode-server.url = "github:alexghr/nixos-vscode-server";
+  inputs.vscode-server.url = "github:msteen/nixos-vscode-server";
   inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
