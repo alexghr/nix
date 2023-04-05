@@ -180,6 +180,7 @@
 
   services.fwupd.enable = true;
 
+  age.secrets.ghcr-token.file = ../../secrets/vader.ghcr.age;
   virtualisation.podman = {
     enable = true;
     dockerSocket.enable = true;
