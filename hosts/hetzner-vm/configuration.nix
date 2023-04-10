@@ -25,7 +25,7 @@
     useDHCP = false;
 
     interfaces = {
-      ens3.useDHCP = true;
+      eth0.useDHCP = true;
     };
 
     firewall = {
