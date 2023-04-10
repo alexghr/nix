@@ -93,6 +93,16 @@
           })
         ];
       };
+
+      hetzner-vm = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+          })
+          ./hosts/hetzner-vm/configuration.nix
+        ];
+      };
     };
 
     darwinConfigurations = {
