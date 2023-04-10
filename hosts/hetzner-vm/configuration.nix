@@ -50,6 +50,7 @@
 
   environment.systemPackages = with pkgs; [
     git
+    vim
   ];
 
   services.openssh = {
