@@ -304,6 +304,7 @@ in {
     programs.direnv.nix-direnv.enable = true;
 
     programs.vscode.enable = enableGuiPackages;
+    programs.vscode.package = pkgs.unstable.vscode;
   };
 }
 

@@ -2,7 +2,8 @@
   description = "Manage my Nix-based machines";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
 
   inputs.darwin.url = "github:lnl7/nix-darwin";
@@ -19,10 +20,25 @@
 
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server, agenix, nixos-hardware }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server, agenix, nixos-hardware }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
+    };
+
+    overlays.unstable = self: super: {
+      # assume we're running NixOS on Linux so use its unstable variant
+      unstable = if super.stdenv.isLinux
+        then
+          import nixos-unstable {
+            system = super.system;
+            config.allowUnfree = super.config.allowUnfree;
+          }
+        else
+          import nixpkgs-unstable {
+            system = super.system;
+            config.allowUnfree = super.config.allowUnfree;
+          };
     };
 
     nixosModules =  builtins.listToAttrs (map (x: {
@@ -55,9 +71,7 @@
           ({ config, pkgs, ...}: {
             nixpkgs.overlays = [
               self.overlays.alexghrNixpkgs
-              (final: prev: {
-                unstable = nixpkgs-unstable.legacyPackages."${system}";
-              })
+              self.overlays.unstable
             ];
           })
           home-manager.nixosModule
@@ -79,9 +93,7 @@
           ({ config, pkgs, ...}: {
             nixpkgs.overlays = [
               self.overlays.alexghrNixpkgs
-              (final: prev: {
-                unstable = nixpkgs-unstable.legacyPackages."${system}";
-              })
+              self.overlays.unstable
             ];
           })
           home-manager.nixosModule
@@ -112,9 +124,7 @@
           ({ config, pkgs, ...}: {
             nixpkgs.overlays = [
               self.overlays.alexghrNixpkgs
-              (final: prev: {
-                unstable = nixpkgs-unstable.legacyPackages."${system}";
-              })
+              self.overlays.unstable
             ];
           })
           home-manager.darwinModule
