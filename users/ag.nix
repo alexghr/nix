@@ -27,7 +27,6 @@ let
     slack
     tdesktop
 
-    vscode
     xclip
 
     desktop-file-utils
