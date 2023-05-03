@@ -26,18 +26,18 @@
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
     };
 
-    overlays.unstable = self: super: {
+    overlays.unstable = final: prev: {
       # assume we're running NixOS on Linux so use its unstable variant
-      unstable = if super.stdenv.isLinux
+      unstable = if prev.stdenv.isLinux
         then
           import nixos-unstable {
-            system = super.system;
-            config.allowUnfree = super.config.allowUnfree;
+            system = prev.system;
+            config.allowUnfree = prev.config.allowUnfree;
           }
         else
           import nixpkgs-unstable {
-            system = super.system;
-            config.allowUnfree = super.config.allowUnfree;
+            system = prev.system;
+            config.allowUnfree = prev.config.allowUnfree;
           };
     };
 
