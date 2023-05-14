@@ -133,21 +133,8 @@
     screenSection = ''
       Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
     '';
-    displayManager.defaultSession = "none+i3";
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        i3lock
-        dunst
-        shutter
-        maim
-        simplescreenrecorder
-      ];
-    };
-
-    desktopManager.xterm.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
   };
 
   services.blueman.enable = true;
