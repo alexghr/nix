@@ -2,6 +2,7 @@
   description = "Manage my Nix-based machines";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+  inputs.nixpkgs-master.url = "github:NixOS/nixpkgs/master";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
@@ -14,13 +15,15 @@
 
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.home-manager-master.url = "github:nix-community/home-manager/master";
+  inputs.home-manager-master.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.agenix.url = "github:montchr/agenix/darwin-support";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, alexghr-nixpkgs, darwin, home-manager, vscode-server, agenix, nixos-hardware }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-master, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -64,7 +67,7 @@
         ];
       };
 
-      vader = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
+      vader = let system = "x86_64-linux"; in nixpkgs-master.lib.nixosSystem {
         inherit system;
         modules = [
           # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
@@ -74,7 +77,7 @@
               self.overlays.unstable
             ];
           })
-          home-manager.nixosModule
+          home-manager-master.nixosModule
           agenix.nixosModule
           { imports = builtins.attrValues self.nixosModules; }
           ./hosts/vader/configuration.nix
