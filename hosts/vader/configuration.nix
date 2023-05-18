@@ -48,6 +48,9 @@
     kernelPackages = pkgs.linuxPackages_6_1;
     supportedFilesystems = [ "btrfs" ];
     enableContainers = true;
+
+    # enable IP forwarding so this machine can be a Tailscale exit node
+    kernel.sysctl."net.ipv4.ip_forward" = 1;
   };
 
   networking = {
@@ -81,6 +84,7 @@
   };
 
   programs.dconf.enable = true;
+  programs.kdeconnect.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
@@ -101,6 +105,10 @@
     '';
   };
 
+  programs.steam = {
+    enable = true;
+  };
+
   programs.adb.enable = true;
   users.users.ag.extraGroups = ["adbusers"];
 
@@ -119,10 +127,6 @@
     pcmanfm
   ];
 
-  programs.steam = {
-    enable = true;
-  };
-
   services.dbus.enable = true;
 
   services.xserver = {
@@ -136,8 +140,6 @@
     displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
   };
-
-  services.blueman.enable = true;
 
   services.udev.packages = [
     pkgs.unstable.ledger-udev-rules
@@ -227,8 +229,5 @@
       ${tailscale}/bin/tailscale up --auth-key file:${config.age.secrets.tailscale.path} --advertise-exit-node
     '';
   };
-
-  # enable IP forwarding so this machine can be a Tailscale exit node
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 }
 
