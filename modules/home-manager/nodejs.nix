@@ -9,8 +9,8 @@ with lib; {
         options = {
           package = mkOption {
             type = types.package;
-            default = pkgs.nodejs-16_x;
-            defaultText = "pkgs.nodejs-16_x";
+            default = pkgs.nodejs-18_x;
+            defaultText = "pkgs.nodejs-18_x";
             description = "The NodeJS package to use";
           };
 
