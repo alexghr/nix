@@ -2,7 +2,7 @@
   description = "Manage my Nix-based machines";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-  inputs.nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+  inputs.nixpkgs-2305.url = "github:NixOS/nixpkgs/release-23.05";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
@@ -23,7 +23,7 @@
 
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-master, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -67,7 +67,7 @@
         ];
       };
 
-      vader = let system = "x86_64-linux"; in nixpkgs-master.lib.nixosSystem {
+      vader = let system = "x86_64-linux"; in nixpkgs-2305.lib.nixosSystem {
         inherit system;
         modules = [
           # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
@@ -84,7 +84,7 @@
           ./users/ag.nix
           vscode-server.nixosModule
           ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
+            nix.registry.nixpkgs.flake = nixpkgs-2305;
             fonts.fonts = [pkgs.alexghrNixpkgs.victor-mono];
           })
         ];

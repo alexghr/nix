@@ -165,18 +165,18 @@
         "type": "github"
       }
     },
-    "nixpkgs-master": {
+    "nixpkgs-2305": {
       "locked": {
-        "lastModified": 1684745219,
-        "narHash": "sha256-vxHnt5UwcyYzbVzu0QE0FZID3QAvEb8FjUO8AXUQHCY=",
+        "lastModified": 1684860012,
+        "narHash": "sha256-j2t9cJCSjmqPR5gE5I2T3mHo1ln2EihiMjLbKzZnnq4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e215adf3b8cf2acbbd2e1c9a869da13d005b4ddf",
+        "rev": "78334a1869f2c43b3c857dd142f284879d84c792",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "master",
+        "ref": "release-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -207,7 +207,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-unstable": "nixos-unstable",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-master": "nixpkgs-master",
+        "nixpkgs-2305": "nixpkgs-2305",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "vscode-server": "vscode-server"
       }
