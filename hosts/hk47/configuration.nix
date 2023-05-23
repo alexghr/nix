@@ -15,6 +15,7 @@
 
   boot = {
     kernelParams = ["cma-256M"];
+    kernelPackages = pkgs.linuxPackages_6_1;
 
     loader = {
       grub.enable = false;
