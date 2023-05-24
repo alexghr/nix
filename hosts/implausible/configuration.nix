@@ -85,20 +85,42 @@
     hostName = "implausible";
   };
 
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_14;
-    enableTCPIP = false;
-    ensureDatabases = [
-      "plausible"
-    ];
-    ensureUsers = [
-      {
-        name = "plausible";
-        ensurePermissions = {
-          "DATABASE plausible" = "ALL PRIVILEGES";
-        };
-      }
-    ];
+  # so that I'm able to connect to Postgres
+  users.users.plausible = {
+    group = "plausible";
+    isSystemUser = true;
+  };
+
+  age.secrets.plausible-release-cookie.file = ../../secrets/plausible.releaseCookie.age;
+  age.secrets.plausible-admin-password.file = ../../secrets/plausible.admin.password.age;
+  age.secrets.plausible-keybase.file = ../../secrets/plausible.keybase.age;
+
+  services = {
+    postgresql = {
+      enable = true;
+      package = pkgs.postgresql_14;
+      enableTCPIP = false;
+    };
+
+    plausible = {
+      enable = true;
+      releaseCookiePath = config.age.secrets.plausible-release-cookie.path;
+      adminUser = {
+        email = "alexghr@users.noreply.github.com";
+        passwordFile = config.age.secrets.plausible-admin-password.path;
+      };
+
+      # I've migrated old data in here
+      database = {
+        clickhouse.url = "http://localhost:8123/plausible";
+      };
+
+      server = {
+        disableRegistration = true;
+        baseUrl = "https://plausible2.alexghr.me";
+        secretKeybaseFile = config.age.secrets.plausible-keybase.path;
+        port = 80;
+      };
+    };
   };
 }
