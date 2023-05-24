@@ -84,4 +84,21 @@
   networking = {
     hostName = "implausible";
   };
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_14;
+    enableTCPIP = false;
+    ensureDatabases = [
+      "plausible"
+    ];
+    ensureUsers = [
+      {
+        name = "plausible";
+        ensurePermissions = {
+          "DATABASE plausible" = "ALL PRIVILEGES";
+        };
+      }
+    ];
+  };
 }
