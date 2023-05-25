@@ -47,11 +47,6 @@ let
     vim-colors-solarized
   ];
 
-  alacrittyTheme = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/alacritty/alacritty-theme/0fb8868d6389014fd551851df7153e4ca2590790/themes/cyber_punk_neon.yaml";
-    sha256 = "sha256-N2553R6L52kfeiW4Vi+yaPbq/jsiS4l2oXkSjQW4Lmg=";
-  };
-
 in {
   users.users."${username}" = {
     home = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
@@ -237,7 +232,7 @@ in {
         };
 
         import = [
-          alacrittyTheme
+          pkgs.alacritty-theme.cyber_punk_neon
         ];
 
         font = let victorMono = style: {

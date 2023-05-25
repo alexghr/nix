@@ -23,7 +23,9 @@
 
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware }: {
+  inputs.alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware, alacritty-theme }: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -75,6 +77,7 @@
             nixpkgs.overlays = [
               self.overlays.alexghrNixpkgs
               self.overlays.unstable
+              alacritty-theme.overlays.default
             ];
           })
           home-manager-master.nixosModule
