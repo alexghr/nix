@@ -118,6 +118,17 @@
           ./hosts/hetzner-vm/configuration.nix
         ];
       };
+
+      implausible = let system = "x86_64-linux"; in nixpkgs-2305.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+          })
+          agenix.nixosModule
+          ./hosts/implausible/configuration.nix
+        ];
+      };
     };
 
     darwinConfigurations = {
