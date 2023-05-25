@@ -47,6 +47,11 @@ let
     vim-colors-solarized
   ];
 
+  alacrittyTheme = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/alacritty/alacritty-theme/0fb8868d6389014fd551851df7153e4ca2590790/themes/cyber_punk_neon.yaml";
+    sha256 = "sha256-N2553R6L52kfeiW4Vi+yaPbq/jsiS4l2oXkSjQW4Lmg=";
+  };
+
 in {
   users.users."${username}" = {
     home = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
@@ -231,34 +236,9 @@ in {
           gtk_theme_variant = "None"; # pick the system's default
         };
 
-        # paper theme from
-        # https://github.com/s6muel/paper-theme/blob/0ed9eccc14757e3dfd3a45981937cca32f56f4e9/themes/alacritty/paper-theme.yml
-        colors = {
-          primary = {
-            background = "#F2EEDE";
-            foreground = "#000000";
-            normal = {
-              black =   "#000000";
-                red =     "#CC3E28";
-                green =   "#216609";
-                yellow =  "#B58900";
-                blue =    "#1E6FCC";
-                magenta = "#5C21A5";
-                cyan =    "#158C86";
-                white =   "#AAAAAA";
-              };
-              bright = {
-                black =   "#555555";
-                red =     "#CC3E28";
-                green =   "#216609";
-                yellow =  "#B58900";
-                blue =    "#1E6FCC";
-                magenta = "#5C21A5";
-                cyan =    "#158C86";
-                white =   "#AAAAAA";
-              };
-          };
-        };
+        import = [
+          alacrittyTheme
+        ];
 
         font = let victorMono = style: {
           family = "Victor Mono";
