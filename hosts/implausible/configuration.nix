@@ -32,8 +32,7 @@
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [];
-      allowedUDPPorts = [];
+      allowedTCPPorts = [80];
     };
   };
 
@@ -117,9 +116,20 @@
 
       server = {
         disableRegistration = true;
-        baseUrl = "https://plausible2.alexghr.me";
+        baseUrl = "https://plausible.alexghr.me";
         secretKeybaseFile = config.age.secrets.plausible-keybase.path;
-        port = 80;
+        port = 8000;
+      };
+    };
+
+    nginx = {
+      enable = true;
+      virtualHosts = {
+        "plausible.alexghr.me" = {
+          locations."/" = {
+            proxyPass = "http://localhost:8000";
+          };
+        };
       };
     };
   };
