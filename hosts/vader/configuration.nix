@@ -125,6 +125,7 @@
     tailscale
     sshfs
     pcmanfm
+    graphite-kde-theme
   ];
 
   services.dbus.enable = true;
