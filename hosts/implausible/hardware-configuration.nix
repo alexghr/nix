@@ -57,5 +57,13 @@ in
         options = [ "subvol=boot" ] ++ commonMountOptions;
       };
 
-    swapDevices = [ ];
+    # https://nixos.wiki/wiki/Btrfs#Swap_file
+    fileSystems."/swap" =
+      { device = "/dev/sda1";
+        fsType = "btrfs";
+        neededForBoot = true;
+        options = [ "subvol=swap" "noatime" ];
+      };
+
+    swapDevices = [ { device = "/swap/swap2GB"; } ];
   }
