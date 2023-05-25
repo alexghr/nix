@@ -10,6 +10,7 @@ let
   vaderHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPNJ1Zg00liAoGjy1wN2OEHLgU2Lcs2zALHh1nGYj9al";
   mackeyHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGMGuXCcUtBZmwfNVX99zG01uqnaXJFndNwePt3uMGLi";
   implausibleHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHdhFymmhJWSlL4if7YjlfVuRiUPjc4r9ddpHcgCzv5v";
+  webbyHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILyPv3bNmGWZ5kHZOyw2yZZxWRvf3EfiL+cTtrvJ0sNg";
 in  {
   "vader.restic-b2-password.age".publicKeys = agSshKeys ++ [vaderHostKey];
   "vader.tailscale.age".publicKeys = agSshKeys ++ [vaderHostKey];
@@ -18,4 +19,5 @@ in  {
   "plausible.releaseCookie.age".publicKeys = agSshKeys ++ [implausibleHostKey];
   "plausible.admin.password.age".publicKeys = agSshKeys ++ [implausibleHostKey];
   "plausible.keybase.age".publicKeys = agSshKeys ++ [implausibleHostKey];
+  "webby.ghcr.age".publicKeys = agSshKeys ++ [webbyHostKey];
 }

@@ -132,6 +132,17 @@
           ./hosts/implausible/configuration.nix
         ];
       };
+
+      webby = let system = "x86_64-linux"; in nixpkgs-2305.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+          })
+          agenix.nixosModule
+          ./hosts/webby/configuration.nix
+        ];
+      };
     };
 
     darwinConfigurations = {
