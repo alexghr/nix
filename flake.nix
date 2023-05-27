@@ -153,6 +153,7 @@
             nixpkgs.overlays = [
               self.overlays.alexghrNixpkgs
               self.overlays.unstable
+              alacritty-theme.overlays.default
             ];
           })
           home-manager.darwinModule
