@@ -2,10 +2,14 @@
   description = "Manage my Nix-based machines";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-  inputs.nixpkgs-2305.url = "github:NixOS/nixpkgs/release-23.05";
+  inputs.nixpkgs-2305.url = "github:NixOS/nixpkgs/nixos-23.05";
+  inputs.nixpkgs-2211.url = "github:NixOS/nixpkgs/nixos-22.11";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
+
+  inputs.disko.url = github:nix-community/disko;
+  inputs.disko.inputs.nixpkgs.follows = "nixpkgs-2305";
 
   inputs.darwin.url = "github:lnl7/nix-darwin";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -25,7 +29,7 @@
 
   inputs.alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware, alacritty-theme }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, nixpkgs-2211, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware, alacritty-theme, disko }@attrs: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -112,13 +116,22 @@
         ];
       };
 
-      hetzner-vm = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
+      b1 =  nixpkgs-2305.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = attrs;
         modules = [
           ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
+            nix.registry.nixpkgs.flake = nixpkgs-2305;
+            # nixpkgs.overlays = [
+            #   (final: prev: {
+            #     # the Clickhouse package in 23.05 doesn't exist in binary caches :(
+            #     clickhouse = nixpkgs-2211.legacyPackages.${prev.system}.clickhouse;
+            #   })
+            # ];
           })
-          ./hosts/hetzner-vm/configuration.nix
+          disko.nixosModules.disko
+          agenix.nixosModule
+          ./hosts/b1/configuration.nix
         ];
       };
 
