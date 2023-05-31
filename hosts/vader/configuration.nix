@@ -51,6 +51,8 @@
 
     # enable IP forwarding so this machine can be a Tailscale exit node
     kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+    binfmt.emulatedSystems = ["aarch64-linux"];
   };
 
   networking = {
