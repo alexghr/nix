@@ -34,6 +34,9 @@
                 "/varlib" = {
                   mountpoint = "/var/lib";
                 };
+                "/atticd" = {
+                  mountpoint = "/var/lib/atticd/storage";
+                };
               };
             };
           }

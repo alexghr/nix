@@ -29,7 +29,9 @@
 
   inputs.alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, nixpkgs-2211, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware, alacritty-theme, disko }@attrs: {
+  inputs.attic.url = "github:zhaofengli/attic";
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, nixpkgs-2211, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware, alacritty-theme, disko, attic }@attrs: {
 
     overlays.alexghrNixpkgs = final: prev: {
       alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
@@ -103,15 +105,10 @@
         modules = [
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs-2305;
-            # nixpkgs.overlays = [
-            #   (final: prev: {
-            #     # the Clickhouse package in 23.05 doesn't exist in binary caches :(
-            #     clickhouse = nixpkgs-2211.legacyPackages.${prev.system}.clickhouse;
-            #   })
-            # ];
           })
           disko.nixosModules.disko
           agenix.nixosModule
+          attic.nixosModules.atticd
           ./hosts/b1/configuration.nix
         ];
       };

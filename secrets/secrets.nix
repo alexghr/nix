@@ -22,4 +22,5 @@ in  {
   "plausible.keybase.age".publicKeys = agSshKeys ++ [implausibleHostKey b1HostKey];
   "webby.ghcr.age".publicKeys = agSshKeys ++ [webbyHostKey b1HostKey];
   "ghcr.age".publicKeys = agSshKeys ++ [b1HostKey];
+  "attic.env.age".publicKeys = agSshKeys ++ [b1HostKey];
 }

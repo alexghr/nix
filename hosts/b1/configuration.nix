@@ -75,6 +75,7 @@
     plausible-admin-password.file = ../../secrets/plausible.admin.password.age;
     plausible-keybase.file = ../../secrets/plausible.keybase.age;
     ghcr.file = ../../secrets/webby.ghcr.age;
+    attic-env.file = ../../secrets/attic.env.age;
   };
 
   virtualisation = {
@@ -140,6 +141,37 @@
       };
     };
 
+    atticd = {
+      enable = true;
+
+      credentialsFile = config.age.secrets.attic-env.path;
+
+      settings = {
+        listen = "[::]:8002";
+        # allowed-hosts = [
+        #   # "attic.alexghr.me"
+        # ];
+        api-endpoint = "https://attic.alexghr.me/";
+
+        database.url = "postgresql:///atticd?host=/run/postgresql&user=atticd";
+
+        storage = {
+          type = "local";
+          path = "/var/lib/atticd/storage";
+        };
+
+        # basic chunking
+        # taken from official docs
+        # https://docs.attic.rs/admin-guide/deployment/nixos.html#configuration
+        chunking = {
+          nar-size-threshold = 64 * 1024; # 64 KiB
+          min-size = 16 * 1024; # 16 KiB
+          avg-size = 64 * 1024; # 64 KiB
+          max-size = 256 * 1024; # 256 KiB
+        };
+      };
+    };
+
     nginx = {
       enable = true;
       virtualHosts = {
@@ -158,7 +190,36 @@
             proxyPass = "http://localhost:8000";
           };
         };
+        "attic.alexghr.me" = {
+          locations."/" = {
+            proxyPass = "http://localhost:8002";
+          };
+        };
       };
     };
+  };
+
+  systemd.services = {
+    atticd-postgres = {
+      after = [ "postgresql.service" ];
+      partOf = [ "atticd.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = config.services.postgresql.superUser;
+        RemainAfterExit = true;
+      };
+      script = ''
+        PSQL() {
+          ${config.services.postgresql.package}/bin/psql --port=5432 "$@"
+        }
+        # check if the database already exists
+        if ! PSQL -lqt | ${pkgs.coreutils}/bin/cut -d \| -f 1 | ${pkgs.gnugrep}/bin/grep -qw atticd ; then
+          PSQL -tAc "CREATE ROLE atticd WITH LOGIN;"
+          PSQL -tAc "CREATE DATABASE atticd WITH OWNER atticd;"
+        fi
+      '';
+      };
+
+      atticd.after = [ "atticd-postgres.service" ];
   };
 }
