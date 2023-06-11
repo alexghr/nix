@@ -97,25 +97,6 @@
         ];
       };
 
-      nix-1 = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ({ config, pkgs, ...}: {
-            nixpkgs.overlays = [
-              self.overlays.alexghrNixpkgs
-              self.overlays.unstable
-            ];
-          })
-          home-manager.nixosModule
-          { imports = builtins.attrValues self.nixosModules; }
-          ./hosts/nix-1/configuration.nix
-          ./users/ag.nix
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-          })
-        ];
-      };
-
       b1 =  nixpkgs-2305.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = attrs;
@@ -132,28 +113,6 @@
           disko.nixosModules.disko
           agenix.nixosModule
           ./hosts/b1/configuration.nix
-        ];
-      };
-
-      implausible = let system = "x86_64-linux"; in nixpkgs-2305.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-          })
-          agenix.nixosModule
-          ./hosts/implausible/configuration.nix
-        ];
-      };
-
-      webby = let system = "x86_64-linux"; in nixpkgs-2305.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-          })
-          agenix.nixosModule
-          ./hosts/webby/configuration.nix
         ];
       };
     };
