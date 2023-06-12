@@ -181,8 +181,6 @@
 
   services.pcscd.enable = true;
 
-  services.vscode-server.enable = true;
-
   services.fwupd.enable = true;
 
   age.secrets.ghcr-token.file = ../../secrets/vader.ghcr.age;

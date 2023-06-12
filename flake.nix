@@ -10,9 +10,6 @@
   inputs.darwin.url = "github:lnl7/nix-darwin";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.vscode-server.url = "github:msteen/nixos-vscode-server";
-  inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-
   inputs.home-manager.url = "github:nix-community/home-manager/release-23.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -27,10 +24,9 @@
 
   inputs.attic.url = "github:zhaofengli/attic";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, vscode-server, agenix, nixos-hardware, alacritty-theme, disko, attic }@attrs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, nixos-hardware, alacritty-theme, disko, attic }@attrs: {
 
     overlays.unstable = final: prev: {
-      # assume we're running NixOS on Linux so use its unstable variant
       unstable = import nixpkgs-unstable {
         system = prev.system;
         config.allowUnfree = prev.config.allowUnfree;
@@ -53,7 +49,6 @@
           nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/hk47/configuration.nix
           ./users/ag.nix
-          vscode-server.nixosModule
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
           })
@@ -76,7 +71,6 @@
           { imports = builtins.attrValues self.nixosModules; }
           ./hosts/vader/configuration.nix
           ./users/ag.nix
-          vscode-server.nixosModule
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
             fonts.fonts = [pkgs.victor-mono];
