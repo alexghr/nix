@@ -148,9 +148,9 @@
 
       settings = {
         listen = "[::]:8002";
-        # allowed-hosts = [
-        #   # "attic.alexghr.me"
-        # ];
+        allowed-hosts = [
+          "attic.alexghr.me"
+        ];
         api-endpoint = "https://attic.alexghr.me/";
 
         database.url = "postgresql:///atticd?host=/run/postgresql&user=atticd";
@@ -195,6 +195,7 @@
             proxyPass = "http://localhost:8002";
             extraConfig = ''
               client_max_body_size 100M;
+              proxy_set_header Host $host;
             '';
           };
         };
