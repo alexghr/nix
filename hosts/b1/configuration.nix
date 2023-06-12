@@ -193,6 +193,9 @@
         "attic.alexghr.me" = {
           locations."/" = {
             proxyPass = "http://localhost:8002";
+            extraConfig = ''
+              client_max_body_size 100M;
+            '';
           };
         };
       };
