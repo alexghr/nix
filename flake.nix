@@ -84,6 +84,7 @@
               self.overlays.alexghrNixpkgs
               self.overlays.unstable
               alacritty-theme.overlays.default
+              attic.overlays.default
             ];
           })
           home-manager-master.nixosModule

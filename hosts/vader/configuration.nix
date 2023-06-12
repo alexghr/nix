@@ -128,6 +128,7 @@
     sshfs
     pcmanfm
     graphite-kde-theme
+    attic
   ];
 
   services.dbus.enable = true;
