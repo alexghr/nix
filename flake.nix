@@ -1,15 +1,11 @@
 {
   description = "Manage my Nix-based machines";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-  inputs.nixpkgs-2305.url = "github:NixOS/nixpkgs/nixos-23.05";
-  inputs.nixpkgs-2211.url = "github:NixOS/nixpkgs/nixos-22.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.alexghr-nixpkgs.url = "github:alexghr/nixpkgs/alexghr/build/update-victor-mono-1.5.3";
 
   inputs.disko.url = github:nix-community/disko;
-  inputs.disko.inputs.nixpkgs.follows = "nixpkgs-2305";
+  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.darwin.url = "github:lnl7/nix-darwin";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -17,13 +13,13 @@
   inputs.vscode-server.url = "github:msteen/nixos-vscode-server";
   inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
+  inputs.home-manager.url = "github:nix-community/home-manager/release-23.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.home-manager-master.url = "github:nix-community/home-manager/master";
-  inputs.home-manager-master.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.agenix.url = "github:montchr/agenix/darwin-support";
+  inputs.agenix.url = "github:ryantm/agenix";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.agenix.inputs.home-manager.follows = "home-manager";
+  inputs.agenix.inputs.darwin.follows = "darwin";
 
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
 
@@ -31,25 +27,14 @@
 
   inputs.attic.url = "github:zhaofengli/attic";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-unstable, nixpkgs-2305, nixpkgs-2211, alexghr-nixpkgs, darwin, home-manager, home-manager-master, vscode-server, agenix, nixos-hardware, alacritty-theme, disko, attic }@attrs: {
-
-    overlays.alexghrNixpkgs = final: prev: {
-      alexghrNixpkgs = alexghr-nixpkgs.legacyPackages.x86_64-linux;
-    };
+  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, vscode-server, agenix, nixos-hardware, alacritty-theme, disko, attic }@attrs: {
 
     overlays.unstable = final: prev: {
       # assume we're running NixOS on Linux so use its unstable variant
-      unstable = if prev.stdenv.isLinux
-        then
-          import nixos-unstable {
-            system = prev.system;
-            config.allowUnfree = prev.config.allowUnfree;
-          }
-        else
-          import nixpkgs-unstable {
-            system = prev.system;
-            config.allowUnfree = prev.config.allowUnfree;
-          };
+      unstable = import nixpkgs-unstable {
+        system = prev.system;
+        config.allowUnfree = prev.config.allowUnfree;
+      };
     };
 
     nixosModules =  builtins.listToAttrs (map (x: {
@@ -63,7 +48,7 @@
         inherit system;
         modules = [
           home-manager.nixosModule
-          agenix.nixosModule
+          agenix.nixosModules.default
           { imports = builtins.attrValues self.nixosModules; }
           nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/hk47/configuration.nix
@@ -75,40 +60,39 @@
         ];
       };
 
-      vader = let system = "x86_64-linux"; in nixpkgs-2305.lib.nixosSystem {
+      vader = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
           ({ config, pkgs, ...}: {
             nixpkgs.overlays = [
-              self.overlays.alexghrNixpkgs
               self.overlays.unstable
               alacritty-theme.overlays.default
               attic.overlays.default
             ];
           })
-          home-manager-master.nixosModule
-          agenix.nixosModule
+          home-manager.nixosModule
+          agenix.nixosModules.default
           { imports = builtins.attrValues self.nixosModules; }
           ./hosts/vader/configuration.nix
           ./users/ag.nix
           vscode-server.nixosModule
           ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs-2305;
-            fonts.fonts = [pkgs.alexghrNixpkgs.victor-mono];
+            nix.registry.nixpkgs.flake = nixpkgs;
+            fonts.fonts = [pkgs.victor-mono];
           })
         ];
       };
 
-      b1 =  nixpkgs-2305.lib.nixosSystem {
+      b1 =  nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = attrs;
         modules = [
           ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs-2305;
+            nix.registry.nixpkgs.flake = nixpkgs;
           })
           disko.nixosModules.disko
-          agenix.nixosModule
+          agenix.nixosModules.default
           attic.nixosModules.atticd
           ./hosts/b1/configuration.nix
         ];
@@ -121,13 +105,12 @@
         modules = [
           ({ config, pkgs, ...}: {
             nixpkgs.overlays = [
-              self.overlays.alexghrNixpkgs
               self.overlays.unstable
               alacritty-theme.overlays.default
             ];
           })
           home-manager.darwinModule
-          agenix.darwinModule
+          agenix.darwinModules.default
           ./modules/home-manager
           ./modules/cachix
           ./modules/system
