@@ -60,7 +60,7 @@ in {
 
     openssh.authorizedKeys.keys = githubSshKeys {
       username = "alexghr";
-      sha256 = "sha256-JfAZgyo8CNBmik7qW93OP2yjnRa4XS81hx4kr+wfTTM=";
+      sha256 = "sha256-UgdDkWbcbzZ656PJS9jggzE8cN/dH/IgMUFVkuTx0Ls=";
     };
   } else {});
 
