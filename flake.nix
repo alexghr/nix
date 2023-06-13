@@ -18,13 +18,11 @@
   inputs.agenix.inputs.home-manager.follows = "home-manager";
   inputs.agenix.inputs.darwin.follows = "darwin";
 
-  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
-
   inputs.alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
 
   inputs.attic.url = "github:zhaofengli/attic";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, nixos-hardware, alacritty-theme, disko, attic }@attrs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko, attic }@attrs: {
 
     overlays.unstable = final: prev: {
       unstable = import nixpkgs-unstable {
@@ -46,7 +44,6 @@
           home-manager.nixosModule
           agenix.nixosModules.default
           { imports = builtins.attrValues self.nixosModules; }
-          nixos-hardware.nixosModules.raspberry-pi-4
           ./hosts/hk47/configuration.nix
           ./users/ag.nix
           ({ pkgs, ... }: {

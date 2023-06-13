@@ -74,9 +74,6 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
   hardware = {
-    # high-resolution display
-    video.hidpi.enable = lib.mkDefault true;
     enableRedistributableFirmware = true;
-    raspberry-pi."4".fkms-3d.enable = true;
   };
 }
