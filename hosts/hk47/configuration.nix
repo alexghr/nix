@@ -53,10 +53,7 @@
     interfaces.wlan0.useDHCP = true;
 
     firewall.enable = true;
-    firewall.allowedTCPPorts = [
-      8080 # unifi http port
-      8443 # unifi https port
-    ];
+    firewall.allowedTCPPorts = [8443];
   };
 
   users.mutableUsers = true;
@@ -65,15 +62,10 @@
 
   services.openssh.enable = true;
 
-  services.unifi = let unifi7 = pkgs.unifi6.overrideAttrs(oldAttrs: rec {
-    src = pkgs.fetchurl {
-      url = "https://dl.ubnt.com/unifi/7.0.25/unifi_sysvinit_all.deb";
-      sha256 = "sha256-DZi2xy6mS3hfqxX1ikiHKPlJ12eaoZVgyl9jKYt91hg=";
-    };
-  }); in {
+  services.unifi = {
     enable = true;
-    unifiPackage = unifi7;
-    openPorts = true;
+    unifiPackage = pkgs.unifi7;
+    openFirewall = true;
   };
 }
 

@@ -41,14 +41,17 @@
       hk47 = let system = "aarch64-linux"; in nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          { imports = builtins.attrValues self.nixosModules; }
           home-manager.nixosModule
           agenix.nixosModules.default
-          { imports = builtins.attrValues self.nixosModules; }
-          ./hosts/hk47/configuration.nix
-          ./users/ag.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
+            nixpkgs.overlays = [
+              alacritty-theme.overlays.default
+            ];
           })
+          ./hosts/hk47/configuration.nix
+          ./users/ag.nix
         ];
       };
 
