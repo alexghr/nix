@@ -85,15 +85,7 @@
     };
 
     settings = {
-      substituters = [
-        "https://attic.alexghr.me/alexghr"
-      ];
-      trusted-public-keys = [
-        "alexghr:5VNXw+55bVdl7SUk4K05TaXJKip7aU1v9KgKdHRTgbU="
-      ];
-      trusted-users = [
-        "ag"
-      ];
+      extra-trusted-users = ["ag"];
     };
   };
 

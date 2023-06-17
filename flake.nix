@@ -85,6 +85,7 @@
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
           })
+          self.nixosModules.attic
           disko.nixosModules.disko
           agenix.nixosModules.default
           attic.nixosModules.atticd
