@@ -39,7 +39,7 @@
       # Clouflare header https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/#cf-connecting-ip
       real_ip_header CF-Connecting-IP;
 
-      log_format main '$remote_addr - $remote_user [$time_local] '
+      log_format main '$remote_addr - $remote_user [$time_iso8601] '
                       '"$host" "$request" $status $body_bytes_sent $request_time '
                       '"$http_referer" "$http_user_agent"';
       access_log /var/log/nginx/access.log main;
