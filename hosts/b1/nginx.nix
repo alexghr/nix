@@ -2,6 +2,13 @@
 {
   services.nginx = {
     enable = true;
+
+    recommendedOptimisation = true;
+    recommendedBrotliSettings = true;
+    recommendedGzipSettings = true;
+    recommendedZstdSettings = true;
+    recommendedProxySettings = true;
+
     virtualHosts = {
       "alexghr.me" = {
         locations."/" = {
