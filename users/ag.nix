@@ -232,7 +232,7 @@ in {
         };
 
         import = [
-          pkgs.alacritty-theme.cyber_punk_neon
+          pkgs.alacritty-theme.solarized_light
         ];
 
         font = let victorMono = style: {
