@@ -67,5 +67,12 @@
     unifiPackage = pkgs.unifi7;
     openFirewall = true;
   };
+
+  age.secrets.tailscale.file = ../../secrets/hk47.tailscale.age;
+  alexghr.tailscale = {
+    enable = true;
+    authKeyFile = config.age.secrets.tailscale.path;
+    exitNode = true;
+  };
 }
 
