@@ -17,6 +17,7 @@ in  {
   "vader.restic-b2-password.age".publicKeys = agSshKeys ++ [vaderHostKey];
   "vader.tailscale.age".publicKeys = agSshKeys ++ [vaderHostKey];
   "hk47.tailscale.age".publicKeys = agSshKeys ++ [hk47HostKey];
+  "hk47.vader-mac.age".publicKeys = agSshKeys ++ [hk47HostKey];
   "ag.npmrc.age".publicKeys = agSshKeys ++ [vaderHostKey mackeyHostKey];
   "vader.ghcr.age".publicKeys = agSshKeys ++ [vaderHostKey];
   "plausible.releaseCookie.age".publicKeys = agSshKeys ++ [implausibleHostKey b1HostKey];

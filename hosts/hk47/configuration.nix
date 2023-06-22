@@ -1,4 +1,10 @@
 { config, pkgs, lib, ... }:
+let
+  wakeVader = macPath: pkgs.writeShellScriptBin "wakevader" ''
+    #!/usr/bin/env bash
+    ${pkgs.wakeonlan}/bin/wakeonlan $(cat ${macPath})
+  '';
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -56,9 +62,22 @@
     firewall.allowedTCPPorts = [8443];
   };
 
+  age.secrets = {
+    tailscale.file = ../../secrets/hk47.tailscale.age;
+    vader-mac = {
+      file = ../../secrets/hk47.vader-mac.age;
+      owner = "ag";
+      group = "users";
+    };
+  };
+
   users.mutableUsers = true;
 
-  environment.systemPackages = with pkgs; [vim raspberrypi-eeprom libraspberrypi];
+  environment.systemPackages = with pkgs; [
+    vim raspberrypi-eeprom
+    libraspberrypi
+    (wakeVader config.age.secrets.vader-mac.path)
+  ];
 
   services.openssh.enable = true;
 
@@ -76,7 +95,6 @@
     openFirewall = true;
   };
 
-  age.secrets.tailscale.file = ../../secrets/hk47.tailscale.age;
   alexghr.tailscale = {
     enable = true;
     authKeyFile = config.age.secrets.tailscale.path;
