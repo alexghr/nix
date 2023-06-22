@@ -25,4 +25,5 @@ in  {
   "webby.ghcr.age".publicKeys = agSshKeys ++ [webbyHostKey b1HostKey];
   "ghcr.age".publicKeys = agSshKeys ++ [b1HostKey];
   "attic.env.age".publicKeys = agSshKeys ++ [b1HostKey];
+  "b1.tailscale.age".publicKeys = agSshKeys ++ [b1HostKey];
 }

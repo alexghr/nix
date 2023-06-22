@@ -77,6 +77,7 @@
     plausible-keybase.file = ../../secrets/plausible.keybase.age;
     ghcr.file = ../../secrets/webby.ghcr.age;
     attic-env.file = ../../secrets/attic.env.age;
+    tailscale.file = ../../secrets/b1.tailscale.age;
   };
 
   virtualisation = {
@@ -196,5 +197,11 @@
       };
 
       atticd.after = [ "atticd-postgres.service" ];
+  };
+
+  alexghr.tailscale = {
+    enable = true;
+    authKeyFile = config.age.secrets.tailscale.path;
+    exitNode = true;
   };
 }
