@@ -62,6 +62,14 @@
 
   services.openssh.enable = true;
 
+  nix = {
+    package = pkgs.nixVersions.nix_2_16;
+
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   services.unifi = {
     enable = true;
     unifiPackage = pkgs.unifi7;
