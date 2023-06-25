@@ -110,6 +110,7 @@
           ./modules/home-manager
           ./modules/cachix
           ./modules/system
+          ./modules/attic
           ./hosts/mackey/darwin-configuration.nix
           ./users/ag.nix
           ({ pkgs, ... }: {
