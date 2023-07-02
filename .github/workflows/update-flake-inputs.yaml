@@ -1,7 +1,7 @@
 name: Update flake inputs
 on:
   schedule:
-    - cron:  '0 8 1-7 * 1' # first Monday of every month at 8am
+    - cron:  '0 8 1 * *' # first day of the month
   workflow_dispatch:
 
 jobs:
