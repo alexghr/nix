@@ -138,6 +138,7 @@
     pcmanfm
     graphite-kde-theme
     attic
+    protontricks
   ];
 
   services.dbus.enable = true;
