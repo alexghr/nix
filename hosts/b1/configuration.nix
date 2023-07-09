@@ -95,6 +95,17 @@
             "8001:80"
           ];
         };
+        yaacc = {
+          image = "ghcr.io/alexghr/yaacc";
+          login = {
+            username = "alexghr";
+            passwordFile = config.age.secrets.ghcr.path;
+            registry = "ghcr.io";
+          };
+          ports = [
+            "8003:3000"
+          ];
+        };
       };
     };
   };

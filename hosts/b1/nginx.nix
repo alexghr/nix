@@ -56,6 +56,11 @@
           proxyPass = "http://localhost:8001";
         };
       };
+      "yaacc.alexghr.me" = {
+        locations."/" = {
+          proxyPass = "http://localhost:8003";
+        };
+      };
       "plausible.alexghr.me" = {
         locations."/" = {
           proxyPass = "http://localhost:8000";
