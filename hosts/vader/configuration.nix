@@ -26,6 +26,11 @@
       driSupport = true;
       driSupport32Bit = true;
     };
+
+    logitech.wireless {
+      enable = true;
+      enableGraphical = true;
+    }
   };
 
   # This value determines the NixOS release from which the default
