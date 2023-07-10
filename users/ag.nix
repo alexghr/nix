@@ -232,7 +232,7 @@ in {
         };
 
         import = [
-          pkgs.alacritty-theme.solarized_light
+          pkgs.alacritty-theme.zenburn
         ];
 
         font = let victorMono = style: {
@@ -240,7 +240,6 @@ in {
           inherit style;
         }; in {
           size = 12;
-          use_thin_strokes = true;
           normal = victorMono "Regular";
           bold = victorMono "Bold";
           italic = victorMono "Italic";
