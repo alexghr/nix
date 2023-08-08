@@ -139,6 +139,11 @@
     graphite-kde-theme
     attic
     protontricks
+
+    # KDE packages
+    plasma5Packages.filelight
+    plasma5Packages.kalk
+    plasma5Packages.calindori
   ];
 
   services.dbus.enable = true;
