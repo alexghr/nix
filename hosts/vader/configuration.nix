@@ -50,7 +50,7 @@
     loader.efi.canTouchEfiVariables = true;
     #loader.efi.efiSysMountPoint = "/boot/efi";
 
-    kernelPackages = pkgs.linuxPackages_6_1;
+    kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "btrfs" ];
     enableContainers = true;
 
