@@ -46,7 +46,14 @@
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot = {
+      enable = true;
+      memtest86 = {
+        enable = true;
+        entryFilename = "o_memtest86.conf";
+      };
+    };
+
     loader.efi.canTouchEfiVariables = true;
     #loader.efi.efiSysMountPoint = "/boot/efi";
 
