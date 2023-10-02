@@ -22,7 +22,10 @@
 
   inputs.attic.url = "github:zhaofengli/attic";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko, attic }@attrs: {
+  inputs.vscode-server.url = "github:nix-community/nixos-vscode-server";
+  inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko, attic, vscode-server }@attrs: {
 
     overlays.unstable = final: prev: {
       unstable = import nixpkgs-unstable {
@@ -69,6 +72,7 @@
           home-manager.nixosModule
           agenix.nixosModules.default
           { imports = builtins.attrValues self.nixosModules; }
+          vscode-server.nixosModules.default
           ./hosts/vader/configuration.nix
           ./users/ag.nix
           ({ pkgs, ... }: {
