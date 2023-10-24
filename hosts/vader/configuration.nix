@@ -151,6 +151,7 @@
     plasma5Packages.filelight
     plasma5Packages.kalk
     plasma5Packages.calindori
+    libsForQt5.bismuth
   ];
 
   services.dbus.enable = true;
