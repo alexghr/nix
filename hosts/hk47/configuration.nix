@@ -80,6 +80,21 @@ in
   ];
 
   services.openssh.enable = true;
+  services.home-assistant = {
+    enable = true;
+    openFirewall = true;
+    extraComponents = [
+      # Components required to complete the onboarding
+      "zha"
+      "met"
+      "radio_browser"
+    ];
+    config = {
+      # Includes dependencies for a basic setup
+      # https://www.home-assistant.io/integrations/default_config/
+      default_config = {};
+    };
+  };
 
   nix = {
     package = pkgs.nixVersions.nix_2_16;
