@@ -42,9 +42,7 @@
       fsType = "vfat";
     };
 
-  swapDevices = [
-    { device = "/dev/nvme0n1p2"; }
-  ];
+  swapDevices = [];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
