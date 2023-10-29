@@ -59,7 +59,26 @@ in
     interfaces.wlan0.useDHCP = true;
 
     firewall.enable = true;
-    firewall.allowedTCPPorts = [8443];
+    #firewall.allowedTCPPorts = [8443 21063 21604];
+    #firewall.allowedUDPPorts = [5353];
+
+    firewall.allowedTCPPorts = [
+      8443 # unifi
+      # open a bunch of ports home-assistant's homekit bridge
+      21064
+      # 40000
+    ];
+    firewall.allowedUDPPorts = [
+      # open a bunch of ports home-assistant's homekit bridge
+      5353
+      #1900
+      #44608
+      #36389
+      #1900
+      #34183
+      #57495
+      #42717
+    ];
   };
 
   age.secrets = {
@@ -88,12 +107,24 @@ in
       "zha"
       "met"
       "radio_browser"
+      "homekit"
     ];
     config = {
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/
       default_config = {};
       "automation ui" = "!include automations.yaml";
+    };
+  };
+  services.avahi = {
+    enable = true;
+    reflector = true;
+    nssmdns = true;
+    allowInterfaces = ["eth0"];
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
     };
   };
 
