@@ -155,6 +155,13 @@
   ];
 
   services.dbus.enable = true;
+  services.avahi = {
+    enable = true;
+    allowInterfaces = ["eth0"];
+    publish = {
+      workstation = true;
+    };
+  };
 
   services.xserver = {
     layout = "us";
