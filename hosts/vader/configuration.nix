@@ -103,6 +103,7 @@
 
   programs.dconf.enable = true;
   programs.kdeconnect.enable = true;
+  programs.nm-applet.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
@@ -173,6 +174,24 @@
     '';
     displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
+
+    displayManager.defaultSession = "none+i3";
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu
+        i3status
+        i3lock
+        dunst
+        shutter
+        maim
+        dex
+        simplescreenrecorder
+        rofi
+      ];
+    };
+
+    desktopManager.xterm.enable = true;
   };
 
   services.udev.packages = [
