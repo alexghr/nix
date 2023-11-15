@@ -151,6 +151,8 @@ in {
         set -g status-right "#[fg=green]#H"
         set-window-option -g window-status-current-style bg=red
 
+        set -g history-limit 10000
+
         # Windows
         bind-key -n F1 select-window -t 1
         bind-key -n F2 select-window -t 2
