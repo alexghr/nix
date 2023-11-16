@@ -244,11 +244,11 @@
   #   npmrc = config.age.secrets.ag-npmrc.path;
   # };
 
-  # age.secrets.tailscale.file = ../../secrets/vader.tailscale.age;
-  # alexghr.tailscale = {
-  #   enable = true;
-  #   authKeyFile = config.age.secrets.tailscale.path;
-  #   exitNode = true;
-  # };
+  age.secrets.tailscale.file = ../../secrets/palpatine.tailscale.age;
+  alexghr.tailscale = {
+    enable = true;
+    authKeyFile = config.age.secrets.tailscale.path;
+    exitNode = true;
+  };
 }
 
