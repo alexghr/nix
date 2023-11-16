@@ -4,9 +4,6 @@
 { config, lib, pkgs, modulesPath, ... }: let commonMountOptions = [
   "compress=zstd"
   "noatime"
-  "ssd"
-  "discard=async"
-  "space_cache=v1"
 ]; in
 
 {
@@ -20,13 +17,13 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/nvm1n1p5";
+    { device = "/dev/nvme1n1p5";
       fsType = "btrfs";
       options = [ "subvol=@" ] ++ commonMountOptions;
     };
 
   fileSystems."/home" =
-    { device = "/dev/nvm1n1p5";
+    { device = "/dev/nvme1n1p5";
       fsType = "btrfs";
       options = [ "subvol=@home" ] ++ commonMountOptions;
     };
@@ -37,8 +34,8 @@
       options = [ "subvol=@nix" ] ++ commonMountOptions;
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/nvme0n1p4";
+  fileSystems."/boot/efi" =
+    { device = "/dev/nvme1n1p4";
       fsType = "vfat";
     };
 
