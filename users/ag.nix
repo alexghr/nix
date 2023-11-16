@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 let
-  githubSshKeys = import ../lib/github-ssh-keys.nix { inherit pkgs; };
   username = "ag";
   packages = with pkgs; [
     imagemagick
@@ -58,10 +57,12 @@ in {
       ++ (if config.virtualisation.podman.enable then ["podman"] else [])
       ++ (if config.virtualisation.lxd.enable then ["lxd"] else []);
 
-    openssh.authorizedKeys.keys = githubSshKeys {
-      username = "alexghr";
-      sha256 = "sha256-UgdDkWbcbzZ656PJS9jggzE8cN/dH/IgMUFVkuTx0Ls=";
-    };
+    # get these from https://github.com/alexghr.keys
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELd6/RHyZ3Rw6251R+nWGvkPseaX2yAC2DlZAtRziIt"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFCcOm5bv/HZtyaavJ0xBFvZJ6fLfuUxhtFj1UU7YXfi"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcqnrGwHDkQPUcSOZnLEd7Y7kMxaiTkIL0uz/P2YDaV"
+    ];
   } else {});
 
   home-manager.users."${username}" = hm: {
