@@ -82,6 +82,46 @@
         ];
       };
 
+      palpatine = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
+          ({ config, pkgs, ...}: {
+            nixpkgs.overlays = [
+              self.overlays.unstable
+              alacritty-theme.overlays.default
+              attic.overlays.default
+            ];
+          })
+          home-manager.nixosModule
+          agenix.nixosModules.default
+          { imports = builtins.attrValues self.nixosModules; }
+          vscode-server.nixosModules.default
+          ./hosts/palpatine/configuration.nix
+          ./users/ag.nix
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+            fonts.fonts = [pkgs.victor-mono];
+          })
+        ];
+      };
+
+      nixosIso = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          ({ pkgs, ... }:
+          {
+            environment.systemPackages = with pkgs; [
+              git
+              vim
+              file
+              parted
+            ];
+          })
+        ];
+      };
+
       b1 =  nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = attrs;
