@@ -137,7 +137,7 @@
 
   environment.systemPackages = with pkgs; [
     pinentry
-    pinentry-curses
+    pinentry-qt
     ntfs3g
     lm_sensors
     yubikey-manager
