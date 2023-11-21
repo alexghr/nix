@@ -4,6 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }: let commonMountOptions = [
   "compress=zstd"
   "noatime"
+  "autodefrag"
 ]; in
 
 {
