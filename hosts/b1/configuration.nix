@@ -142,7 +142,7 @@
 
       # I've migrated old data in here
       database = {
-        clickhouse.url = "http://localhost:8123/plausible";
+        clickhouse.url = "http://127.0.0.1:8123/plausible";
         postgres.dbname = "plausible";
       };
 
