@@ -20,6 +20,12 @@
     inherit lib;
   };
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/" ];
+    interval = "weekly";
+  };
+
   swapDevices = [{
     device = "/swap/swapfile";
     size = 2048;
