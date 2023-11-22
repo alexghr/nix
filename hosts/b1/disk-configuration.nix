@@ -27,9 +27,11 @@
                 };
                 "/nix" = {
                   mountOptions = [ "compress=zstd" "noatime" ];
+                  mountpoint = "/nix";
                 };
                 "/swap" = {
                   mountOptions = [ "noatime" "nodatacow" ];
+                  mountpoint = "/swap";
                 };
                 "/varlib" = {
                   mountpoint = "/var/lib";
