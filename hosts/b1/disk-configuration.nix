@@ -21,25 +21,32 @@
             end = "100%";
             content = {
               type = "btrfs";
-              subvolumes = {
-                "/root" = {
-                  mountpoint = "/";
+              subvolumes =
+                let
+                  mountOptions = [ "compress=zstd" "noatime" "autodefrag" ];
+                in
+                {
+                  "/root" = {
+                    inherit mountOptions;
+                    mountpoint = "/";
+                  };
+                  "/nix" = {
+                    inherit mountOptions;
+                    mountpoint = "/nix";
+                  };
+                  "/varlib" = {
+                    inherit mountOptions;
+                    mountpoint = "/var/lib";
+                  };
+                  "/atticd" = {
+                    inherit mountOptions;
+                    mountpoint = "/var/lib/atticd/storage";
+                  };
+                  "/swap" = {
+                    mountOptions = [ "noatime" "nodatacow" ];
+                    mountpoint = "/swap";
+                  };
                 };
-                "/nix" = {
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                  mountpoint = "/nix";
-                };
-                "/swap" = {
-                  mountOptions = [ "noatime" "nodatacow" ];
-                  mountpoint = "/swap";
-                };
-                "/varlib" = {
-                  mountpoint = "/var/lib";
-                };
-                "/atticd" = {
-                  mountpoint = "/var/lib/atticd/storage";
-                };
-              };
             };
           }
         ];
