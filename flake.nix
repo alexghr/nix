@@ -14,10 +14,18 @@
   inputs.home-manager.url = "github:nix-community/home-manager/release-23.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.home-manager-2311.url = "github:nix-community/home-manager/release-23.11";
+  inputs.home-manager-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
+
   inputs.agenix.url = "github:ryantm/agenix";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.agenix.inputs.home-manager.follows = "home-manager";
   inputs.agenix.inputs.darwin.follows = "darwin";
+
+  inputs.agenix-2311.url = "github:ryantm/agenix";
+  inputs.agenix-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
+  inputs.agenix-2311.inputs.home-manager.follows = "home-manager-2311";
+  inputs.agenix-2311.inputs.darwin.follows = "darwin";
 
   inputs.alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
 
@@ -26,7 +34,7 @@
   inputs.vscode-server.url = "github:nix-community/nixos-vscode-server";
   inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, nixpkgs-2311, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko, attic, vscode-server }@attrs: {
+  outputs = { self, nixpkgs, nixpkgs-2311, nixpkgs-unstable, darwin, home-manager, home-manager-2311, agenix, agenix-2311, alacritty-theme, disko, attic, vscode-server }@attrs: {
 
     overlays.unstable = final: prev: {
       unstable = import nixpkgs-unstable {
@@ -71,8 +79,8 @@
               attic.overlays.default
             ];
           })
-          home-manager.nixosModule
-          agenix.nixosModules.default
+          home-manager-2311.nixosModule
+          agenix-2311.nixosModules.default
           { imports = builtins.attrValues self.nixosModules; }
           vscode-server.nixosModules.default
           ./hosts/palpatine/configuration.nix
