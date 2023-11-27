@@ -2,6 +2,7 @@
   description = "Manage my Nix-based machines";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+  inputs.nixpkgs-2311.url = "github:NixOS/nixpkgs/nixos-23.11";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   inputs.disko.url = github:nix-community/disko;
@@ -25,7 +26,7 @@
   inputs.vscode-server.url = "github:nix-community/nixos-vscode-server";
   inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko, attic, vscode-server }@attrs: {
+  outputs = { self, nixpkgs, nixpkgs-2311, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko, attic, vscode-server }@attrs: {
 
     overlays.unstable = final: prev: {
       unstable = import nixpkgs-unstable {
@@ -59,7 +60,7 @@
       };
 
 
-      palpatine = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
+      palpatine = let system = "x86_64-linux"; in nixpkgs-2311.lib.nixosSystem {
         inherit system;
         modules = [
           # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
