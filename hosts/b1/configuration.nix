@@ -78,7 +78,6 @@
   };
 
   age.secrets = {
-    plausible-release-cookie.file = ../../secrets/plausible.releaseCookie.age;
     plausible-admin-password.file = ../../secrets/plausible.admin.password.age;
     plausible-keybase.file = ../../secrets/plausible.keybase.age;
     ghcr.file = ../../secrets/webby.ghcr.age;
@@ -140,7 +139,6 @@
 
     plausible = {
       enable = true;
-      releaseCookiePath = config.age.secrets.plausible-release-cookie.path;
       adminUser = {
         email = "alexghr@users.noreply.github.com";
         passwordFile = config.age.secrets.plausible-admin-password.path;

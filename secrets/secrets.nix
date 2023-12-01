@@ -19,7 +19,6 @@ in  {
   "hk47.tailscale.age".publicKeys = agSshKeys ++ [hk47HostKey];
   "hk47.vader-mac.age".publicKeys = agSshKeys ++ [hk47HostKey];
   "ag.npmrc.age".publicKeys = agSshKeys ++ [mackeyHostKey palpatineHostKey];
-  "plausible.releaseCookie.age".publicKeys = agSshKeys ++ [implausibleHostKey b1HostKey];
   "plausible.admin.password.age".publicKeys = agSshKeys ++ [implausibleHostKey b1HostKey];
   "plausible.keybase.age".publicKeys = agSshKeys ++ [implausibleHostKey b1HostKey];
   "webby.ghcr.age".publicKeys = agSshKeys ++ [webbyHostKey b1HostKey];
