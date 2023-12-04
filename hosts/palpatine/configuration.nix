@@ -2,6 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
+{ nixpkgsFlakePath }:
 { config, pkgs, ... }: let username = "ag"; in
 {
   imports =
@@ -104,7 +105,16 @@
     settings = {
       extra-trusted-users = ["ag"];
     };
+
+    nixPath = [
+      "nixpkgs=/etc/nixpkgs/channels/nixpkgs"
+      "/nix/var/nix/profiles/per-user/root/channels"
+    ];
   };
+
+  systemd.tmpfiles.rules = [
+    "L+ /etc/nixpkgs/channels/nixpkgs - - - - ${nixpkgsFlakePath}"
+  ];
 
   programs.dconf.enable = true;
   programs.nm-applet.enable = true;

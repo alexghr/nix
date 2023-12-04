@@ -74,7 +74,7 @@
           agenix.nixosModules.default
           { imports = builtins.attrValues self.nixosModules; }
           vscode-server.nixosModules.default
-          ./hosts/palpatine/configuration.nix
+          (import ./hosts/palpatine/configuration.nix { nixpkgsFlakePath = nixpkgs; })
           ./users/ag.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
