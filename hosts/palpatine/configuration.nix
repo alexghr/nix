@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { nixpkgsFlakePath }:
-{ config, pkgs, ... }: let username = "ag"; in
+{ config, pkgs, lib, ... }: let username = "ag"; in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -197,6 +197,34 @@
     };
 
     desktopManager.xterm.enable = true;
+  };
+
+  systemd.oomd = {
+    enable = lib.mkForce true;
+  };
+
+  # apply diff from https://github.com/NixOS/nixpkgs/pull/273921
+  systemd.slices."-".sliceConfig = {
+    ManagedOOMMemoryPressure = "kill";
+    ManagedOOMMemoryPressureLimit = "80%";
+  };
+
+  systemd.slices."system".sliceConfig = {
+    ManagedOOMMemoryPressure = "kill";
+    ManagedOOMMemoryPressureLimit = "80%";
+  };
+
+  systemd.slices."user-".sliceConfig = {
+    ManagedOOMMemoryPressure = "kill";
+    ManagedOOMMemoryPressureLimit = "80%";
+  };
+
+  systemd.user.units."slice" = {
+    text = ''
+      ManagedOOMMemoryPressure=kill
+      ManagedOOMMemoryPressureLimit=80%
+    '';
+    overrideStrategy = "asDropin";
   };
 
   services.udev.packages = [
