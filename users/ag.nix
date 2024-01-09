@@ -223,6 +223,7 @@ in {
 
     programs.alacritty = {
       enable = enableGuiPackages;
+      package = pkgs.unstable.alacritty;
       settings = {
         window = {
           padding = { x = 4; y = 8; };
