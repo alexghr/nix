@@ -31,7 +31,6 @@
   system.stateVersion = 4;
 
   environment.systemPackages = with pkgs; [
-    pinentry
     pinentry_mac
     gnupg
   ];
