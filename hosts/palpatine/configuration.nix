@@ -192,6 +192,7 @@
         dex
         simplescreenrecorder
         rofi
+        rofi-calc
         pcmanfm
       ];
     };
