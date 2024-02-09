@@ -237,7 +237,7 @@ in {
         };
 
         import = [
-          pkgs.alacritty-theme.solarized_dark
+          pkgs.alacritty-theme.monokai_pro
         ];
 
         font = let victorMono = style: {
