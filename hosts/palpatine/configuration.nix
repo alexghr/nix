@@ -159,6 +159,8 @@
     sshfs
     attic
     protontricks
+    nnn
+    file
   ];
 
   services.dbus.enable = true;
@@ -183,11 +185,12 @@
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
+        qimgv
+        llpp
         dmenu
         i3status
         i3lock
         dunst
-        shutter
         maim
         dex
         simplescreenrecorder
