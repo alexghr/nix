@@ -89,6 +89,8 @@
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ({ pkgs, ... }:
           {
+            networking.networkmanager.enable = true;
+            networking.wireless.enable = false;
             environment.systemPackages = with pkgs; [
               git
               vim
@@ -112,6 +114,19 @@
           agenix.nixosModules.default
           attic.nixosModules.atticd
           ./hosts/b1/configuration.nix
+        ];
+      };
+
+      r5d4 =  nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = attrs;
+        modules = [
+          ({ pkgs, ... }: {
+            nix.registry.nixpkgs.flake = nixpkgs;
+          })
+          self.nixosModules.tailscale
+          agenix.nixosModules.default
+          (import ./hosts/r5d4/configuration.nix { nixpkgsFlakePath = nixpkgs; })
         ];
       };
     };
