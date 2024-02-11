@@ -13,11 +13,12 @@ let
   webbyHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILyPv3bNmGWZ5kHZOyw2yZZxWRvf3EfiL+cTtrvJ0sNg";
   b1HostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9kPhQAUClUZjG4kQXRg0vxEvDAC5DEmJtLBvVtBnZ1";
   palpatineHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY7KI54Rb+QmhvYZkUTlGzEPni78VfTBFeUno+h1P9K";
+  r5d4HostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJNI8tDWbfknVcn3aiU8zdfLdHWECF72fch0voGR8EFe";
 in  {
   "vader.restic-b2-password.age".publicKeys = agSshKeys;
   "palpatine.tailscale.age".publicKeys = agSshKeys ++ [palpatineHostKey];
   "hk47.tailscale.age".publicKeys = agSshKeys ++ [hk47HostKey];
-  "hk47.vader-mac.age".publicKeys = agSshKeys ++ [hk47HostKey];
+  "hk47.vader-mac.age".publicKeys = agSshKeys ++ [hk47HostKey r5d4HostKey];
   "ag.npmrc.age".publicKeys = agSshKeys ++ [mackeyHostKey palpatineHostKey];
   "plausible.admin.password.age".publicKeys = agSshKeys ++ [implausibleHostKey b1HostKey];
   "plausible.keybase.age".publicKeys = agSshKeys ++ [implausibleHostKey b1HostKey];
@@ -25,4 +26,5 @@ in  {
   "ghcr.age".publicKeys = agSshKeys ++ [b1HostKey];
   "attic.env.age".publicKeys = agSshKeys ++ [b1HostKey];
   "b1.tailscale.age".publicKeys = agSshKeys ++ [b1HostKey];
+  "r5d4.tailscale.age".publicKeys = agSshKeys ++ [r5d4HostKey];
 }

@@ -4,6 +4,12 @@
 
 { nixpkgsFlakePath }:
 { config, pkgs, lib, ... }:
+let
+  wakeVader = macPath: pkgs.writeShellScriptBin "wakevader" ''
+    #!/usr/bin/env bash
+    ${pkgs.wakeonlan}/bin/wakeonlan $(cat ${macPath})
+  '';
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -27,8 +33,7 @@
   boot = {
     loader.systemd-boot = {
       enable = true;
-      memtest86 = {
-        enable = true;
+      memtest86 = { enable = true;
         entryFilename = "o_memtest86.conf";
       };
     };
@@ -86,6 +91,11 @@
     "L+ /etc/nixpkgs/channels/nixpkgs - - - - ${nixpkgsFlakePath}"
   ];
 
+  age.secrets = {
+    tailscale.file = ../../secrets/r5d4.tailscale.age;
+    vader-mac.file = ../../secrets/hk47.vader-mac.age;
+  };
+
   services.btrfs.autoScrub = {
     enable = true;
     fileSystems = [ "/" ];
@@ -97,6 +107,47 @@
   security.rtkit.enable = true;
   services.fwupd.enable = true;
 
+  services.home-assistant = {
+    enable = true;
+    openFirewall = true;
+    extraComponents = [
+      # Components required to complete the onboarding
+      "zha"
+      "met"
+      "radio_browser"
+      "homekit"
+    ];
+    config = {
+      # Includes dependencies for a basic setup
+      # https://www.home-assistant.io/integrations/default_config/
+      default_config = {};
+      "automation ui" = "!include automations.yaml";
+    };
+  };
+  services.avahi = {
+    enable = true;
+    reflector = true;
+    nssmdns = true;
+    allowInterfaces = ["wlp2s0"];
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+    };
+  };
+
+  services.unifi = {
+    enable = true;
+    unifiPackage = pkgs.unifi7;
+    openFirewall = true;
+  };
+
+  alexghr.tailscale = {
+    enable = true;
+    authKeyFile = config.age.secrets.tailscale.path;
+    exitNode = true;
+  };
+
   powerManagement.powertop.enable = true;
 
   users.users.root.openssh.authorizedKeys.keys = [
@@ -104,17 +155,11 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcqnrGwHDkQPUcSOZnLEd7Y7kMxaiTkIL0uz/P2YDaV"
   ];
 
-  # age.secrets.tailscale.file = ../../secrets/palpatine.tailscale.age;
-  # alexghr.tailscale = {
-  #   enable = true;
-  #   authKeyFile = config.age.secrets.tailscale.path;
-  #   exitNode = true;
-  # };
-
   environment.systemPackages = with pkgs; [
     vim
     git
     powertop
+    (wakeVader config.age.secrets.vader-mac.path)
   ];
 }
 
