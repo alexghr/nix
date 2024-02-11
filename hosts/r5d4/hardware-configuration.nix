@@ -38,6 +38,7 @@
   fileSystems."/boot" =
     { device = "/dev/sda1";
       fsType = "vfat";
+      # https://discourse.nixos.org/t/nixos-install-with-custom-flake-results-in-boot-being-world-accessible/34555/14?u=alexghr
       options= [ "umask=0077" "defaults" ];
     };
 
