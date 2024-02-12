@@ -63,7 +63,6 @@ in
     #firewall.allowedUDPPorts = [5353];
 
     firewall.allowedTCPPorts = [
-      8443 # unifi
       # open a bunch of ports home-assistant's homekit bridge
       21064
       # 40000
@@ -134,12 +133,6 @@ in
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-  };
-
-  services.unifi = {
-    enable = true;
-    unifiPackage = pkgs.unifi7;
-    openFirewall = true;
   };
 
   alexghr.tailscale = {
