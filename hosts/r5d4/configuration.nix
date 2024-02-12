@@ -57,9 +57,9 @@ in
 
     firewall = {
       enable = true;
-      # trustedInterfaces = ["tailscale0"];
-      # allowedTCPPorts = [];
-      # allowedUDPPorts = [ config.services.tailscale.port ];
+      trustedInterfaces = ["tailscale0"];
+      allowedTCPPorts = [8443];
+      allowedUDPPorts = [ config.services.tailscale.port ];
     };
 
     # change this to enable Tailscale to act as an exit node
@@ -159,6 +159,7 @@ in
     vim
     git
     powertop
+    lsof
     (wakeVader config.age.secrets.vader-mac.path)
   ];
 }
