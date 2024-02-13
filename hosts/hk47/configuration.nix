@@ -98,23 +98,7 @@ in
   ];
 
   services.openssh.enable = true;
-  services.home-assistant = {
-    enable = true;
-    openFirewall = true;
-    extraComponents = [
-      # Components required to complete the onboarding
-      "zha"
-      "met"
-      "radio_browser"
-      "homekit"
-    ];
-    config = {
-      # Includes dependencies for a basic setup
-      # https://www.home-assistant.io/integrations/default_config/
-      default_config = {};
-      "automation ui" = "!include automations.yaml";
-    };
-  };
+
   services.avahi = {
     enable = true;
     reflector = true;
