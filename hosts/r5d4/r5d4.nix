@@ -54,7 +54,10 @@
     firewall = {
       enable = true;
       trustedInterfaces = [];
-      allowedTCPPorts = [8443];
+      allowedTCPPorts = [
+        8443 # unifi https port
+        21064 # home-assistant's homekit integration
+      ];
       allowedUDPPorts = [];
     };
   };
