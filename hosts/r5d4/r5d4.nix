@@ -44,6 +44,8 @@
     lsof
     lm_sensors
     pciutils
+    podman
+    podman-compose
   ];
 
   networking = {
@@ -120,4 +122,16 @@
 
     HWMON_MODULES="coretemp"
   '';
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerSocket.enable = true;
+      dockerCompat = true;
+    };
+    oci-containers = {
+      backend = "podman";
+      containers = {};
+    };
+  };
 }
