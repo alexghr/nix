@@ -65,6 +65,11 @@
   };
 
   services = {
+    logind.lidSwitchExternalPower = "ignore";
+    logind.lidSwitch = "ignore";
+    logind.extraConfig = ''
+      HandleLidSwitch=ignore
+    '';
     openssh.enable = true;
     thermald.enable = true;
     home-assistant = {
