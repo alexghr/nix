@@ -4,5 +4,6 @@
     ./hk47
     ./drk-1
     ./trip
+    ./iso.nix
   ];
 }
