@@ -90,7 +90,7 @@
         # Includes dependencies for a basic setup
         # https://www.home-assistant.io/integrations/default_config/
         default_config = {};
-        # "automation ui" = "!include automations.yaml";
+        "automation ui" = "!include automations.yaml";
       };
     };
 
@@ -98,7 +98,7 @@
       enable = true;
       reflector = true;
       nssmdns = true;
-      allowInterfaces = ["enp2s0"];
+      allowInterfaces = ["enp3s0"];
       publish = {
         enable = true;
         addresses = true;
@@ -109,16 +109,18 @@
     unifi = {
       enable = true;
       unifiPackage = pkgs.unifi7;
-      mongodbPackage = pkgs.unstable.mongodb-4_4;
+      mongodbPackage = pkgs.pinned.mongodb-4_4;
       openFirewall = true;
     };
 
     tailscale = {
       enable = true;
       openFirewall = true;
-      useRoutingFeatures = "both";
+      useRoutingFeatures = "server";
+      extraUpFlags = ["--advertise-exit-node"];
       authKeyFile = config.age.secrets.tailscale.path;
     };
+    iperf3.enable = true;
   };
 
   systemd.services.set-nvme-temp = {

@@ -56,10 +56,7 @@
     firewall = {
       enable = true;
       trustedInterfaces = [];
-      allowedTCPPorts = [
-        8443 # unifi https port
-        21064 # home-assistant's homekit integration
-      ];
+      allowedTCPPorts = [];
       allowedUDPPorts = [];
     };
   };
@@ -72,22 +69,6 @@
     '';
     openssh.enable = true;
     thermald.enable = true;
-    home-assistant = {
-      enable = true;
-      openFirewall = true;
-      extraComponents = [
-        # Components required to complete the onboarding
-        "zha"
-        "met"
-        "homekit"
-      ];
-      config = {
-        # Includes dependencies for a basic setup
-        # https://www.home-assistant.io/integrations/default_config/
-        default_config = {};
-        "automation ui" = "!include automations.yaml";
-      };
-    };
 
     avahi = {
       enable = true;
@@ -101,16 +82,10 @@
       };
     };
 
-    unifi = {
-      enable = true;
-      unifiPackage = pkgs.unifi7;
-      openFirewall = true;
-    };
-
     tailscale = {
       enable = true;
       openFirewall = true;
-      useRoutingFeatures = "both";
+      useRoutingFeatures = "client";
       authKeyFile = config.age.secrets.tailscale.path;
     };
   };

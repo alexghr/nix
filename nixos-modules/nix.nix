@@ -10,6 +10,10 @@
         system = prev.system;
         config.allowUnfree = prev.config.allowUnfree;
       };
+      pinned = import inputs.nixpkgs-pinned {
+        system = prev.system;
+        config.allowUnfree = prev.config.allowUnfree;
+      };
     })];
     nix = {
       package = lib.mkDefault pkgs.nixVersions.stable;
