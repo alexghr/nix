@@ -48,6 +48,7 @@
   };
 
   powerManagement.cpuFreqGovernor = "powersave";
+  powerManagement.powertop.enable = true;
 
   users.users.root.openssh.authorizedKeys.keys = alexghrKeys;
 
@@ -84,6 +85,24 @@
     openssh.enable = true;
     fwupd.enable = true;
     thermald.enable = true;
+
+    # Remove one of the Intel i226-V NICs (in this case, eth0)
+    # both eth0 and eth1 cause the system to hang when power management is enabled
+    # if there is no cable plugged in
+    udev = {
+      enable = true;
+      extraRules =
+        let
+          eth0 = "0000:02:00.0";
+          disableEth0 = pkgs.writeShellScript "disable-eth0" ''
+            echo 1 > /sys/bus/pci/devices/0000:02:00.0/remove
+            echo Removed PCI device ${eth0}
+          '';
+        in
+        ''
+          ACTION=="add", SUBSYSTEM=="pci", KERNEL=="${eth0}", RUN+="${disableEth0}"
+        '';
+    };
 
     home-assistant = {
       enable = true;
