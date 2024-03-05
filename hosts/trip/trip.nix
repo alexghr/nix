@@ -38,6 +38,13 @@
       availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci"];
       kernelModules = [];
     };
+
+    # keep getting hung tasks. Panic and restart system after 1 second
+    # https://unix.stackexchange.com/questions/702983/automatically-restart-linux-on-hung-task-timeout-dmesg
+    kernel.sysctl = {
+      "kernel.hung_task_panic" = 1;
+      "kernel.panic" = 1;
+    };
   };
 
   powerManagement.cpuFreqGovernor = "powersave";
