@@ -1,0 +1,22 @@
+---
+- Network:
+  - EdgeRouter X:
+      href: https://10.1.1.1/
+      description: Main router/firewall
+      # ping: 10.1.1.1
+  - Hasivo:
+      href: http://10.1.1.104/
+      description: Core switch
+      # ping: 10.1.1.104
+      siteMonitor: http://10.1.1.104/
+  - Unifi:
+      href: https://trip:8443/
+      description: Unifi controller
+      # ping: localhost
+      siteMonitor: https://trip:8443/
+- Home automation:
+  - Home Assistant:
+      href: http://trip:8123/
+      description: Home automation
+      # ping: localhost
+      siteMonitor: http://trip:8123/

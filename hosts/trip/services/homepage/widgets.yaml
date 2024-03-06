@@ -1,0 +1,28 @@
+---
+- resources:
+    label: System
+    cpu: true
+    cputemp: true
+    memory: true
+
+- resources:
+    label: Storage
+    disk: /
+
+- search:
+    provider: duckduckgo
+    target: _blank
+
+- datetime:
+    text_size: xl
+    format:
+      dateStyle: short
+      timeStyle: short
+
+- openmeteo:
+    label: Bristol, UK
+    latitude: 51.4525851
+    longitude: -2.5855651
+    timezone: Europe/London
+    units: metric
+    cache: 5

@@ -15,6 +15,7 @@
     nixosModules.agenix
     "${modulesPath}/installer/scan/not-detected.nix"
     ./trip.fs.nix
+    ./services/homepage
   ];
 
   system.stateVersion = "23.11";
