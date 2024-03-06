@@ -4,4 +4,3 @@ let
 in {
   "secrets.tailscale.age".publicKeys = alexghrKeys ++ [hostKey];
 }
-

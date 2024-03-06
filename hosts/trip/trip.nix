@@ -91,17 +91,13 @@
     # if there is no cable plugged in
     udev = {
       enable = true;
-      extraRules =
-        let
-          eth0 = "0000:02:00.0";
-          disableEth0 = pkgs.writeShellScript "disable-eth0" ''
-            echo 1 > /sys/bus/pci/devices/0000:02:00.0/remove
-            echo Removed PCI device ${eth0}
-          '';
-        in
-        ''
-          ACTION=="add", SUBSYSTEM=="pci", KERNEL=="${eth0}", RUN+="${disableEth0}"
+      extraRules = let
+        eth0 = "0000:02:00.0";
+        disableEth0 = pkgs.writeShellScript "disable-eth0" ''
+          echo 1 > /sys/bus/pci/devices/0000:02:00.0/remove
+          echo Removed PCI device ${eth0}
         '';
+      in ''ACTION=="add", SUBSYSTEM=="pci", KERNEL=="${eth0}", RUN+="${disableEth0}"'';
     };
 
     home-assistant = {

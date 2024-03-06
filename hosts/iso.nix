@@ -20,42 +20,43 @@
             alexghrKeys = self.alexghrKeys;
           };
 
-          modules = [(
-            {
-              config,
-              pkgs,
-              alexghrKeys,
-              modulesPath,
-              lib,
-              ...
-            }:
-            {
-              imports = [
-                "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-              ];
+          modules = [
+            (
+              {
+                config,
+                pkgs,
+                alexghrKeys,
+                modulesPath,
+                lib,
+                ...
+              }: {
+                imports = [
+                  "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+                ];
 
-              boot.kernelPackages = pkgs.linuxPackages_6_1;
+                boot.kernelPackages = pkgs.linuxPackages_6_1;
 
-              system.stateVersion = "23.11";
-              time.timeZone = "Europe/London";
+                system.stateVersion = "23.11";
+                time.timeZone = "Europe/London";
 
-              users.users.nixos.openssh.authorizedKeys.keys = alexghrKeys;
+                users.users.nixos.openssh.authorizedKeys.keys = alexghrKeys;
 
-              networking = {
-                hostName = "nixos";
-                networkmanager.enable = true;
-                wireless.enable = false;
-              };
+                networking = {
+                  hostName = "nixos";
+                  networkmanager.enable = true;
+                  wireless.enable = false;
+                };
 
-              environment.systemPackages = with pkgs; [
-                vim
-                git
-                parted
-              ];
+                environment.systemPackages = with pkgs; [
+                  vim
+                  git
+                  parted
+                ];
 
-              services.openssh.enable = true;
-            }
-          )];
+                services.openssh.enable = true;
+              }
+            )
+          ];
         }
     );
 }

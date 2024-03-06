@@ -5,16 +5,18 @@
 }: {
   flake.nixosModules.nix = {pkgs, ...}: {
     nixpkgs.config.allowUnfree = lib.mkDefault true;
-    nixpkgs.overlays = [(final: prev: {
-      unstable = import inputs.nixpkgs-unstable {
-        system = prev.system;
-        config.allowUnfree = prev.config.allowUnfree;
-      };
-      pinned = import inputs.nixpkgs-pinned {
-        system = prev.system;
-        config.allowUnfree = prev.config.allowUnfree;
-      };
-    })];
+    nixpkgs.overlays = [
+      (final: prev: {
+        unstable = import inputs.nixpkgs-unstable {
+          system = prev.system;
+          config.allowUnfree = prev.config.allowUnfree;
+        };
+        pinned = import inputs.nixpkgs-pinned {
+          system = prev.system;
+          config.allowUnfree = prev.config.allowUnfree;
+        };
+      })
+    ];
     nix = {
       package = lib.mkDefault pkgs.nixVersions.stable;
       extraOptions = ''
