@@ -20,3 +20,13 @@
       description: Home automation
       # ping: localhost
       siteMonitor: http://trip:8123/
+- Misc:
+    - Uptime Robot:
+        href: https://uptimerobot.com/
+        description: Uptime monitoring
+        # ping: localhost
+        siteMonitor: https://uptimerobot.com/
+        widget:
+            type: uptimerobot
+            url: https://api.uptimerobot.com
+            key: "{{HOMEPAGE_FILE_UPTIMEROBOT_API_KEY}}"
