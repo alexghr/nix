@@ -15,7 +15,7 @@
     nixosModules.agenix
     "${modulesPath}/installer/scan/not-detected.nix"
     ./trip.fs.nix
-    ./services/homepage
+    ./services
   ];
 
   system.stateVersion = "23.11";
@@ -61,6 +61,10 @@
     lm_sensors
     pciutils
     usbutils
+    dnsutils
+    lsof
+    podman
+    podman-compose
   ];
 
   networking = {
@@ -174,4 +178,16 @@
 
     HWMON_MODULES="coretemp"
   '';
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerSocket.enable = true;
+      dockerCompat = true;
+    };
+    oci-containers = {
+      backend = "podman";
+      containers = {};
+    };
+  };
 }

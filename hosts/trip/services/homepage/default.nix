@@ -11,7 +11,19 @@
 
   age.secrets.uptimerobot.file = ../../secrets.uptimerobot.age;
 
+  users.users.homepage-dashboard = {
+    isSystemUser = true;
+    home = "/var/lib/homepage-dashboard";
+    group = "homepage-dashboard";
+    extraGroups = [ "podman" ];
+  };
+
+  users.groups.homepage-dashboard = {};
+
   systemd.services.homepage-dashboard.serviceConfig = {
+    User = "homepage-dashboard";
+    Group = "homepage-dashboard";
+
     # load agenix secrets as credentials into systemd services
     # https://dee.underscore.world/blog/systemd-credentials-nixos-containers/
     LoadCredential = [
@@ -27,5 +39,6 @@
     "L+ /var/lib/homepage-dashboard/services.yaml - - - - ${./services.yaml}"
     "L+ /var/lib/homepage-dashboard/bookmarks.yaml - - - - ${./bookmarks.yaml}"
     "L+ /var/lib/homepage-dashboard/widgets.yaml - - - - ${./widgets.yaml}"
+    "L+ /var/lib/homepage-dashboard/docker.yaml - - - - ${./docker.yaml}"
   ];
 }

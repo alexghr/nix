@@ -1,0 +1,6 @@
+{
+  imports = [
+    ./pihole.nix
+    ./homepage
+  ];
+}

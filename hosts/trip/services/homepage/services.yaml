@@ -14,12 +14,19 @@
       description: Unifi controller
       # ping: localhost
       siteMonitor: https://trip:8443/
-- Home automation:
+- Services:
   - Home Assistant:
       href: http://trip:8123/
       description: Home automation
       # ping: localhost
       siteMonitor: http://trip:8123/
+  - PiHole:
+      href: http://trip:8081/admin/
+      description: DNS ad blocker
+      # ping: localhost
+      siteMonitor: http://trip:8081/admin/
+      server: trip-podman
+      container: pihole
 - Misc:
     - Uptime Robot:
         href: https://uptimerobot.com/
