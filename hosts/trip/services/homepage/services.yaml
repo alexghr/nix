@@ -3,27 +3,27 @@
   - EdgeRouter X:
       href: https://10.1.1.1/
       description: Main router/firewall
-      # ping: 10.1.1.1
+      ping: 10.1.1.1
   - Hasivo:
       href: http://10.1.1.104/
       description: Core switch
-      # ping: 10.1.1.104
+      ping: 10.1.1.104
       siteMonitor: http://10.1.1.104/
   - Unifi:
       href: https://trip:8443/
       description: Unifi controller
-      # ping: localhost
+      ping: trip
       siteMonitor: https://trip:8443/
 - Services:
   - Home Assistant:
       href: http://trip:8123/
       description: Home automation
-      # ping: localhost
+      ping: trip
       siteMonitor: http://trip:8123/
   - PiHole:
       href: http://trip:8081/admin/
       description: DNS ad blocker
-      # ping: localhost
+      ping: trip
       siteMonitor: http://trip:8081/admin/
       server: trip-podman
       container: pihole
@@ -31,7 +31,6 @@
     - Uptime Robot:
         href: https://uptimerobot.com/
         description: Uptime monitoring
-        # ping: localhost
         siteMonitor: https://uptimerobot.com/
         widget:
             type: uptimerobot

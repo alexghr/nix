@@ -20,18 +20,26 @@
 
   users.groups.homepage-dashboard = {};
 
-  systemd.services.homepage-dashboard.serviceConfig = {
-    User = "homepage-dashboard";
-    Group = "homepage-dashboard";
+  systemd.services.homepage-dashboard = {
+    # explicitly add the `ping` binary to the service's PATH
+    # otherwise the ping feature of Homepage won't work
+    path = [
+      pkgs.iputils
+    ];
 
-    # load agenix secrets as credentials into systemd services
-    # https://dee.underscore.world/blog/systemd-credentials-nixos-containers/
-    LoadCredential = [
-      "uptimerobot:${config.age.secrets.uptimerobot.path}"
-    ];
-    Environment = [
-      "HOMEPAGE_FILE_UPTIMEROBOT_API_KEY=%d/uptimerobot"
-    ];
+    serviceConfig = {
+      User = "homepage-dashboard";
+      Group = "homepage-dashboard";
+
+      # load agenix secrets as credentials into systemd services
+      # https://dee.underscore.world/blog/systemd-credentials-nixos-containers/
+      LoadCredential = [
+        "uptimerobot:${config.age.secrets.uptimerobot.path}"
+      ];
+      Environment = [
+        "HOMEPAGE_FILE_UPTIMEROBOT_API_KEY=%d/uptimerobot"
+      ];
+    };
   };
 
   systemd.tmpfiles.rules = [
