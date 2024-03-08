@@ -1,6 +1,6 @@
 {
   imports = [
-    ./pihole.nix
+    ./blocky.nix
     ./homepage
   ];
 }

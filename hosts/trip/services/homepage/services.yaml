@@ -20,13 +20,6 @@
       description: Home automation
       ping: trip
       siteMonitor: http://trip:8123/
-  - PiHole:
-      href: http://trip:8081/admin/
-      description: DNS ad blocker
-      ping: trip
-      siteMonitor: http://trip:8081/admin/
-      server: trip-podman
-      container: pihole
 - Misc:
     - Uptime Robot:
         href: https://uptimerobot.com/
