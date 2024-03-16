@@ -65,6 +65,7 @@
     lsof
     podman
     podman-compose
+    bcachefs-tools
   ];
 
   networking = {
@@ -74,6 +75,7 @@
 
     firewall = {
       enable = true;
+      allowPing = true;
       allowedTCPPorts = [
         8443 # unifi https port
         21064 # home-assistant's homekit integration

@@ -12,5 +12,15 @@
     options = ["umask=0077" "defaults"];
   };
 
+  fileSystems."/mnt/shares" = {
+    device = "/dev/disk/by-uuid/6bfd2d5e-dea3-4c55-a61e-b9ddacc8ffe5";
+    fsType = "bcachefs";
+  };
+
+  fileSystems."/mnt/hdd" = {
+    device = "/dev/disk/by-uuid/6ABED17EBED1436D";
+    fsType = "ntfs";
+  };
+
   swapDevices = [];
 }
