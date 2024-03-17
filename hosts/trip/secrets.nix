@@ -4,4 +4,5 @@ let
 in {
   "secrets.tailscale.age".publicKeys = alexghrKeys ++ [hostKey];
   "secrets.uptimerobot.age".publicKeys = alexghrKeys ++ [hostKey];
+  "secrets.caddy.age".publicKeys = alexghrKeys ++ [hostKey];
 }
