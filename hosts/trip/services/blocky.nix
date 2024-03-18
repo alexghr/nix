@@ -17,6 +17,7 @@
       }];
     }
   ];
+
   services.blocky = {
     enable = true;
     settings = {

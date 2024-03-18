@@ -9,7 +9,7 @@
     openFirewall = true;
   };
 
-  age.secrets.uptimerobot.file = ../../secrets.uptimerobot.age;
+  age.secrets.uptimerobot.file = ../../secrets/uptimerobot.age;
 
   users.users.homepage-dashboard = {
     isSystemUser = true;

@@ -85,7 +85,7 @@
   };
 
   age.secrets = {
-    tailscale.file = ./secrets.tailscale.age;
+    tailscale.file = ./secrets/tailscale.age;
   };
 
   services = {

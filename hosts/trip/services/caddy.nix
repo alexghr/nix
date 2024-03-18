@@ -10,7 +10,7 @@
   services.tailscale.permitCertUid = builtins.toString config.users.users.caddy.uid;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  age.secrets.caddy.file = ../secrets.caddy.age;
+  age.secrets.caddy.file = ../secrets/caddy.age;
 
   systemd.services.caddy = {
     serviceConfig = {
