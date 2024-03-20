@@ -12,7 +12,7 @@
     openFirewall = true;
     shares = {
       public = {
-        path = "/mnt/shares/public";
+        path = "/mnt/bcache/shares/public";
         browseable = "yes";
         comment = "Public samba share.";
         "read only" = true;
@@ -23,7 +23,7 @@
       };
 
       ag = {
-        path = "/mnt/shares/ag";
+        path = "/mnt/bcache/shares/ag";
         comment = "ag's private share.";
         browseable = false;
         "read only" = false;
