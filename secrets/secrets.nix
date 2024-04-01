@@ -17,6 +17,7 @@ let
 in  {
   "vader.restic-b2-password.age".publicKeys = agSshKeys;
   "palpatine.tailscale.age".publicKeys = agSshKeys ++ [palpatineHostKey];
+  "ag.samba.age".publicKeys = agSshKeys ++ [palpatineHostKey];
   "hk47.tailscale.age".publicKeys = agSshKeys ++ [hk47HostKey];
   "hk47.vader-mac.age".publicKeys = agSshKeys ++ [hk47HostKey r5d4HostKey];
   "ag.npmrc.age".publicKeys = agSshKeys ++ [mackeyHostKey palpatineHostKey];

@@ -40,6 +40,27 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/shares/public" = {
+    device = "//trip.home/public";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+    # add sec=none to browser as guest
+    in ["${automount_opts},credentials=${config.age.secrets.ag-samba.path},uid=1000,gid=100"];
+  };
+
+  fileSystems."/mnt/shares/ag" = {
+    device = "//trip.home/ag";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+    in ["${automount_opts},credentials=${config.age.secrets.ag-samba.path},uid=1000,gid=100"];
+  };
+
   swapDevices = [];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

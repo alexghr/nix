@@ -161,8 +161,11 @@
     protontricks
     nnn
     file
+    cifs-utils
+    samba
   ];
 
+  services.gvfs.enable = true;
   services.dbus.enable = true;
   services.avahi = {
     enable = true;
@@ -292,5 +295,7 @@
     authKeyFile = config.age.secrets.tailscale.path;
     exitNode = true;
   };
+
+  age.secrets.ag-samba.file = ../../secrets/ag.samba.age;
 }
 
