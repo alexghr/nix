@@ -75,13 +75,10 @@
 
     firewall = {
       enable = true;
-      trustedInterfaces = [ "tailscale0" "lxdbr0" ];
-      allowedTCPPorts = [3000];
+      trustedInterfaces = [ "lxdbr0" ];
+      allowedTCPPorts = [3000 ];
       allowedUDPPorts = [ config.services.tailscale.port ];
     };
-
-    # change this to enable Tailscale to act as an exit node
-    firewall.checkReversePath = "loose";
   };
 
   nixpkgs.config = {
@@ -290,10 +287,12 @@
   # };
 
   age.secrets.tailscale.file = ../../secrets/palpatine.tailscale.age;
-  alexghr.tailscale = {
+
+  services.tailscale = {
     enable = true;
+    openFirewall = true;
+    useRoutingFeatures = "client";
     authKeyFile = config.age.secrets.tailscale.path;
-    exitNode = true;
   };
 
   age.secrets.ag-samba.file = ../../secrets/ag.samba.age;
