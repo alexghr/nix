@@ -137,6 +137,7 @@
 
   programs.steam = {
     enable = true;
+    remotePlay.openFirewall = true;
   };
 
   programs.adb.enable = true;
