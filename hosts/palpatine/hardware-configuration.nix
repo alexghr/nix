@@ -18,25 +18,25 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/nvme1n1p5";
+    { device = "/dev/disk/by-uuid/acd0e5ad-79da-4cc1-aaaa-f5941e495511";
       fsType = "btrfs";
       options = [ "subvol=@" ] ++ commonMountOptions;
     };
 
   fileSystems."/home" =
-    { device = "/dev/nvme1n1p5";
+    { device = "/dev/disk/by-uuid/acd0e5ad-79da-4cc1-aaaa-f5941e495511";
       fsType = "btrfs";
       options = [ "subvol=@home" ] ++ commonMountOptions;
     };
 
   fileSystems."/nix" =
-    { device = "/dev/nvme1n1p5";
+    { device = "/dev/disk/by-uuid/acd0e5ad-79da-4cc1-aaaa-f5941e495511";
       fsType = "btrfs";
       options = [ "subvol=@nix" ] ++ commonMountOptions;
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/nvme1n1p4";
+    { device = "/dev/disk/by-uuid/D648-6016";
       fsType = "vfat";
     };
 
