@@ -76,8 +76,7 @@
     firewall = {
       enable = true;
       trustedInterfaces = [ "lxdbr0" ];
-      allowedTCPPorts = [3000 ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
+      allowedUDPPorts = [ config.services.tailscale.port];
     };
   };
 
