@@ -60,7 +60,15 @@
     enableContainers = true;
 
     # enable IP forwarding so this machine can be a Tailscale exit node
-    kernel.sysctl."net.ipv4.ip_forward" = 1;
+    kernel.sysctl = {
+      "net.ipv4.ip_forward" = 1;
+
+      # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
+      "vm.swappiness" = 180;
+      "vm.watermark_boost_factor" = 0;
+      "vm.watermark_scale_factor" = 125;
+      "vm.page-cluster" = 0;
+    };
 
     #binfmt.emulatedSystems = ["aarch64-linux"];
   };
@@ -200,6 +208,7 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.defaultSession = "none+i3";
 
+  zramSwap.enable = true;
 
   systemd.oomd = {
     enable = lib.mkForce true;
