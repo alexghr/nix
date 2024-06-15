@@ -164,6 +164,8 @@
     file
     cifs-utils
     samba
+    earthly
+    btop
   ];
 
   services.gvfs.enable = true;
@@ -266,14 +268,9 @@
 
   services.vscode-server.enable = true;
 
-  virtualisation.podman = {
-    enable = true;
-    dockerSocket.enable = true;
-    dockerCompat = true;
-  };
-
-  virtualisation.lxd.enable = true;
-  virtualisation.lxc.lxcfs.enable = true;
+  virtualisation.docker.enable = true;
+  virtualisation.lxd.enable = false;
+  virtualisation.lxc.lxcfs.enable = false;
 
   # age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
   # alexghr.b2-backup = {
