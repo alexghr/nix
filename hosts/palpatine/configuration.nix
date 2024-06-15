@@ -49,10 +49,7 @@
   boot = {
     loader.systemd-boot = {
       enable = true;
-      memtest86 = {
-        enable = true;
-        entryFilename = "o_memtest86.conf";
-      };
+      memtest86.enable = true;
     };
 
     loader.efi.canTouchEfiVariables = true;
@@ -88,7 +85,7 @@
   };
 
   nix = {
-    package = pkgs.nixVersions.nix_2_16;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -117,7 +114,6 @@
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "qt";
     enableSSHSupport = true;
     enableExtraSocket = true;
   };
@@ -173,15 +169,13 @@
   };
 
   services.xserver = {
-    layout = "us";
-    xkbOptions="compose:menu";
+    xkb.layout = "us";
+    xkb.options="compose:menu";
     videoDrivers = [ "nvidia" ];
     enable = true;
     screenSection = ''
       Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
     '';
-    displayManager.sddm.enable = true;
-    displayManager.defaultSession = "none+i3";
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
@@ -202,6 +196,10 @@
 
     desktopManager.xterm.enable = true;
   };
+  
+  services.displayManager.sddm.enable = true;
+  services.displayManager.defaultSession = "none+i3";
+
 
   systemd.oomd = {
     enable = lib.mkForce true;

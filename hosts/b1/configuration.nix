@@ -50,7 +50,7 @@
   };
 
   nix = {
-    package = pkgs.nixVersions.nix_2_16;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';

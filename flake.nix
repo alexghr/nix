@@ -1,7 +1,7 @@
 {
   description = "Manage my Nix-based machines";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   inputs.disko.url = github:nix-community/disko;
@@ -10,7 +10,7 @@
   inputs.darwin.url = "github:lnl7/nix-darwin";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.home-manager.url = "github:nix-community/home-manager/release-23.11";
+  inputs.home-manager.url = "github:nix-community/home-manager/release-24.05";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.agenix.url = "github:ryantm/agenix";
@@ -78,7 +78,7 @@
           ./users/ag.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
-            fonts.fonts = [pkgs.victor-mono];
+            fonts.packages= [pkgs.victor-mono];
           })
         ];
       };
@@ -151,7 +151,7 @@
           ./users/ag.nix
           ({ pkgs, ... }: {
             nix.registry.nixpkgs.flake = nixpkgs;
-            fonts.fonts = [pkgs.victor-mono];
+            fonts.packages = [pkgs.victor-mono];
           })
         ];
       };

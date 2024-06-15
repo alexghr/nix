@@ -33,9 +33,7 @@ in
   boot = {
     loader.systemd-boot = {
       enable = true;
-      memtest86 = { enable = true;
-        entryFilename = "o_memtest86.conf";
-      };
+      memtest86.enable = true;
     };
 
     loader.efi.canTouchEfiVariables = true;
@@ -71,7 +69,7 @@ in
   };
 
   nix = {
-    package = pkgs.nixVersions.nix_2_16;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
