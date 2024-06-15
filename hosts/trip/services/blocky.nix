@@ -31,8 +31,8 @@
       blocking = {
         blackLists.ads = [
           "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
-          "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-          "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/pro.txt"
+          # "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+          # "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/pro.txt"
           # enable this once blocky updates to v0.23
           # "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt"
         ];
@@ -51,6 +51,9 @@
 
       ports.http = 4000;
       prometheus.enable = true;
+      customDNS.mapping = {
+        "hass.esrever.uno" = "10.1.1.110";
+      };
     };
   };
 }

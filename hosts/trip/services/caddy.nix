@@ -34,12 +34,6 @@
         '';
       };
 
-      "grafana.esrever.uno" = {
-        extraConfig = ''
-          reverse_proxy :${builtins.toString config.services.grafana.settings.server.http_port}
-        '';
-      };
-
       "hass.esrever.uno" = {
         extraConfig = ''
           reverse_proxy :${builtins.toString config.services.home-assistant.config.http.server_port}
