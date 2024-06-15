@@ -33,7 +33,8 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = ["kvm-intel" "coretemp"];
+    kernelModules = ["kvm-intel" "coretemp" "msr"];
+    kernelParams = ["pcie_aspm=force"];
     extraModulePackages = [];
     initrd = {
       availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci"];
@@ -66,6 +67,7 @@
     podman
     podman-compose
     bcachefs-tools
+    config.boot.kernelPackages.turbostat
   ];
 
   networking = {
