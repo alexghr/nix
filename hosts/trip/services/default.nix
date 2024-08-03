@@ -5,5 +5,6 @@
     ./samba.nix
     ./caddy.nix
     ./homepage
+    ./tandoor.nix
   ];
 }

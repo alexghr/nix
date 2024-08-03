@@ -40,6 +40,12 @@
         '';
       };
 
+      "tandoor.esrever.uno" = {
+        extraConfig = ''
+          reverse_proxy :${builtins.toString config.services.tandoor-recipes.port}
+        '';
+      };
+
       "unifi.esrever.uno" = {
         extraConfig = ''
           reverse_proxy {
