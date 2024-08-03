@@ -2,10 +2,9 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   networking.firewall = {
-    allowedTCPPorts = [ 2342 ];
+    allowedTCPPorts = [2342];
   };
 
   services.blocky.settings.customDNS.mapping."grafana.esrever.uno" = "10.1.1.110";
@@ -32,7 +31,7 @@
     exporters = {
       node = {
         enable = true;
-        enabledCollectors = [ "systemd" ];
+        enabledCollectors = ["systemd"];
         port = 9002;
       };
     };
@@ -40,9 +39,11 @@
     scrapeConfigs = [
       {
         job_name = "trip";
-        static_configs = [{
-          targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
-        }];
+        static_configs = [
+          {
+            targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];
+          }
+        ];
       }
     ];
   };

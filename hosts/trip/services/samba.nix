@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   users.users.ag.isNormalUser = true;
 
   services.samba = {

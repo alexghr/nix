@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   services.homepage-dashboard = {
     enable = true;
     openFirewall = true;
@@ -15,7 +14,7 @@
     isSystemUser = true;
     home = "/var/lib/homepage-dashboard";
     group = "homepage-dashboard";
-    extraGroups = [ "podman" ];
+    extraGroups = ["podman"];
   };
 
   users.groups.homepage-dashboard = {};

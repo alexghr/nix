@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/78bf0dd5-4fe6-4081-81f6-c7ac21a9ace2";
     fsType = "btrfs";
@@ -36,7 +33,7 @@
       ${pkgs.util-linux}/bin/mount -o $mount_flags -t bcachefs $mount_devices $mount_point
     '';
     # samba shares live on this disk
-    wantedBy = [ "multi-user.target" "samba.target" ];
+    wantedBy = ["multi-user.target" "samba.target"];
   };
 
   swapDevices = [];

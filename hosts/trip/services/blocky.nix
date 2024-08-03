@@ -2,19 +2,20 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   networking.firewall = {
-    allowedTCPPorts = [ 53 ];
-    allowedUDPPorts = [ 53 ];
+    allowedTCPPorts = [53];
+    allowedUDPPorts = [53];
   };
 
   services.prometheus.scrapeConfigs = [
     {
       job_name = "blocky.trip";
-      static_configs = [{
-        targets = [ "127.0.0.1:${toString config.services.blocky.settings.ports.http}" ];
-      }];
+      static_configs = [
+        {
+          targets = ["127.0.0.1:${toString config.services.blocky.settings.ports.http}"];
+        }
+      ];
     }
   ];
 

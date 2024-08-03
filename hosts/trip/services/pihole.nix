@@ -2,11 +2,10 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   networking.firewall = {
-    allowedTCPPorts = [ 53 8081 ];
-    allowedUDPPorts = [ 53 ];
+    allowedTCPPorts = [53 8081];
+    allowedUDPPorts = [53];
   };
 
   virtualisation.oci-containers.containers = {
