@@ -4,6 +4,7 @@
     ./hk47
     ./drk-1
     ./trip
+    ./palpatine
     ./iso.nix
   ];
 }

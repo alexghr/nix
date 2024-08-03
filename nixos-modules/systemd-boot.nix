@@ -6,7 +6,7 @@
 
         memtest86 = {
           enable = true;
-          entryFilename = "o_memtest86.conf";
+          sortKey = "o_memtest86.conf";
         };
       };
 

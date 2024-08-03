@@ -1,0 +1,36 @@
+import = ["./theme"]
+live_config_reload = true
+
+[cursor]
+style = "Block"
+
+[font]
+size = 12
+
+[font.bold]
+family = "Monaspace Krypton"
+style = "Bold"
+
+[font.bold_italic]
+family = "Monaspace Radon"
+style = "Bold"
+
+[font.italic]
+family = "Monaspace Radon"
+style = "Regular"
+
+[font.normal]
+family = "Monaspace Neon"
+style = "Regular"
+
+[window]
+decorations = "full"
+dynamic_title = true
+opacity = 1
+option_as_alt = "Both"
+startup_mode = "Windowed"
+title = "Alacritty"
+
+[window.padding]
+x = 4
+y = 8

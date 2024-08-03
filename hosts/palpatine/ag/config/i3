@@ -1,0 +1,127 @@
+set $mod Mod4
+
+font pango:Monaspace Krypton Regular 10
+
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id solaar -w hide -b symbolic
+exec --no-startup-id dunst
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+
+# set $lock i3lock --image=/home/ag/.background.png
+set $lock loginctl lock-sessions
+bindsym $mod+Control+l exec $lock
+bindsym $mod+Control+s exec --no-startup-id $lock && systemctl suspend
+
+exec "setxkbmap -option 'grp:alt_shift_toggle' -layout us,ro"
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+bindsym $mod+Return exec alacritty
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
+#bindsym $mod+F2 exec start_or_focus --no-startup-id -w 5 -c Slack slack
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+b split h
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
+bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/$(date)"
+bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/$(date)"
+
+bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bar {
+        status_command i3status
+}
+
+for_window [window_role="pop-up"] floating enable
+for_window [class="Solaar"] floating enable
+for_window [instance="crx_cinhimbnkkaeohfgghhklpknlkffjgod"] floating enable
+for_window [class="TelegramDesktop"] floating enable
+for_window [class="Pcmanfm"] floating enable
+for_window [class="steam"] floating enable
+for_window [class="Bitwarden"] floating enable
+for_window [class="kwalletmanager5"] floating enable

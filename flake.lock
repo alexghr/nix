@@ -23,6 +23,46 @@
         "type": "github"
       }
     },
+    "alacritty-theme": {
+      "inputs": {
+        "alacritty-theme": "alacritty-theme_2",
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1722526024,
+        "narHash": "sha256-kt9YUDyYOrTAwHdQgOlOYfuC4tqrLSVrmbiIDW7r3g0=",
+        "owner": "alexghr",
+        "repo": "alacritty-theme.nix",
+        "rev": "a0bb7695365cd465a1cb5ac974468ad766d82f35",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexghr",
+        "repo": "alacritty-theme.nix",
+        "type": "github"
+      }
+    },
+    "alacritty-theme_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1722389905,
+        "narHash": "sha256-1tt4GL3KNa3S4dEFiRZf4B1+CM6e7/gO3Q34847lYkI=",
+        "owner": "alacritty",
+        "repo": "alacritty-theme",
+        "rev": "4091fddff8da892d5594e94116927c7445620867",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alacritty",
+        "repo": "alacritty-theme",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -86,16 +126,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1720535198,
-        "narHash": "sha256-zwVvxrdIzralnSbcpghA92tWu2DV2lwv89xZc8MTrbg=",
+        "lastModified": 1722519197,
+        "narHash": "sha256-VEdJmVU2eLFtLqCjTYJd1J7+Go8idAcZoT11IewFiRg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "205fd4226592cc83fd4c0885a3e4c9c400efabb5",
+        "rev": "05405724efa137a0b899cce5ab4dde463b4fd30b",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-23.11",
+        "ref": "nixos-24.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -147,6 +187,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "alacritty-theme": "alacritty-theme",
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs",
         "nixpkgs-pinned": "nixpkgs-pinned",
