@@ -8,8 +8,9 @@ exec --no-startup-id dunst
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
-# set $lock i3lock --image=/home/ag/.background.png
-set $lock loginctl lock-sessions
+set $lock i3lock --image=/home/ag/.background.png
+#set $lock loginctl lock-sessions
+
 bindsym $mod+Control+l exec $lock
 bindsym $mod+Control+s exec --no-startup-id $lock && systemctl suspend
 

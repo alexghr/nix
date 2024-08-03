@@ -110,7 +110,6 @@ in {
       ["${home}/.config/git/config" ./config/gitconfig]
       ["${home}/.config/tmux/tmux.conf" ./config/tmux.conf]
     ];
-    group = config.users.users.${user}.group;
   in
-    lib.map (link: "L+ ${lib.elemAt link 0} - ${user} ${group} - ${lib.elemAt link 1}") links;
+    lib.map (link: "L+ ${lib.elemAt link 0} - - - - ${lib.elemAt link 1}") links;
 }

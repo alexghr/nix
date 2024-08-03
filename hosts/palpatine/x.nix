@@ -19,6 +19,7 @@
         i3status
         i3lock
         xss-lock
+        xclip
 
         dunst # notification manager
         maim # screenshot tool
@@ -31,7 +32,7 @@
         llpp # pdf viewer
         pcmanfm # file pkgs.alacritty-theme.monokai_promanager
 
-        xclip
+        pavucontrol
 
         kdePackages.kwallet
         kdePackages.kwalletmanager
