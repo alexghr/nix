@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   nix.settings = {
     extra-substituters = [
       "https://attic.alexghr.me/alexghr"

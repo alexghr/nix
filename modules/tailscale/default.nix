@@ -1,8 +1,11 @@
-{ config, pkgs, lib, ...}:
-let
-  cfg = config.alexghr.tailscale;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.alexghr.tailscale;
+in {
   options.alexghr.tailscale = {
     enable = lib.mkEnableOption "Enable tailscale";
     authKeyFile = lib.mkOption {
@@ -19,7 +22,10 @@ in
   config = lib.mkIf cfg.enable {
     services.tailscale = {
       enable = true;
-      useRoutingFeatures = if cfg.exitNode then "both" else "client";
+      useRoutingFeatures =
+        if cfg.exitNode
+        then "both"
+        else "client";
     };
 
     # taken from https://tailscale.com/blog/nixos-minecraft/
@@ -27,9 +33,9 @@ in
       description = "Automatic connection to Tailscale";
 
       # make sure tailscale is running before trying to connect to tailscale
-      after = [ "network-pre.target" "tailscale.service" ];
-      wants = [ "network-pre.target" "tailscale.service" ];
-      wantedBy = [ "multi-user.target" ];
+      after = ["network-pre.target" "tailscale.service"];
+      wants = ["network-pre.target" "tailscale.service"];
+      wantedBy = ["multi-user.target"];
 
       # set this service as a oneshot job
       serviceConfig.Type = "oneshot";

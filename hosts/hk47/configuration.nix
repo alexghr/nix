@@ -1,15 +1,19 @@
-{ config, pkgs, lib, ... }:
-let
-  wakeVader = macPath: pkgs.writeShellScriptBin "wakevader" ''
-    #!/usr/bin/env bash
-    ${pkgs.wakeonlan}/bin/wakeonlan $(cat ${macPath})
-  '';
-in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  wakeVader = macPath:
+    pkgs.writeShellScriptBin "wakevader" ''
+      #!/usr/bin/env bash
+      ${pkgs.wakeonlan}/bin/wakeonlan $(cat ${macPath})
+    '';
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -92,7 +96,8 @@ in
   users.mutableUsers = true;
 
   environment.systemPackages = with pkgs; [
-    vim raspberrypi-eeprom
+    vim
+    raspberrypi-eeprom
     libraspberrypi
     (wakeVader config.age.secrets.vader-mac.path)
   ];
@@ -125,4 +130,3 @@ in
     exitNode = true;
   };
 }
-

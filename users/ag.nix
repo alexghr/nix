@@ -1,78 +1,125 @@
-{ config, pkgs, ... }:
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   username = "ag";
-  packages = with pkgs; [
-    imagemagick
-    kubectl
-    kubeseal
-  ] ++ (if pkgs.stdenv.isLinux then [
-    v4l-utils
-    libguestfs
-  ] else [])
-  ++ (if pkgs.config.allowUnfree then [
-    ngrok
-  ] else []);
+  packages = with pkgs;
+    [
+      imagemagick
+      kubectl
+      kubeseal
+    ]
+    ++ (
+      if pkgs.stdenv.isLinux
+      then [
+        v4l-utils
+        libguestfs
+      ]
+      else []
+    )
+    ++ (
+      if pkgs.config.allowUnfree
+      then [
+        ngrok
+      ]
+      else []
+    );
 
   enableGuiPackages = pkgs.stdenv.isDarwin || config.services.xserver.enable;
-  guiPackages = if pkgs.stdenv.isLinux then with pkgs; [
-    firefox
-    chromium
-    google-chrome
+  guiPackages =
+    if pkgs.stdenv.isLinux
+    then
+      with pkgs; [
+        firefox
+        chromium
+        google-chrome
 
-    gimp-with-plugins
-    inkscape
+        gimp-with-plugins
+        inkscape
 
-    discord
-    slack
-    tdesktop
+        discord
+        slack
+        tdesktop
 
-    xclip
+        xclip
 
-    desktop-file-utils
-    vlc
-    filezilla
-    libreoffice
-    bitwarden
+        desktop-file-utils
+        vlc
+        filezilla
+        libreoffice
+        bitwarden
 
-    obs-studio
-    winePackages.full
-    ffmpeg-full
+        obs-studio
+        winePackages.full
+        ffmpeg-full
 
-    unstable.thunderbird
-  ] else [];
+        unstable.thunderbird
+      ]
+    else [];
 
   vimPlugins = with pkgs.vimPlugins; [
     vim-nix
     vim-colors-solarized
   ];
-
 in {
-  users.users."${username}" = {
-    home = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
-  } // (if pkgs.stdenv.isLinux then {
-    isNormalUser = true;
+  users.users."${username}" =
+    {
+      home =
+        if pkgs.stdenv.isDarwin
+        then "/Users/${username}"
+        else "/home/${username}";
+    }
+    // (
+      if pkgs.stdenv.isLinux
+      then {
+        isNormalUser = true;
 
-    extraGroups = ["wheel"]
-      ++ (if config.services.pipewire.enable then ["pipewire" "audio" "video"] else [])
-      ++ (if config.virtualisation.podman.enable then ["podman"] else [])
-      ++ (if config.virtualisation.docker.enable then ["docker"] else [])
-      ++ (if config.virtualisation.lxd.enable then ["lxd"] else []);
+        extraGroups =
+          ["wheel"]
+          ++ (
+            if config.services.pipewire.enable
+            then ["pipewire" "audio" "video"]
+            else []
+          )
+          ++ (
+            if config.virtualisation.podman.enable
+            then ["podman"]
+            else []
+          )
+          ++ (
+            if config.virtualisation.docker.enable
+            then ["docker"]
+            else []
+          )
+          ++ (
+            if config.virtualisation.lxd.enable
+            then ["lxd"]
+            else []
+          );
 
-    # get these from https://github.com/alexghr.keys
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELd6/RHyZ3Rw6251R+nWGvkPseaX2yAC2DlZAtRziIt"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFCcOm5bv/HZtyaavJ0xBFvZJ6fLfuUxhtFj1UU7YXfi"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcqnrGwHDkQPUcSOZnLEd7Y7kMxaiTkIL0uz/P2YDaV"
-    ];
-  } else {});
+        # get these from https://github.com/alexghr.keys
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELd6/RHyZ3Rw6251R+nWGvkPseaX2yAC2DlZAtRziIt"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFCcOm5bv/HZtyaavJ0xBFvZJ6fLfuUxhtFj1UU7YXfi"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcqnrGwHDkQPUcSOZnLEd7Y7kMxaiTkIL0uz/P2YDaV"
+        ];
+      }
+      else {}
+    );
 
   home-manager.users."${username}" = hm: {
-
     home.username = username;
     home.homeDirectory = config.users.users."${username}".home;
     home.stateVersion = "21.11";
 
-    home.packages = packages ++ (if enableGuiPackages then guiPackages else []);
+    home.packages =
+      packages
+      ++ (
+        if enableGuiPackages
+        then guiPackages
+        else []
+      );
 
     home.sessionVariables = {
       NPM_PREFIX = "$HOME/.npm-packages";
@@ -112,7 +159,7 @@ in {
         lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches --remotes --tags";
         ck = "checkout";
         get = "fetch --all --prune";
-        rb  = "rebase";
+        rb = "rebase";
         rbi = "rebase --interactive";
         rbc = "rebase --continue";
         rba = "rebase --abort";
@@ -203,8 +250,9 @@ in {
           PS1="\[\033[01;32m\][\t]\[\033[00m\]\[\033[01;35m\]\\u@\\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$info\[\033[00m\]$ "
         }
 
-        PROMPT_COMMAND=set_ps1
-        set_ps1
+        #PROMPT_COMMAND=set_ps1
+        #set_ps1
+        #eval "$(starship init bash)"
       '';
     };
 
@@ -227,13 +275,15 @@ in {
       package = pkgs.unstable.alacritty;
       settings = {
         window = {
-          padding = { x = 4; y = 8; };
+          padding = {
+            x = 4;
+            y = 8;
+          };
           decorations = "full";
           opacity = 1;
           startup_mode = "Windowed";
           title = "Alacritty";
           dynamic_title = true;
-          gtk_theme_variant = "None"; # pick the system's default
           option_as_alt = "Both";
         };
 
@@ -241,10 +291,12 @@ in {
           pkgs.alacritty-theme.monokai_pro
         ];
 
-        font = let victorMono = style: {
-          family = "Victor Mono";
-          inherit style;
-        }; in {
+        font = let
+          victorMono = style: {
+            family = "Victor Mono";
+            inherit style;
+          };
+        in {
           size = 12;
           normal = victorMono "Regular";
           bold = victorMono "Bold";
@@ -260,14 +312,17 @@ in {
       };
     };
 
-    programs.i3status = if pkgs.stdenv.isLinux && config.services.xserver.enable && config.services.xserver.windowManager.i3.enable then {
-      enable = true;
-      modules = {
-        ipv6.enable = false;
-        "wireless _first_".enable = false;
-        "battery all".enable = false;
-      };
-    } else {};
+    programs.i3status =
+      if pkgs.stdenv.isLinux && config.services.xserver.enable && config.services.xserver.windowManager.i3.enable
+      then {
+        enable = true;
+        modules = {
+          ipv6.enable = false;
+          "wireless _first_".enable = false;
+          "battery all".enable = false;
+        };
+      }
+      else {};
 
     services.gpg-agent = {
       maxCacheTtl = 604800;
@@ -281,4 +336,3 @@ in {
     programs.vscode.package = pkgs.unstable.vscode;
   };
 }
-

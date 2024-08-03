@@ -1,9 +1,10 @@
 # add home-manager as a channel first
 # nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   nixpkgs.config.allowUnfree = true;
 
   nix = {

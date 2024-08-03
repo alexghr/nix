@@ -1,20 +1,22 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ nixpkgsFlakePath }:
-{ config, pkgs, lib, ... }:
-let
-  wakeVader = macPath: pkgs.writeShellScriptBin "wakevader" ''
-    #!/usr/bin/env bash
-    ${pkgs.wakeonlan}/bin/wakeonlan $(cat ${macPath})
-  '';
-in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+{nixpkgsFlakePath}: {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  wakeVader = macPath:
+    pkgs.writeShellScriptBin "wakevader" ''
+      #!/usr/bin/env bash
+      ${pkgs.wakeonlan}/bin/wakeonlan $(cat ${macPath})
+    '';
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   hardware.enableAllFirmware = true;
 
@@ -40,7 +42,7 @@ in
     loader.efi.efiSysMountPoint = "/boot";
 
     kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = [ "btrfs" ];
+    supportedFilesystems = ["btrfs"];
 
     # enable IP forwarding so this machine can be a Tailscale exit node
     kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -57,7 +59,7 @@ in
       enable = true;
       trustedInterfaces = ["tailscale0"];
       allowedTCPPorts = [8443];
-      allowedUDPPorts = [ config.services.tailscale.port ];
+      allowedUDPPorts = [config.services.tailscale.port];
     };
 
     # change this to enable Tailscale to act as an exit node
@@ -96,7 +98,7 @@ in
 
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/" ];
+    fileSystems = ["/"];
     interval = "daily";
   };
 
@@ -161,4 +163,3 @@ in
     (wakeVader config.age.secrets.vader-mac.path)
   ];
 }
-

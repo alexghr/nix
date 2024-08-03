@@ -1,5 +1,4 @@
-{ disks ? [ "/dev/sda" ], ... }:
-{
+{disks ? ["/dev/sda"], ...}: {
   disk = {
     main = {
       type = "disk";
@@ -8,12 +7,12 @@
         type = "table";
         format = "gpt";
         partitions = [
-        {
+          {
             name = "boot";
             start = "0";
             end = "1M";
             part-type = "primary";
-            flags = [ "bios_grub" ];
+            flags = ["bios_grub"];
           }
           {
             name = "root";
@@ -21,32 +20,30 @@
             end = "100%";
             content = {
               type = "btrfs";
-              subvolumes =
-                let
-                  mountOptions = [ "compress=zstd" "noatime" "autodefrag" ];
-                in
-                {
-                  "/root" = {
-                    inherit mountOptions;
-                    mountpoint = "/";
-                  };
-                  "/nix" = {
-                    inherit mountOptions;
-                    mountpoint = "/nix";
-                  };
-                  "/varlib" = {
-                    inherit mountOptions;
-                    mountpoint = "/var/lib";
-                  };
-                  "/atticd" = {
-                    inherit mountOptions;
-                    mountpoint = "/var/lib/atticd/storage";
-                  };
-                  "/swap" = {
-                    mountOptions = [ "noatime" "nodatacow" ];
-                    mountpoint = "/swap";
-                  };
+              subvolumes = let
+                mountOptions = ["compress=zstd" "noatime" "autodefrag"];
+              in {
+                "/root" = {
+                  inherit mountOptions;
+                  mountpoint = "/";
                 };
+                "/nix" = {
+                  inherit mountOptions;
+                  mountpoint = "/nix";
+                };
+                "/varlib" = {
+                  inherit mountOptions;
+                  mountpoint = "/var/lib";
+                };
+                "/atticd" = {
+                  inherit mountOptions;
+                  mountpoint = "/var/lib/atticd/storage";
+                };
+                "/swap" = {
+                  mountOptions = ["noatime" "nodatacow"];
+                  mountpoint = "/swap";
+                };
+              };
             };
           }
         ];

@@ -1,13 +1,11 @@
 # nix run github:numtide/nixos-anywhere -- --flake .#b1 root@<ip>
-
 {
- config,
- pkgs,
- lib,
- modulesPath,
- ...
-}:
-{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -22,17 +20,19 @@
 
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/" ];
+    fileSystems = ["/"];
     interval = "weekly";
   };
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 2048;
-  }];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 2048;
+    }
+  ];
 
   boot = {
-    supportedFilesystems = [ "btrfs" ];
+    supportedFilesystems = ["btrfs"];
 
     loader.grub = {
       enable = true;
@@ -192,8 +192,8 @@
 
   systemd.services = {
     atticd-postgres = {
-      after = [ "postgresql.service" ];
-      partOf = [ "atticd.service" ];
+      after = ["postgresql.service"];
+      partOf = ["atticd.service"];
       serviceConfig = {
         Type = "oneshot";
         User = config.services.postgresql.superUser;
@@ -209,9 +209,9 @@
           PSQL -tAc "CREATE DATABASE atticd WITH OWNER atticd;"
         fi
       '';
-      };
+    };
 
-      atticd.after = [ "atticd-postgres.service" ];
+    atticd.after = ["atticd-postgres.service"];
   };
 
   alexghr.tailscale = {

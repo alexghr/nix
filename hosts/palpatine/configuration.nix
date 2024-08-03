@@ -1,14 +1,18 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ nixpkgsFlakePath }:
-{ config, pkgs, lib, ... }: let username = "ag"; in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+{nixpkgsFlakePath}: {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  username = "ag";
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   hardware = {
     enableAllFirmware = true;
@@ -56,7 +60,7 @@
     loader.efi.efiSysMountPoint = "/boot/efi";
 
     kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = [ "btrfs" ];
+    supportedFilesystems = ["btrfs"];
     enableContainers = true;
 
     # enable IP forwarding so this machine can be a Tailscale exit node
@@ -80,8 +84,8 @@
 
     firewall = {
       enable = true;
-      trustedInterfaces = [ "lxdbr0" ];
-      allowedUDPPorts = [ config.services.tailscale.port];
+      trustedInterfaces = ["lxdbr0"];
+      allowedUDPPorts = [config.services.tailscale.port];
     };
   };
 
@@ -166,10 +170,25 @@
     samba
     earthly
     btop
+    pkgs.unstable.neovide
+    pkgs.unstable.neovim
+    kwalletmanager
+    kwalletcli
+    #starship
   ];
+  programs.starship = {
+    enable = true;
+    presets = ["pure-preset"];
+    settings = {
+      add_newline = false;
+    };
+  };
 
   services.gvfs.enable = true;
-  services.dbus.enable = true;
+  services.dbus = {
+    enable = true;
+    packages = [pkgs.kwalletmanager pkgs.kdePackages.kwallet];
+  };
   services.avahi = {
     enable = true;
     allowInterfaces = ["eth0"];
@@ -180,12 +199,13 @@
 
   services.xserver = {
     xkb.layout = "us";
-    xkb.options="compose:menu";
-    videoDrivers = [ "nvidia" ];
+    xkb.options = "compose:menu";
+    videoDrivers = ["nvidia"];
     enable = true;
     screenSection = ''
-      Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
+      Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=Off, ForceFullCompositionPipeline=Off, AllowGSYNCCompatible=On}"
     '';
+    updateDbusEnvironment = true;
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
@@ -201,12 +221,13 @@
         rofi
         rofi-calc
         pcmanfm
+        pkgs.unstable.neovide
       ];
     };
 
     desktopManager.xterm.enable = true;
   };
-  
+
   services.displayManager.sddm.enable = true;
   services.displayManager.defaultSession = "none+i3";
 
@@ -240,13 +261,23 @@
     overrideStrategy = "asDropin";
   };
 
+  systemd.user.services = {
+    kwallet = {
+      after = ["basic.target"];
+      wantedBy = ["graphical-session.target"];
+      script = ''
+        ${pkgs.kdePackages.kwallet}/bin/kwalletd6
+      '';
+    };
+  };
+
   services.udev.packages = [
     pkgs.unstable.ledger-udev-rules
   ];
 
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/" ];
+    fileSystems = ["/"];
     interval = "daily";
   };
 
@@ -271,6 +302,36 @@
   virtualisation.docker.enable = true;
   virtualisation.lxd.enable = false;
   virtualisation.lxc.lxcfs.enable = false;
+
+  virtualisation.oci-containers.backend = "docker";
+  virtualisation.oci-containers.containers.aztec-devbox = {
+    image = "aztecprotocol/devbox:1.0";
+    hostname = "aztec-devbox";
+    #user = "root";
+    autoStart = true;
+    extraOptions = ["--network=host" "--privileged"];
+    volumes = [
+      "/home/ag/code/aztec:/workspaces"
+    ];
+    #entrypoint = "/bin/bash";
+    cmd = ["/bin/bash" "-c" "while true; do sleep 1; done"];
+    #cmd = ["sleep" "9999"];
+  };
+
+  virtualisation.oci-containers.containers.aztec-sysbox = {
+    image = "ghcr.io/alexghr/aztec-sysbox:latest";
+    hostname = "aztec-sysbox";
+    #user = "root";
+    autoStart = true;
+    extraOptions = ["--privileged"];
+    volumes = [
+      "/home/ag/code/aztec:/workspaces"
+      "user:/home/ubuntu"
+    ];
+    #entrypoint = "/bin/bash";
+    #cmd = ["/bin/bash" "-c" "while true; do sleep 1; done"];
+    #cmd = ["sleep" "9999"];
+  };
 
   # age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
   # alexghr.b2-backup = {
@@ -300,5 +361,13 @@
   };
 
   age.secrets.ag-samba.file = ../../secrets/ag.samba.age;
-}
 
+  #programs.neovim = {
+  #  enable = true;
+  #  package = pkgs.unstable.neovim;
+  #  configure = {
+  #  };
+  #};
+
+  #fonts.packages = [pkgs.fira-code]
+}

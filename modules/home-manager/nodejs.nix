@@ -1,11 +1,20 @@
-{ config, pkgs, lib, ...}:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib; {
   options.alexghr = {
     nodejs = mkOption {
       description = "Enable NodeJS using home-manager";
       default = {};
 
-      type = types.attrsOf (types.submodule ({ config, name, ...}: {
+      type = types.attrsOf (types.submodule ({
+        config,
+        name,
+        ...
+      }: {
         options = {
           package = mkOption {
             type = types.package;
@@ -25,13 +34,15 @@ with lib; {
   };
 
   config = {
-    home-manager.users = mapAttrs (name: nodeConfig: hm: {
-      home.packages = [nodeConfig.package];
-      home.file = mkIf (nodeConfig.npmrc != null) {
-        ".npmrc" = {
-          source = hm.config.lib.file.mkOutOfStoreSymlink nodeConfig.npmrc;
+    home-manager.users =
+      mapAttrs (name: nodeConfig: hm: {
+        home.packages = [nodeConfig.package];
+        home.file = mkIf (nodeConfig.npmrc != null) {
+          ".npmrc" = {
+            source = hm.config.lib.file.mkOutOfStoreSymlink nodeConfig.npmrc;
+          };
         };
-      };
-    }) config.alexghr.nodejs;
+      })
+      config.alexghr.nodejs;
   };
 }

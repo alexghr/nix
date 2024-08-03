@@ -25,8 +25,18 @@
   inputs.vscode-server.url = "github:nix-community/nixos-vscode-server";
   inputs.vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko, attic, vscode-server }@attrs: {
-
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    darwin,
+    home-manager,
+    agenix,
+    alacritty-theme,
+    disko,
+    attic,
+    vscode-server,
+  } @ attrs: {
     overlays.unstable = final: prev: {
       unstable = import nixpkgs-unstable {
         system = prev.system;
@@ -34,78 +44,89 @@
       };
     };
 
-    nixosModules =  builtins.listToAttrs (map (x: {
-      name = x;
-      value = import (./modules + "/${x}");
-    })
-    (builtins.attrNames (builtins.readDir ./modules)));
+    nixosModules = builtins.listToAttrs (map (x: {
+        name = x;
+        value = import (./modules + "/${x}");
+      })
+      (builtins.attrNames (builtins.readDir ./modules)));
 
     nixosConfigurations = {
-      hk47 = let system = "aarch64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          { imports = builtins.attrValues self.nixosModules; }
-          home-manager.nixosModule
-          agenix.nixosModules.default
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-            nixpkgs.overlays = [
-              alacritty-theme.overlays.default
-            ];
-          })
-          ./hosts/hk47/configuration.nix
-          ./users/ag.nix
-        ];
-      };
+      hk47 = let
+        system = "aarch64-linux";
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            {imports = builtins.attrValues self.nixosModules;}
+            home-manager.nixosModule
+            agenix.nixosModules.default
+            ({pkgs, ...}: {
+              nix.registry.nixpkgs.flake = nixpkgs;
+              nixpkgs.overlays = [
+                alacritty-theme.overlays.default
+              ];
+            })
+            ./hosts/hk47/configuration.nix
+            ./users/ag.nix
+          ];
+        };
 
+      palpatine = let
+        system = "x86_64-linux";
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
+            ({
+              config,
+              pkgs,
+              ...
+            }: {
+              nixpkgs.overlays = [
+                self.overlays.unstable
+                alacritty-theme.overlays.default
+                attic.overlays.default
+              ];
+            })
+            home-manager.nixosModule
+            agenix.nixosModules.default
+            {imports = builtins.attrValues self.nixosModules;}
+            vscode-server.nixosModules.default
+            (import ./hosts/palpatine/configuration.nix {nixpkgsFlakePath = nixpkgs;})
+            ./users/ag.nix
+            ({pkgs, ...}: {
+              nix.registry.nixpkgs.flake = nixpkgs;
+              fonts.packages = [pkgs.victor-mono];
+            })
+          ];
+        };
 
-      palpatine = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
-          ({ config, pkgs, ...}: {
-            nixpkgs.overlays = [
-              self.overlays.unstable
-              alacritty-theme.overlays.default
-              attic.overlays.default
-            ];
-          })
-          home-manager.nixosModule
-          agenix.nixosModules.default
-          { imports = builtins.attrValues self.nixosModules; }
-          vscode-server.nixosModules.default
-          (import ./hosts/palpatine/configuration.nix { nixpkgsFlakePath = nixpkgs; })
-          ./users/ag.nix
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-            fonts.packages= [pkgs.victor-mono];
-          })
-        ];
-      };
+      nixosIso = let
+        system = "x86_64-linux";
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ({pkgs, ...}: {
+              networking.networkmanager.enable = true;
+              networking.wireless.enable = false;
+              environment.systemPackages = with pkgs; [
+                git
+                vim
+                file
+                parted
+              ];
+            })
+          ];
+        };
 
-      nixosIso = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          ({ pkgs, ... }:
-          {
-            networking.networkmanager.enable = true;
-            networking.wireless.enable = false;
-            environment.systemPackages = with pkgs; [
-              git
-              vim
-              file
-              parted
-            ];
-          })
-        ];
-      };
-
-      b1 =  nixpkgs.lib.nixosSystem {
+      b1 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = attrs;
         modules = [
-          ({ pkgs, ... }: {
+          ({pkgs, ...}: {
             nix.registry.nixpkgs.flake = nixpkgs;
           })
           self.nixosModules.attic
@@ -117,44 +138,51 @@
         ];
       };
 
-      r5d4 =  nixpkgs.lib.nixosSystem {
+      r5d4 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = attrs;
         modules = [
-          ({ pkgs, ... }: {
+          ({pkgs, ...}: {
             nix.registry.nixpkgs.flake = nixpkgs;
           })
           self.nixosModules.tailscale
           agenix.nixosModules.default
-          (import ./hosts/r5d4/configuration.nix { nixpkgsFlakePath = nixpkgs; })
+          (import ./hosts/r5d4/configuration.nix {nixpkgsFlakePath = nixpkgs;})
         ];
       };
     };
 
     darwinConfigurations = {
-      mackey = let system = "aarch64-darwin"; in darwin.lib.darwinSystem {
-        inherit system;
-        modules = [
-          ({ config, pkgs, ...}: {
-            nixpkgs.overlays = [
-              self.overlays.unstable
-              alacritty-theme.overlays.default
-            ];
-          })
-          home-manager.darwinModule
-          agenix.darwinModules.default
-          ./modules/home-manager
-          ./modules/cachix
-          ./modules/system
-          ./modules/attic
-          ./hosts/mackey/darwin-configuration.nix
-          ./users/ag.nix
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-            fonts.packages = [pkgs.victor-mono];
-          })
-        ];
-      };
+      mackey = let
+        system = "aarch64-darwin";
+      in
+        darwin.lib.darwinSystem {
+          inherit system;
+          modules = [
+            ({
+              config,
+              pkgs,
+              ...
+            }: {
+              nixpkgs.overlays = [
+                self.overlays.unstable
+                alacritty-theme.overlays.default
+              ];
+            })
+            home-manager.darwinModule
+            agenix.darwinModules.default
+            ./modules/home-manager
+            ./modules/cachix
+            ./modules/system
+            ./modules/attic
+            ./hosts/mackey/darwin-configuration.nix
+            ./users/ag.nix
+            ({pkgs, ...}: {
+              nix.registry.nixpkgs.flake = nixpkgs;
+              fonts.packages = [pkgs.victor-mono];
+            })
+          ];
+        };
     };
   };
 }
