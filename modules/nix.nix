@@ -2,8 +2,8 @@
   inputs,
   lib,
   ...
-}: {
-  flake.nixosModules.nix = {pkgs, ...}: {
+}: let
+  module = {pkgs, ...}: {
     nixpkgs.config.allowUnfree = lib.mkDefault true;
     nixpkgs.overlays = [
       (final: prev: {
@@ -25,18 +25,28 @@
 
       gc = {
         automatic = true;
-        dates = "monthly";
         options = "--delete-older-than 30d";
       };
-
-      nixPath = [
-        "nixpkgs=/etc/nixpkgs/channels/nixpkgs"
-        "/nix/var/nix/profiles/per-user/root/channels"
-      ];
     };
-
+  };
+in {
+  flake.nixosModules.nix = {pkgs, ...}: {
+    imports = [module];
+    nix.gc.dates = "monthly";
+    nix.nixPath = [
+      "nixpkgs=/etc/nixpkgs/channels/nixpkgs"
+      "/nix/var/nix/profiles/per-user/root/channels"
+    ];
     systemd.tmpfiles.rules = [
       "L+ /etc/nixpkgs/channels/nixpkgs - - - - ${inputs.nixpkgs}"
     ];
+  };
+  flake.darwinModules.nix = {pkgs, ...}: {
+    imports = [module];
+    nix.gc.interval = {
+      Hour = 12;
+      Minute = 0;
+      Day = 1; # Monthly
+    };
   };
 }

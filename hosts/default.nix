@@ -5,6 +5,8 @@
     ./drk-1
     ./trip
     ./palpatine
+    ./mackey
+
     ./iso.nix
   ];
 }
