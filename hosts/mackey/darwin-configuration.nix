@@ -46,9 +46,4 @@
     owner = "ag";
     group = "staff";
   };
-
-  alexghr.nodejs.ag = {
-    package = pkgs.nodejs-18_x;
-    npmrc = config.age.secrets.ag-npmrc.path;
-  };
 }
