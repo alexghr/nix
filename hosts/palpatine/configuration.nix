@@ -25,6 +25,8 @@
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+    keyboard.qmk.enable = true;
+
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
       powerManagement.enable = true;
