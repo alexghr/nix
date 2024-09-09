@@ -20,7 +20,7 @@ in {
   users.users.${user} = {
     inherit home;
     isNormalUser = true;
-    extraGroups = ["wheel" "pipewire" "audio" "video" "docker"];
+    extraGroups = ["wheel" "pipewire" "audio" "video" "docker" "dialout"];
     shell = pkgs.bashInteractive;
     openssh.authorizedKeys.keys = alexghrKeys;
     packages = with pkgs.unstable; [
@@ -57,7 +57,7 @@ in {
 
   environment.sessionVariables = {
     EDITOR = "${neovimPkg}/bin/nvim";
-    VISUAL = "${neovidePkg}/bin/neovide";
+    #VISUAL = "${neovidePkg}/bin/neovide";
     FLAKE = "${home}/code/alexghr/nix";
   };
 

@@ -87,7 +87,6 @@
     fstrim.enable = true;
     openssh.enable = true;
     fwupd.enable = true;
-    openvscode-server.enable = true;
     dbus.enable = true;
 
     pipewire = {
