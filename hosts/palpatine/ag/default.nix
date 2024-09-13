@@ -28,8 +28,10 @@ in {
       btop
       neovimPkg
       neovidePkg
+      nix-index
 
       alacritty
+      kitty
       bitwarden
       vscode
 
