@@ -20,7 +20,7 @@ in {
   users.users.${user} = {
     inherit home;
     isNormalUser = true;
-    extraGroups = ["wheel" "pipewire" "audio" "video" "docker" "dialout"];
+    extraGroups = ["wheel" "pipewire" "audio" "video" "docker" "dialout" "uinput" "input"];
     shell = pkgs.bashInteractive;
     openssh.authorizedKeys.keys = alexghrKeys;
     packages = with pkgs.unstable; [

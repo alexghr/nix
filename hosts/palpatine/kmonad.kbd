@@ -1,0 +1,25 @@
+(defcfg
+  input  (device-file "/dev/input/by-id/usb-DREVO.Inc_BladeMaster_PRO_88-if01-event-kbd")
+  output (uinput-sink "My KMonad output" "true")
+  fallthrough true
+  allow-cmd false
+  implicit-around around
+)
+
+(defsrc a s d f g h j k l ;)
+
+(defalias
+  met_a (tap-hold-next-release 250 a lmet)
+  alt_s (tap-hold-next-release 250 s lalt)
+  ctl_d (tap-hold-next-release 250 d lctl)
+  sft_f (tap-hold-next-release 250 f lsft)
+
+  sft_j (tap-hold-next-release 250 j rsft)
+  ctl_k (tap-hold-next-release 250 k rctl)
+  alt_l (tap-hold-next-release 250 l lalt)
+  met_; (tap-hold-next-release 250 ; rmet)
+)
+
+(deflayer homerowmods
+  @met_a   @alt_s   @ctl_d   @sft_f   g   h   @sft_j   @ctl_k   @alt_l   @met_;
+)

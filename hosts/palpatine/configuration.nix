@@ -13,6 +13,7 @@
     nixosModules.btrfs
     nixosModules.nix
     nixosModules.agenix
+    nixosModules.kmonad
     "${modulesPath}/installer/scan/not-detected.nix"
     ./fs.nix
     ./swap.nix
@@ -55,7 +56,7 @@
   powerManagement.cpuFreqGovernor = "performance";
 
   boot = {
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "uinput"];
     kernelPackages = pkgs.linuxPackages;
     kernelModules = ["kvm-amd"];
     loader.efi.efiSysMountPoint = "/boot/efi";
@@ -112,6 +113,17 @@
       publish = {
         workstation = true;
       };
+    };
+    kmonad = {
+      enable = true;
+      keyboards.homerowMods =
+      let
+      	device = "/dev/input/by-id/usb-DREVO.Inc_BladeMaster_PRO_88-if01-event-kbd";
+      in
+        {
+          inherit device;
+          config = builtins.readFile ./kmonad.kbd;
+        };
     };
   };
 

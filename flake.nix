@@ -23,6 +23,11 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    kmonad = {
+      url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -46,6 +51,7 @@
       };
       flake = {
         nixosModules.agenix = inputs.agenix.nixosModules.default;
+        nixosModules.kmonad = inputs.kmonad.nixosModules.default;
         darwinModules.agenix = inputs.agenix.darwinModules.default;
         alexghrKeys = import ./alexghr.keys.nix;
       };
