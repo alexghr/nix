@@ -14,6 +14,7 @@
         "--add-host" "host.docker.internal:host-gateway"
       ];
       volumes = [
+        "docker:/var/lib/docker"
         "/home/ag/code/aztec:/workspaces"
         "user:/home/ubuntu"
       ];

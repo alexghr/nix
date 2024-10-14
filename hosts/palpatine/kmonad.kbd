@@ -9,15 +9,15 @@
 (defsrc a s d f g h j k l ;)
 
 (defalias
-  met_a (tap-hold-next-release 250 a lmet)
-  alt_s (tap-hold-next-release 250 s lalt)
-  ctl_d (tap-hold-next-release 250 d lctl)
-  sft_f (tap-hold-next-release 250 f lsft)
+  met_a (tap-hold-next-release 300 a lmet)
+  alt_s (tap-hold-next-release 300 s lalt)
+  ctl_d (tap-hold-next-release 300 d lctl)
+  sft_f (tap-hold-next-release 300 f lsft)
 
-  sft_j (tap-hold-next-release 250 j rsft)
-  ctl_k (tap-hold-next-release 250 k rctl)
-  alt_l (tap-hold-next-release 250 l lalt)
-  met_; (tap-hold-next-release 250 ; rmet)
+  sft_j (tap-hold-next-release 300 j rsft)
+  ctl_k (tap-hold-next-release 300 k rctl)
+  alt_l (tap-hold-next-release 300 l lalt)
+  met_; (tap-hold-next-release 300 ; rmet)
 )
 
 (deflayer homerowmods

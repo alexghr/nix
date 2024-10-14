@@ -115,7 +115,7 @@
       };
     };
     kmonad = {
-      enable = true;
+      enable = false;
       keyboards.homerowMods =
       let
       	device = "/dev/input/by-id/usb-DREVO.Inc_BladeMaster_PRO_88-if01-event-kbd";
