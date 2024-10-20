@@ -8,10 +8,13 @@
       autoStart = true;
       user = "root";
       extraOptions = [
-        "--privileged" 
-        "--add-host" "aztec-sysbox:127.0.0.1"
-        "--add-host" "aztec-sysbox:[::1]"
-        "--add-host" "host.docker.internal:host-gateway"
+        "--privileged"
+        "--add-host"
+        "aztec-sysbox:127.0.0.1"
+        "--add-host"
+        "aztec-sysbox:[::1]"
+        "--add-host"
+        "host.docker.internal:host-gateway"
       ];
       volumes = [
         "docker:/var/lib/docker"

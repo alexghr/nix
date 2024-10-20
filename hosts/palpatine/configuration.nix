@@ -14,8 +14,9 @@
     nixosModules.nix
     nixosModules.agenix
     nixosModules.kmonad
+    nixosModules.disko
     "${modulesPath}/installer/scan/not-detected.nix"
-    ./fs.nix
+    ./disk-config.nix
     ./swap.nix
     ./x.nix
     ./ag
@@ -83,7 +84,7 @@
     };
   };
 
-  age.secrets.tailscale.file = ./secrets/tailscale.age;
+  # age.secrets.tailscale.file = ./secrets/tailscale.age;
 
   services = {
     gvfs.enable = true;
@@ -100,12 +101,12 @@
       pulse.enable = true;
     };
 
-    tailscale = {
-      enable = true;
-      openFirewall = true;
-      useRoutingFeatures = "client";
-      authKeyFile = config.age.secrets.tailscale.path;
-    };
+    # tailscale = {
+    #   enable = true;
+    #   openFirewall = true;
+    #   useRoutingFeatures = "client";
+    #   authKeyFile = config.age.secrets.tailscale.path;
+    # };
 
     avahi = {
       enable = true;
@@ -116,14 +117,12 @@
     };
     kmonad = {
       enable = false;
-      keyboards.homerowMods =
-      let
-      	device = "/dev/input/by-id/usb-DREVO.Inc_BladeMaster_PRO_88-if01-event-kbd";
-      in
-        {
-          inherit device;
-          config = builtins.readFile ./kmonad.kbd;
-        };
+      keyboards.homerowMods = let
+        device = "/dev/input/by-id/usb-DREVO.Inc_BladeMaster_PRO_88-if01-event-kbd";
+      in {
+        inherit device;
+        config = builtins.readFile ./kmonad.kbd;
+      };
     };
   };
 
