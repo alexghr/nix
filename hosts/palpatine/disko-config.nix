@@ -1,12 +1,9 @@
 {config, ...}: {
   disko.devices = {
-    disk = let
-      disk0 = "disk0";
-      disk1 = "disk1";
-    in {
+    disk = {
       disk0 = {
         type = "disk";
-        name = disk0;
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
@@ -24,7 +21,6 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = ["--label ${disk0}"];
               };
             };
           };
@@ -32,7 +28,7 @@
       };
       disk1 = {
         type = "disk";
-        name = disk1;
+        device = "/dev/nvme1n1";
         content = {
           type = "gpt";
           partitions = {
@@ -40,7 +36,7 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = ["--data raid1" "--metadata raid1" "--label ${disk1}" "/dev/disk/by-label/${disk0}"];
+                extraArgs = ["--force" "--data raid1" "--metadata raid1" "/dev/disk/by-partlabel/disk-disk0-data"];
                 subvolumes = {
                   "/root" = {
                     mountpoint = "/";

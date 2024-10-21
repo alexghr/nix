@@ -16,13 +16,13 @@
     nixosModules.kmonad
     nixosModules.disko
     "${modulesPath}/installer/scan/not-detected.nix"
-    ./disk-config.nix
+    ./disko-config.nix
     ./swap.nix
     ./x.nix
     ./ag
   ];
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "24.05";
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
