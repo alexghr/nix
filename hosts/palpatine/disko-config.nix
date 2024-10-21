@@ -48,7 +48,6 @@
                   };
                   "/nix" = {
                     mountpoint = "/nix";
-                    inherit mountOptions;
                     mountOptions = ["compress=zstd" "noatime"];
                   };
                   "/var" = {
