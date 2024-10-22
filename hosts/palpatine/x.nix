@@ -57,6 +57,11 @@
     };
   };
 
+  security.pam.services.unlockKeyring.kwallet = {
+    enable = true;
+    package = pkgs.kdePackages.kwallet;
+  };
+
   programs.gnupg.agent = {
     enable = true;
     settings = {

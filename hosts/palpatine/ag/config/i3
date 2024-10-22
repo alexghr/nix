@@ -8,13 +8,14 @@ exec --no-startup-id dunst
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
-set $lock i3lock --image=/home/ag/.background.png
+set $lock i3lock --color 002244
 #set $lock loginctl lock-sessions
 
 bindsym $mod+Control+l exec $lock
 bindsym $mod+Control+s exec --no-startup-id $lock && systemctl suspend
 
 exec "setxkbmap -option 'grp:alt_shift_toggle' -layout us,ro"
+exec "xsetroot -solid '#333333'"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
