@@ -32,6 +32,7 @@
               }: {
                 imports = [
                   "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+                    self.nixosModules.nix
                 ];
 
                 boot.kernelPackages = pkgs.linuxPackages_6_1;

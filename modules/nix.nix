@@ -35,10 +35,12 @@ in {
     nix.gc.dates = "monthly";
     nix.nixPath = [
       "nixpkgs=/etc/nixpkgs/channels/nixpkgs"
+      "nixpkgs-unstable=/etc/nixpkgs/channels/nixpkgs-unstable"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
     systemd.tmpfiles.rules = [
       "L+ /etc/nixpkgs/channels/nixpkgs - - - - ${inputs.nixpkgs}"
+      "L+ /etc/nixpkgs/channels/nixpkgs-unstable - - - - ${inputs.nixpkgs-unstable}"
     ];
   };
   flake.darwinModules.nix = {pkgs, ...}: {
