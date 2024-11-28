@@ -29,20 +29,12 @@
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = false;
-      raspberryPi = {
-        enable = true;
-        version = 4;
-        #uboot.enable = true;
-        firmwareConfig = ''
-          gpu_mem=256
-        '';
-      };
     };
 
     # custom /tmp in filesystems
     # I needed more storage in order for nix to be able to build things
     # default tmpOnTmpfs allocates 50% of RAM, which is 2GiB on this system
-    tmpOnTmpfs = false;
+    tmp.useTmpfs = false;
   };
 
   hardware = {

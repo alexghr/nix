@@ -143,7 +143,7 @@
     };
 
     unifi = {
-      enable = true;
+      enable = false;
       unifiPackage = pkgs.unifi7;
       mongodbPackage = pkgs.pinned.mongodb-4_4;
       openFirewall = true;

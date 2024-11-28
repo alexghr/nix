@@ -70,18 +70,6 @@
     openssh.enable = true;
     thermald.enable = true;
 
-    avahi = {
-      enable = true;
-      reflector = true;
-      nssmdns = true;
-      allowInterfaces = ["wlp2s0"];
-      publish = {
-        enable = true;
-        addresses = true;
-        workstation = true;
-      };
-    };
-
     tailscale = {
       enable = true;
       openFirewall = true;

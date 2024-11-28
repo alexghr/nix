@@ -31,6 +31,7 @@
 
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
+      open = false;
       powerManagement.enable = true;
       nvidiaSettings = true;
       modesetting.enable = true;
@@ -49,7 +50,6 @@
 
     opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;
     };
   };
