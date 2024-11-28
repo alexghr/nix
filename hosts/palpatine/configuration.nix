@@ -84,7 +84,7 @@
     };
   };
 
-  age.secrets.tailscale.file = ./secrets/tailscale.age;
+  #age.secrets.tailscale.file = ./secrets/tailscale.age;
 
   services = {
     gvfs.enable = true;
@@ -101,20 +101,13 @@
       pulse.enable = true;
     };
 
-    tailscale = {
-      enable = true;
-      openFirewall = true;
-      useRoutingFeatures = "client";
-      authKeyFile = config.age.secrets.tailscale.path;
-    };
+    #tailscale = {
+    #  enable = true;
+    #  openFirewall = true;
+    #  useRoutingFeatures = "client";
+    #  authKeyFile = config.age.secrets.tailscale.path;
+    #};
 
-    avahi = {
-      enable = true;
-      allowInterfaces = ["enp5s0"];
-      publish = {
-        workstation = true;
-      };
-    };
     kmonad = {
       enable = false;
       keyboards.homerowMods = let

@@ -15,6 +15,8 @@
         "aztec-sysbox:[::1]"
         "--add-host"
         "host.docker.internal:host-gateway"
+	"--network"
+	"host"
       ];
       volumes = [
         "docker:/var/lib/docker"
