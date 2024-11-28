@@ -1,4 +1,4 @@
-{config, ...}: {
+{
   disko.devices = {
     disk = {
       disk0 = {
@@ -8,7 +8,7 @@
           type = "gpt";
           partitions = {
             ESP = {
-              size = "512MB";
+              size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
