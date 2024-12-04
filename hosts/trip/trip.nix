@@ -79,7 +79,6 @@
       enable = true;
       allowPing = true;
       allowedTCPPorts = [
-        8443 # unifi https port
         21064 # home-assistant's homekit integration
       ];
       allowedUDPPorts = [];
@@ -140,13 +139,6 @@
         addresses = true;
         workstation = true;
       };
-    };
-
-    unifi = {
-      enable = false;
-      unifiPackage = pkgs.unifi7;
-      mongodbPackage = pkgs.pinned.mongodb-4_4;
-      openFirewall = true;
     };
 
     tailscale = {
