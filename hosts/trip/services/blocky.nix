@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  apiPort = 4000;
+in {
   networking.firewall = {
-    allowedTCPPorts = [53];
+    allowedTCPPorts = [53 apiPort];
     allowedUDPPorts = [53];
   };
 
@@ -13,11 +15,15 @@
       job_name = "blocky.trip";
       static_configs = [
         {
-          targets = ["127.0.0.1:${toString config.services.blocky.settings.ports.http}"];
+          targets = ["127.0.0.1:${toString apiPort}"];
         }
       ];
     }
   ];
+
+  services.caddy.virtualHosts."blocky.esrever.uno".extraConfig = ''
+    reverse_proxy :${toString apiPort}
+  '';
 
   services.blocky = {
     enable = true;
@@ -50,9 +56,10 @@
         cacheTimeNegative = "5m";
       };
 
-      ports.http = 4000;
+      ports.http = "0.0.0.0:${toString apiPort}";
       prometheus.enable = true;
       customDNS = {
+        filterUnmappedTypes = false;
         rewrite = {
           "home" = "localdomain";
         };
@@ -60,6 +67,7 @@
           "mackey.localdomain" = "10.1.1.116";
           "palpatine.localdomain" = "10.1.1.105";
           "trip.localdomain" = "10.1.1.110";
+          "unifi.localdomain" = "10.1.1.1";
           "esrever.uno" = "10.1.1.110";
         };
       };
