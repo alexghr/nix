@@ -4,4 +4,5 @@ let
 in {
   "tailscale.age".publicKeys = alexghrKeys ++ [hostKey];
   "samba.age".publicKeys = alexghrKeys ++ [hostKey];
+  "nix-ssh.age".publicKeys = alexghrKeys ++ [hostKey];
 }

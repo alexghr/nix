@@ -56,6 +56,14 @@
 
   users.users.root.openssh.authorizedKeys.keys = alexghrKeys;
 
+  nix.sshServe = {
+    enable = true;
+    write = true;
+    keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/niKT1e0ukzxSBe2j0I9peCjbXyLNVppENK3l41tzO"];
+    protocol = "ssh";
+  };
+  nix.settings.trusted-users = ["nix-ssh"];
+
   environment.systemPackages = with pkgs; [
     vim
     git

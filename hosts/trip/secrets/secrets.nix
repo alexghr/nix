@@ -7,4 +7,5 @@ in {
   "caddy.age".publicKeys = alexghrKeys ++ [hostKey];
   "ghcr.age".publicKeys = alexghrKeys ++ [hostKey];
   "cloudflared.age".publicKeys = alexghrKeys ++ [hostKey];
+  "nix-serve-private-key.age".publicKeys = alexghrKeys ++ [hostKey];
 }

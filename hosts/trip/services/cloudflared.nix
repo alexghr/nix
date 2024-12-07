@@ -1,8 +1,4 @@
-{
-  config,
-  ...
-}:
-{
+{config, ...}: {
   age.secrets = {
     ghcr.file = ../secrets/ghcr.age;
     cloudflared = {

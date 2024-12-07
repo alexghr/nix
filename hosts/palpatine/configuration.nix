@@ -23,6 +23,19 @@
   ];
 
   system.stateVersion = "24.05";
+  # inspired from https://github.com/caarlos0/dotfiles/blob/e2cb05d1e381956b7aba4303cc27206695657a0e/machines/shared.nix#L83
+  nix.extraOptions = ''
+    post-build-hook = ${packages.uploadToCache}/bin/upload-to-cache
+  '';
+
+  age.secrets.nix-ssh.file = ./secrets/nix-ssh.age;
+  programs.ssh.extraConfig = ''
+    Host nixcache.esrever.uno
+    User nix-ssh
+    BatchMode yes
+    IdentitiesOnly yes
+    IdentityFile ${config.age.secrets.nix-ssh.path}
+  '';
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -129,6 +142,7 @@
   };
 
   environment.systemPackages = with pkgs.unstable; [
+    packages.uploadToCache
     nix-output-monitor
     nvd
     nh
