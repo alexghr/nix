@@ -46,6 +46,8 @@
     kernel.sysctl = {
       "kernel.hung_task_panic" = 1;
       "kernel.panic" = 1;
+      "net.core.rmem_max" = 7500000;
+      "net.core.wmem_max" = 7500000;
     };
   };
 

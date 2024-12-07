@@ -6,5 +6,6 @@
     ./caddy.nix
     ./homepage
     ./tandoor.nix
+    ./cloudflared.nix
   ];
 }
