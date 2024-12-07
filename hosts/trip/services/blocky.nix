@@ -52,8 +52,16 @@
 
       ports.http = 4000;
       prometheus.enable = true;
-      customDNS.mapping = {
-        "hass.esrever.uno" = "10.1.1.110";
+      customDNS = {
+        rewrite = {
+          "home" = "localdomain";
+        };
+        mapping = {
+          "mackey.localdomain" = "10.1.1.116";
+          "palpatine.localdomain" = "10.1.1.105";
+          "trip.localdomain" = "10.1.1.110";
+          "esrever.uno" = "10.1.1.110";
+        };
       };
     };
   };

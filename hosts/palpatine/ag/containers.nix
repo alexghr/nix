@@ -13,10 +13,8 @@
         "aztec-sysbox:127.0.0.1"
         "--add-host"
         "aztec-sysbox:[::1]"
-        "--add-host"
-        "host.docker.internal:host-gateway"
-	"--network"
-	"host"
+        "--network"
+        "host"
       ];
       volumes = [
         "docker:/var/lib/docker"

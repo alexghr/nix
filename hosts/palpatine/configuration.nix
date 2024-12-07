@@ -68,6 +68,8 @@
     networkmanager.enable = true;
     wireless.enable = false;
     firewall.enable = true;
+    useDHCP = false;
+    dhcpcd.enable = false;
   };
 
   time.timeZone = "Europe/London";
