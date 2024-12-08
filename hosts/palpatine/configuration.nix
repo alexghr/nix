@@ -137,7 +137,11 @@
   security.rtkit.enable = true;
 
   virtualisation = {
-    docker.enable = true;
+    docker = {
+      enable = true;
+      extraOptions = "--registry-mirror https://docker.esrever.uno";
+    };
+
     oci-containers.backend = "docker";
   };
 

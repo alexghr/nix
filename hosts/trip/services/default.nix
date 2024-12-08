@@ -8,5 +8,6 @@
     ./tandoor.nix
     ./cloudflared.nix
     ./nix-serve.nix
+    ./docker.nix
   ];
 }
