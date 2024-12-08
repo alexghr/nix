@@ -9,5 +9,6 @@
     ./cloudflared.nix
     ./nix-serve.nix
     ./docker.nix
+    ./apt-cacher-ng.nix
   ];
 }
