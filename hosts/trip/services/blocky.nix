@@ -68,6 +68,7 @@ in {
           "palpatine.localdomain" = "10.1.1.105";
           "trip.localdomain" = "10.1.1.110";
           "unifi.localdomain" = "10.1.1.1";
+          "pizero.localdomain" = "10.1.102.206";
           "esrever.uno" = "10.1.1.110";
         };
       };

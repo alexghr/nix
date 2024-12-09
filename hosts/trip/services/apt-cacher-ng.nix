@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   port = 3142;
   acngConf = pkgs.writeTextDir "acng.conf" ''
     PidFile: /var/run/apt-cacher-ng/pid
@@ -26,14 +25,13 @@ let
 
     PassThroughPattern: .*
   '';
-in
-{
+in {
   services.blocky.settings.customDNS.mapping."aptcache.esrever.uno" = "10.1.1.110";
   networking.firewall.allowedTCPPorts = [port];
 
   systemd.services.apt-cacher-ng = {
     description = "APT mirror";
-    path = [ pkgs.apt-cacher-ng ];
+    path = [pkgs.apt-cacher-ng];
     script = ''
       apt-cacher-ng -c ${acngConf}
     '';
