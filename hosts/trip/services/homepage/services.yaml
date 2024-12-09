@@ -1,25 +1,34 @@
 ---
 - Network:
-  - EdgeRouter X:
-      href: https://10.1.1.1/
-      description: Main router/firewall
+  - Unifi:
+      href: https://unifi.home
+      description: Unifi Controller
       ping: 10.1.1.1
+      siteMonitor: https://unifi.home
   - Hasivo:
       href: http://10.1.1.104/
       description: Core switch
       ping: 10.1.1.104
-      siteMonitor: http://10.1.1.104/
-  - Unifi:
-      href: https://trip:8443/
-      description: Unifi controller
-      ping: trip
-      siteMonitor: https://trip:8443/
+      siteMonitor: http://10.1.1.104
 - Services:
   - Home Assistant:
-      href: http://trip:8123/
+      href: https://hass.esrever.uno
       description: Home automation
       ping: trip
-      siteMonitor: http://trip:8123/
+      siteMonitor: https://hass.esrever.uno
+  - Grafana:
+      href: https://grafana.esrever.uno
+      description: Home automation
+      ping: trip
+      siteMonitor: https://grafana.esrever.uno
+  - Tandoor:
+      href: https://tandoor.esrever.uno
+      description: Recipe aggregator
+      siteMonitor: https://tandoor.esrever.uno
+  - AptCacherNg:
+      href: https://aptcache.esrever.uno/acng-report.html
+      description: Apt cache
+      siteMonitor: https://aptcache.esrever.uno/acng-report.html
 - Misc:
     - Uptime Robot:
         href: https://uptimerobot.com/

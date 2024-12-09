@@ -27,6 +27,11 @@
   '';
 in {
   services.blocky.settings.customDNS.mapping."aptcache.esrever.uno" = "10.1.1.110";
+  services.caddy.virtualHosts."aptcache.esrever.uno" = {
+    extraConfig = ''
+      reverse_proxy :${toString port}
+    '';
+  };
   networking.firewall.allowedTCPPorts = [port];
 
   systemd.services.apt-cacher-ng = {
