@@ -13,6 +13,7 @@
     nixosModules.btrfs
     nixosModules.nix
     nixosModules.agenix
+    nixosModules.wolhttp
     "${modulesPath}/installer/scan/not-detected.nix"
     ./trip.fs.nix
     ./services
@@ -103,6 +104,11 @@
     openssh.enable = true;
     fwupd.enable = true;
     thermald.enable = true;
+    
+    wolhttp = {
+      enable = true;
+      port = 9023;
+    };
 
     # Remove one of the Intel i226-V NICs (in this case, eth0)
     # both eth0 and eth1 cause the system to hang when power management is enabled
@@ -131,6 +137,13 @@
         # https://www.home-assistant.io/integrations/default_config/
         default_config = {};
         "automation ui" = "!include automations.yaml";
+        "script" = "!include scripts.yaml";
+        rest_command = {
+          wake_palpatine = {
+            url = "http://127.0.0.1:${toString config.services.wolhttp.port}/30:52:5a:00:36:5e";
+            method = "POST";
+          };
+        };
 
         http = {
           use_x_forwarded_for = true;

@@ -33,6 +33,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    wolhttp = {
+      url = "github:alexghr/wolhttp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -52,12 +57,14 @@
         ...
       }: {
         packages.default = pkgs.hello;
+        packages.wolhttp = inputs.wolhttp.packages.${system}.default;
         formatter = pkgs.alejandra;
       };
       flake = {
         nixosModules.agenix = inputs.agenix.nixosModules.default;
         nixosModules.kmonad = inputs.kmonad.nixosModules.default;
         nixosModules.disko = inputs.disko.nixosModules.default;
+        nixosModules.wolhttp = inputs.wolhttp.nixosModules.default;
         darwinModules.agenix = inputs.agenix.darwinModules.default;
         alexghrKeys = import ./alexghr.keys.nix;
       };

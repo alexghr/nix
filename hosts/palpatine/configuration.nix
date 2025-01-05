@@ -80,9 +80,18 @@
     hostName = "palpatine";
     networkmanager.enable = true;
     wireless.enable = false;
-    firewall.enable = true;
+    firewall = {
+      enable = true;
+      allowPing = true;
+      allowedTCPPorts = [];
+      allowedUDPPorts = [];
+    };
     useDHCP = false;
     dhcpcd.enable = false;
+    interfaces.enp5s0.wakeOnLan = {
+      enable = true;
+      policy = ["magic"];
+    };
   };
 
   time.timeZone = "Europe/London";
