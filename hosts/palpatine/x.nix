@@ -47,20 +47,11 @@
 
   services.dbus.packages = [pkgs.kdePackages.kwallet];
 
-  systemd.user.services = {
-    kwallet = {
-      after = ["basic.target"];
-      wantedBy = ["graphical-session.target"];
-      script = ''
-        ${pkgs.kdePackages.kwallet}/bin/kwalletd6
-      '';
-    };
+  security.pam.services.kwallet = {
+    name = "kwallet";
+    enableKwallet = true;
   };
 
-  security.pam.services.unlockKeyring.kwallet = {
-    enable = true;
-    package = pkgs.kdePackages.kwallet;
-  };
 
   programs.gnupg.agent = {
     enable = true;

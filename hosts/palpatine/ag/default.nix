@@ -32,6 +32,7 @@ in {
 
       alacritty
       kitty
+      ghostty
       bitwarden
       vscode
 
@@ -46,6 +47,10 @@ in {
       gimp-with-plugins
       inkscape
       vlc
+
+      file
+      unzip
+      imagemagick
 
       (pkgs.callPackage ./bin/i3_window.nix {})
     ];
