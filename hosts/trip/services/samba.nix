@@ -6,7 +6,7 @@
   users.users.ag.isNormalUser = true;
 
   services.samba = {
-    enable = true;
+    enable = false;
     securityType = "user";
     openFirewall = true;
     shares = {
@@ -36,7 +36,7 @@
   };
 
   services.samba-wsdd = {
-    enable = true;
-    openFirewall = true;
+    enable = false;
+    openFirewall = false;
   };
 }

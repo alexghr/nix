@@ -38,6 +38,7 @@ in {
 
       firefox
       google-chrome
+      brave
       thunderbird
       libreoffice
 

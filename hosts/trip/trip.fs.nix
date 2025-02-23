@@ -17,6 +17,7 @@
   # https://github.com/NixOS/nixpkgs/issues/72970
   # https://github.com/systemd/systemd/issues/8234
   systemd.services.mount-bcache = {
+    enable = false;
     description = "mount bcache";
     script = ''
       mount_flags="noatime"
@@ -33,7 +34,7 @@
       ${pkgs.util-linux}/bin/mount -o $mount_flags -t bcachefs $mount_devices $mount_point
     '';
     # samba shares live on this disk
-    wantedBy = ["multi-user.target" "samba.target"];
+    # wantedBy = ["multi-user.target" "samba.target"];
   };
 
   swapDevices = [];

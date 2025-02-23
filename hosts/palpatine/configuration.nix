@@ -106,6 +106,10 @@
       enableSSHSupport = true;
       enableExtraSocket = true;
     };
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
   };
 
   age.secrets.tailscale.file = ./secrets/tailscale.age;
