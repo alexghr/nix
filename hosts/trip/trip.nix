@@ -79,6 +79,9 @@
     podman-compose
     bcachefs-tools
     config.boot.kernelPackages.turbostat
+    virt-manager
+    OVMF
+    libguestfs
   ];
 
   networking = {
@@ -94,6 +97,16 @@
       ];
       allowedUDPPorts = [];
     };
+
+    bridges = {
+      "br0" = {
+        interfaces = [ "enp3s0" ];
+      };
+    };
+
+    interfaces.br0 = {
+      useDHCP = true;
+    };
   };
 
   age.secrets = {
@@ -104,7 +117,7 @@
     openssh.enable = true;
     fwupd.enable = true;
     thermald.enable = true;
-    
+
     wolhttp = {
       enable = true;
       port = 9023;
@@ -125,7 +138,7 @@
     };
 
     home-assistant = {
-      enable = true;
+      enable = false;
       openFirewall = true;
       extraComponents = [
         "zha"
@@ -212,6 +225,11 @@
     oci-containers = {
       backend = "podman";
       containers = {};
+    };
+    libvirtd = {
+      enable = true;
+      # Used for UEFI boot of Home Assistant OS guest image
+      qemuOvmf = true;
     };
   };
 }
