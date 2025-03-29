@@ -52,7 +52,6 @@
     enableKwallet = true;
   };
 
-
   programs.gnupg.agent = {
     enable = true;
     settings = {

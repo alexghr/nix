@@ -10,5 +10,6 @@
     ./nix-serve.nix
     ./docker.nix
     ./apt-cacher-ng.nix
+    ./aztec.nix
   ];
 }
