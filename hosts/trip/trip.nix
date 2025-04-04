@@ -217,19 +217,17 @@
   '';
 
   virtualisation = {
-    podman = {
+    docker = {
       enable = true;
-      dockerSocket.enable = true;
-      dockerCompat = true;
     };
     oci-containers = {
-      backend = "podman";
+      backend = "docker";
       containers = {};
     };
     libvirtd = {
       enable = true;
       # Used for UEFI boot of Home Assistant OS guest image
-      qemuOvmf = true;
+      qemu.ovmf.enable = true;
     };
   };
 }

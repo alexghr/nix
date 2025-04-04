@@ -11,5 +11,6 @@
     ./docker.nix
     ./apt-cacher-ng.nix
     ./aztec.nix
+    ./homeassistant
   ];
 }
