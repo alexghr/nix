@@ -82,6 +82,7 @@
     virt-manager
     OVMF
     libguestfs
+    OVMFFull
   ];
 
   networking = {
@@ -228,6 +229,7 @@
       enable = true;
       # Used for UEFI boot of Home Assistant OS guest image
       qemu.ovmf.enable = true;
+      qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
     };
   };
 }
