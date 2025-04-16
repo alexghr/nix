@@ -36,7 +36,7 @@
         TEST_ACCOUNTS = "false";
         SPONSORED_FPC = "true";
 
-        LOG_LEVEL = "info";
+        LOG_LEVEL = "debug; info: aztec:simulator, json-rpc";
         LOG_JSON = "true";
         DATA_DIRECTORY = "/var/lib/aztec";
         VALIDATOR_DISABLED = "false";
@@ -46,6 +46,7 @@
         ARCHIVER_VIEM_POLLING_INTERVAL_MS = "1000";
         L1_READER_VIEM_POLLING_INTERVAL_MS = "1000";
         SEQ_VIEM_POLLING_INTERVAL_MS = "1000";
+	SENTINEL_ENABLED = "true";
 
         P2P_PORT = "43210";
         P2P_QUERY_FOR_IP = "true";
