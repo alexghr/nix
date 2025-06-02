@@ -1,12 +1,12 @@
 {config, ...}: {
-  age.secrets = {
-    ghcr.file = ../secrets/ghcr.age;
-    cloudflared = {
-      file = ../secrets/cloudflared.age;
-      owner = config.services.cloudflared.user;
-      group = config.services.cloudflared.group;
-    };
-  };
+  #age.secrets = {
+  #  ghcr.file = ../secrets/ghcr.age;
+  #  cloudflared = {
+  #    file = ../secrets/cloudflared.age;
+  #    owner = config.services.cloudflared.user;
+  #    group = config.services.cloudflared.group;
+  #  };
+  #};
 
   #virtualisation.oci-containers.containers = {
   #  alexghr = {
@@ -22,7 +22,7 @@
   #  };
   #};
 
-  services.cloudflared.enable = true;
+  # services.cloudflared.enable = true;
   #services.cloudflared.tunnels."c7c61e3d-0b6d-4ee5-9129-b8a5f7019f80" = {
   #  credentialsFile = config.age.secrets.cloudflared.path;
   #  default = "http_status:404";

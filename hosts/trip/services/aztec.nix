@@ -14,9 +14,10 @@
 
   virtualisation.oci-containers.containers = {
     aztec-alpha-val1 = {
-      image = "aztecprotocol/aztec:latest";
+      # image = "aztecprotocol/aztec:latest";
       # image = "philwindle/aztec:latest";
-      # image = "alexghr/aztec:4302d1655867e26d890e9c2157abaac83d4af6f8";
+      image = "alexghr/aztec:latest";
+      pull = "always";
       entrypoint = "/bin/bash";
       cmd = [
         "-c"
@@ -31,12 +32,12 @@
         "43210:43210/udp"
       ];
       environment = {
-        LOG_LEVEL = "info";
+        LOG_LEVEL = "debug; info: simulator, json-rpc";
         LOG_JSON = "true";
         DATA_DIRECTORY = "/var/lib/aztec";
         VALIDATOR_DISABLED = "false";
         SEQ_MIN_TX_PER_BLOCK = "0";
-        SEQ_MAX_TX_PER_BLOCK = "2";
+        SEQ_MAX_TX_PER_BLOCK = "8";
         ARCHIVER_POLLING_INTERVAL_MS = "1000";
         ARCHIVER_VIEM_POLLING_INTERVAL_MS = "1000";
         L1_READER_VIEM_POLLING_INTERVAL_MS = "1000";
