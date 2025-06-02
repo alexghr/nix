@@ -24,11 +24,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    kmonad = {
-      url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,7 +57,6 @@
       };
       flake = {
         nixosModules.agenix = inputs.agenix.nixosModules.default;
-        nixosModules.kmonad = inputs.kmonad.nixosModules.default;
         nixosModules.disko = inputs.disko.nixosModules.default;
         nixosModules.wolhttp = inputs.wolhttp.nixosModules.default;
         darwinModules.agenix = inputs.agenix.darwinModules.default;

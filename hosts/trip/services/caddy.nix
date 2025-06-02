@@ -21,28 +21,18 @@
     enable = true;
     email = "{env.ADMIN_EMAIL}";
     # see packages/caddy/default.nix
-    package = packages.caddyCF;
+    # package = packages.caddyCF;
+    # acme_dns cloudflare {env.CF_DNS_API_TOKEN}
+    # tailscale cert trip.spotted-gar.ts.net
     globalConfig = ''
-      acme_dns cloudflare {env.CF_DNS_API_TOKEN}
     '';
 
+    # reverse_proxy / :${builtins.toString config.services.homepage-dashboard.listenPort}
     virtualHosts = {
-      "trip.esrever.uno" = {
-        extraConfig = ''
-          reverse_proxy :${builtins.toString config.services.homepage-dashboard.listenPort}
-        '';
-      };
-
-      "hass.esrever.uno" = {
-        extraConfig = ''
-          reverse_proxy :${builtins.toString config.services.home-assistant.config.http.server_port}
-        '';
-      };
-
-      "tandoor.esrever.uno" = {
-        extraConfig = ''
-          reverse_proxy :${builtins.toString config.services.tandoor-recipes.port}
-        '';
+      "trip.spotted-gar.ts.net" = {
+        #extraConfig = ''
+        #  reverse_proxy :${builtins.toString config.services.grafana.settings.server.http_port}
+        #'';
       };
     };
   };

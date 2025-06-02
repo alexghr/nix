@@ -31,3 +31,6 @@
 
 [user]
   name = "Alex Gherghisan"
+  email = "alexghr@users.noreply.github.com"
+[color]
+  ui="auto"

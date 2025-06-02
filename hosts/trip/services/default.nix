@@ -12,5 +12,7 @@
     ./apt-cacher-ng.nix
     ./aztec.nix
     ./homeassistant
+    ./otel.nix
+    ./loki.nix
   ];
 }

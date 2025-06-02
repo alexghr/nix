@@ -47,9 +47,10 @@
 
   services.dbus.packages = [pkgs.kdePackages.kwallet];
 
-  security.pam.services.kwallet = {
-    name = "kwallet";
-    enableKwallet = true;
+  security.pam.services.kwallet.kwallet = {
+    enable = true;
+    forceRun = true;
+    package = pkgs.kdePackages.kwallet-pam;
   };
 
   programs.gnupg.agent = {
@@ -60,11 +61,12 @@
     };
     enableExtraSocket = true;
     enableBrowserSocket = false;
-    pinentryPackage =
-      pkgs.kwalletcli.overrideAttrs
-      (finalAttrs: previousAttrs: {
-        meta.mainProgram = "pinentry-kwallet";
-      });
+    #pinentryPackage =
+    #  pkgs.kwalletcli.overrideAttrs
+    #  (finalAttrs: previousAttrs: {
+    #    meta.mainProgram = "pinentry-kwallet";
+    #  });
+    pinentryPackage = pkgs.pinentry-qt;
   };
 
   fonts = {

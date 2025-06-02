@@ -28,8 +28,8 @@
         options = "--delete-older-than 30d";
       };
 
-      settings.substituters = ["https://nixcache.esrever.uno"];
-      settings.trusted-public-keys = ["nixcache.esrever.uno:CyCbXQKNkoSsPISjnHaVY2ag6ZmL0q/8saSdnqEUdFk="];
+      #settings.substituters = ["https://nixcache.esrever.uno"];
+      #settings.trusted-public-keys = ["nixcache.esrever.uno:CyCbXQKNkoSsPISjnHaVY2ag6ZmL0q/8saSdnqEUdFk="];
     };
   };
 in {

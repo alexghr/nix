@@ -13,7 +13,6 @@
     nixosModules.btrfs
     nixosModules.nix
     nixosModules.agenix
-    nixosModules.kmonad
     nixosModules.disko
     "${modulesPath}/installer/scan/not-detected.nix"
     ./disko-config.nix
@@ -24,9 +23,9 @@
 
   system.stateVersion = "24.05";
   # inspired from https://github.com/caarlos0/dotfiles/blob/e2cb05d1e381956b7aba4303cc27206695657a0e/machines/shared.nix#L83
-  nix.extraOptions = ''
-    post-build-hook = ${packages.uploadToCache}/bin/upload-to-cache
-  '';
+  #nix.extraOptions = ''
+  #  post-build-hook = ${packages.uploadToCache}/bin/upload-to-cache
+  #'';
 
   age.secrets.nix-ssh.file = ./secrets/nix-ssh.age;
   programs.ssh.extraConfig = ''
@@ -134,16 +133,6 @@
       openFirewall = true;
       useRoutingFeatures = "client";
       authKeyFile = config.age.secrets.tailscale.path;
-    };
-
-    kmonad = {
-      enable = false;
-      keyboards.homerowMods = let
-        device = "/dev/input/by-id/usb-DREVO.Inc_BladeMaster_PRO_88-if01-event-kbd";
-      in {
-        inherit device;
-        config = builtins.readFile ./kmonad.kbd;
-      };
     };
   };
 

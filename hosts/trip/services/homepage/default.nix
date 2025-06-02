@@ -5,7 +5,6 @@
 }: {
   services.homepage-dashboard = {
     enable = true;
-    openFirewall = true;
   };
 
   age.secrets.uptimerobot.file = ../../secrets/uptimerobot.age;
@@ -14,10 +13,16 @@
     isSystemUser = true;
     home = "/var/lib/homepage-dashboard";
     group = "homepage-dashboard";
-    extraGroups = ["podman"];
+    extraGroups = ["docker"];
   };
 
   users.groups.homepage-dashboard = {};
+
+  services.caddy.virtualHosts."trip.spotted-gar.ts.net".extraConfig = ''
+    redir / /home html
+    reverse_proxy /home :${builtins.toString config.services.homepage-dashboard.listenPort}
+    reverse_proxy /home/* :${builtins.toString config.services.homepage-dashboard.listenPort}
+  '';
 
   systemd.services.homepage-dashboard = {
     # explicitly add the `ping` binary to the service's PATH

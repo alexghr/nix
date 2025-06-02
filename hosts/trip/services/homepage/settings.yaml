@@ -5,3 +5,4 @@ background:
   blur: sm
 cardBlur: lg
 showStats: true
+base: https://trip.spotted-gar.ts.net/home
