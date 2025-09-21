@@ -17,7 +17,6 @@
       enable = true;
       extraPackages = with pkgs; [
         i3status
-        i3lock
         xss-lock
         xclip
 
@@ -42,6 +41,7 @@
     desktopManager.xterm.enable = true;
   };
 
+  programs.i3lock.enable = true;
   services.displayManager.sddm.enable = true;
   services.displayManager.defaultSession = "none+i3";
 

@@ -108,6 +108,16 @@ in {
     };
   };
 
+  programs.neovim = {
+    viAlias = true;
+    vimAlias = true;
+    configure = {
+      packages.plugins = with pkgs.vimPlugins; {
+        start = [oil-nvim nvim-lspconfig];
+      };
+    };
+  };
+
   systemd.user.tmpfiles.users.${user}.rules = let
     links = [
       ["${home}/.bashrc" ./config/bashrc]

@@ -6,6 +6,13 @@
   networking.firewall = {
     allowedTCPPorts = [4318];
   };
+
+  services.caddy.virtualHosts."trip.spotted-gar.ts.net".extraConfig = ''
+    handle_path /otel/* {
+        reverse_proxy localhost:4318
+    }
+  '';
+
   services.opentelemetry-collector = {
     enable = true;
     package = pkgs.unstable.opentelemetry-collector-contrib;

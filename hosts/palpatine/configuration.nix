@@ -91,6 +91,17 @@
       enable = true;
       policy = ["magic"];
     };
+
+    interfaces.enp6s0 = {
+      useDHCP = true;
+      #ipv4.addresses = [
+      #  {
+      #    address = "192.168.1.101";
+      #    # address = "10.2.1.99";
+      #    prefixLength = 24;
+      #  }
+      #];
+    };
   };
 
   time.timeZone = "Europe/London";

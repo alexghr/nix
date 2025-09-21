@@ -21,9 +21,9 @@ in {
     }
   ];
 
-  services.caddy.virtualHosts."blocky.esrever.uno".extraConfig = ''
-    reverse_proxy :${toString apiPort}
-  '';
+    #services.caddy.virtualHosts."blocky.esrever.uno".extraConfig = ''
+    #  reverse_proxy :${toString apiPort}
+    #'';
 
   services.blocky = {
     enable = true;
