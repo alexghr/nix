@@ -1,5 +1,6 @@
 {
   config,
+  packages,
   pkgs,
   alexghrKeys,
   nixosModules,
@@ -24,6 +25,8 @@ in {
     shell = pkgs.bashInteractive;
     openssh.authorizedKeys.keys = alexghrKeys;
     packages = with pkgs.unstable; [
+      packages.helium 
+
       yazi
       btop
       neovimPkg
