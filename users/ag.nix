@@ -5,6 +5,7 @@ let
     imagemagick
     kubectl
     kubeseal
+    neovim
   ] ++ (if pkgs.stdenv.isLinux then [
     v4l-utils
     libguestfs
@@ -280,4 +281,3 @@ in {
     programs.vscode.package = pkgs.unstable.vscode;
   };
 }
-
