@@ -13,18 +13,8 @@
     '';
   };
 
-  # link home.packages to /Applications so that Spotlight can find them
-  system.build.applications = pkgs.lib.mkForce (pkgs.buildEnv {
-    name = "applications";
-    paths = config.environment.systemPackages ++ config.home-manager.users.ag.home.packages;
-    pathsToLink = "/Applications";
-  });
-
   programs.bash.enableCompletion = true;
   programs.zsh.enable = true;
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
