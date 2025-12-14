@@ -7,7 +7,7 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.darwin.url = "github:lnl7/nix-darwin";
+  inputs.darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.11";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.home-manager.url = "github:nix-community/home-manager/release-25.11";
