@@ -6,7 +6,6 @@
     recommendedOptimisation = true;
     recommendedBrotliSettings = true;
     recommendedGzipSettings = true;
-    recommendedZstdSettings = true;
     recommendedProxySettings = true;
 
     commonHttpConfig = ''
@@ -59,15 +58,6 @@
       "www.alexghr.me" = {
         locations."/" = {
           proxyPass = "http://127.0.0.1:8001";
-        };
-      };
-      "attic.alexghr.me" = {
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:8002";
-          extraConfig = ''
-            client_max_body_size 100M;
-            proxy_set_header Host $host;
-          '';
         };
       };
     };

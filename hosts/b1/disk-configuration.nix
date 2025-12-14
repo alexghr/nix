@@ -38,10 +38,6 @@
                     inherit mountOptions;
                     mountpoint = "/var/lib";
                   };
-                  "/atticd" = {
-                    inherit mountOptions;
-                    mountpoint = "/var/lib/atticd/storage";
-                  };
                   "/swap" = {
                     mountOptions = [ "noatime" "nodatacow" ];
                     mountpoint = "/swap";

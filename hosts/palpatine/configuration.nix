@@ -20,11 +20,11 @@
       powerManagement.enable = true;
       nvidiaSettings = true;
       modesetting.enable = true;
+      open = true;
     };
 
     opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;
     };
 
@@ -80,7 +80,6 @@
 
     firewall = {
       enable = true;
-      trustedInterfaces = [ "lxdbr0" ];
       allowedUDPPorts = [ config.services.tailscale.port];
     };
   };
@@ -147,7 +146,6 @@
   users.users.ag.extraGroups = ["adbusers"];
 
   environment.systemPackages = with pkgs; [
-    pinentry
     pinentry-qt
     ntfs3g
     lm_sensors
@@ -158,7 +156,6 @@
     pkgs.unstable.ledger-live-desktop
     tailscale
     sshfs
-    attic
     protontricks
     nnn
     file
@@ -266,11 +263,7 @@
 
   services.fwupd.enable = true;
 
-  services.vscode-server.enable = true;
-
   virtualisation.docker.enable = true;
-  virtualisation.lxd.enable = false;
-  virtualisation.lxc.lxcfs.enable = false;
 
   # age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
   # alexghr.b2-backup = {

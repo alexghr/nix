@@ -24,7 +24,7 @@ let
 
     discord
     slack
-    tdesktop
+    telegram-desktop
 
     xclip
 
@@ -32,7 +32,7 @@ let
     vlc
     filezilla
     libreoffice
-    bitwarden
+    bitwarden-desktop
 
     obs-studio
     winePackages.full
@@ -55,8 +55,7 @@ in {
     extraGroups = ["wheel"]
       ++ (if config.services.pipewire.enable then ["pipewire" "audio" "video"] else [])
       ++ (if config.virtualisation.podman.enable then ["podman"] else [])
-      ++ (if config.virtualisation.docker.enable then ["docker"] else [])
-      ++ (if config.virtualisation.lxd.enable then ["lxd"] else []);
+      ++ (if config.virtualisation.docker.enable then ["docker"] else []);
 
     # get these from https://github.com/alexghr.keys
     openssh.authorizedKeys.keys = [
@@ -101,8 +100,8 @@ in {
     programs.git = {
       enable = true;
       userName = "Alex Gherghisan";
-      userEmail = null; # intentionally left blank
-      signing = null; # intentionally left blank
+      userEmail = ""; # intentionally left blank
+      # signing = ""; # intentionally left blank
 
       aliases = {
         st = "status --short --branch";

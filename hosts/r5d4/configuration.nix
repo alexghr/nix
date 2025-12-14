@@ -134,12 +134,6 @@ in
     };
   };
 
-  services.unifi = {
-    enable = true;
-    unifiPackage = pkgs.unifi7;
-    openFirewall = true;
-  };
-
   alexghr.tailscale = {
     enable = true;
     authKeyFile = config.age.secrets.tailscale.path;
