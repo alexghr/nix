@@ -10,6 +10,7 @@
     package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
+      trusted-users = ag
     '';
   };
 
@@ -28,7 +29,7 @@
   environment.shells = [pkgs.bashInteractive];
 
   home-manager.users.ag.programs.bash.bashrcExtra = pkgs.lib.mkAfter ''
-    export PATH="/etc/profiles/per-user/$USER/bin:$PATH"
+    export PATH="/etc/profiles/per-user/$USER/bin:/Users/$USER/.npm/bin:$PATH"
   '';
 
   age.secrets.ag-npmrc = {
