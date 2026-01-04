@@ -5,12 +5,12 @@
   alexghrKeys,
   nixosModules,
   lib,
+  inputs,
   ...
 }: let
   user = "ag";
   home = "/home/${user}";
-  neovimPkg = pkgs.unstable.neovim;
-  neovidePkg = pkgs.unstable.neovide;
+  neovimPkg =  inputs.neovim-nightly.packages.${pkgs.system}.default; #pkgs.neovim-nightly.neovim;
 in {
   imports = [
     nixosModules.alacritty-theme
@@ -30,7 +30,6 @@ in {
       yazi
       btop
       neovimPkg
-      neovidePkg
       nix-index
 
       alacritty

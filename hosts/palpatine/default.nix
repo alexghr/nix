@@ -20,6 +20,7 @@
             packages = config.packages;
             alexghrKeys = self.alexghrKeys;
             nixosModules = self.nixosModules;
+	    inputs = inputs;
           };
 
           modules = [

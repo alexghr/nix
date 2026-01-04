@@ -11,12 +11,18 @@
           system = prev.system;
           config.allowUnfree = prev.config.allowUnfree;
         };
+	neovim-nightly = import inputs.neovim-nightly {
+          system = prev.system;
+          config.allowUnfree = prev.config.allowUnfree;
+	};
       })
     ];
     nix = {
       package = lib.mkDefault pkgs.nixVersions.stable;
       extraOptions = ''
         experimental-features = nix-command flakes
+         extra-substituters = https://devenv.cachix.org
+         extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
       '';
 
       gc = {
