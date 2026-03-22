@@ -66,7 +66,7 @@
     };
   };
 
-  powerManagement.cpuFreqGovernor = "performance";
+  powerManagement.cpuFreqGovernor = "ondemand";
 
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "uinput"];
@@ -159,10 +159,6 @@
   };
 
   environment.systemPackages = with pkgs.unstable; [
-    packages.uploadToCache
-    nix-output-monitor
-    nvd
-    nh
     neovim
     git
     curl

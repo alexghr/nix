@@ -25,27 +25,24 @@ in {
     shell = pkgs.bashInteractive;
     openssh.authorizedKeys.keys = alexghrKeys;
     packages = with pkgs.unstable; [
-      packages.helium 
-
       yazi
       btop
       neovimPkg
+      lua-language-server
       nix-index
 
       alacritty
-      kitty
       ghostty
-      bitwarden
+      bitwarden-desktop
       vscode
 
       firefox
-      google-chrome
       brave
       thunderbird
-      libreoffice
+      # libreoffice
 
       slack
-      tdesktop
+      telegram-desktop
 
       gimp-with-plugins
       inkscape
@@ -54,6 +51,8 @@ in {
       file
       unzip
       imagemagick
+
+      devenv
 
       (pkgs.callPackage ./bin/i3_window.nix {})
     ];
@@ -129,6 +128,7 @@ in {
       ["${home}/.config/i3status/config" ./config/i3status]
       ["${home}/.config/git/config" ./config/gitconfig]
       ["${home}/.config/tmux/tmux.conf" ./config/tmux.conf]
+      ["${home}/.config/zellij/config.kdl" ./config/zellij-config.kdl]
     ];
   in
     lib.map (link: "L+ ${lib.elemAt link 0} - - - - ${lib.elemAt link 1}") links;
