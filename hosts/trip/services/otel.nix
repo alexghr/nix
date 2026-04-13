@@ -37,6 +37,9 @@
         otlphttp = {
           endpoint = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/otlp";
         };
+        "otlphttp/tempo" = {
+          endpoint = "http://${config.services.tempo.settings.distributor.receivers.otlp.protocols.http.endpoint}";
+        };
       };
       service.pipelines = {
         metrics = {
@@ -48,6 +51,11 @@
           receivers = ["otlp"];
           processors = ["memory_limiter" "batch"];
           exporters = ["otlphttp"];
+        };
+        traces = {
+          receivers = ["otlp"];
+          processors = ["memory_limiter" "batch"];
+          exporters = ["otlphttp/tempo"];
         };
       };
     };

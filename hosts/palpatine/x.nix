@@ -66,7 +66,7 @@
     #  (finalAttrs: previousAttrs: {
     #    meta.mainProgram = "pinentry-kwallet";
     #  });
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentryPackage = pkgs.pinentry-all;
   };
 
   fonts = {

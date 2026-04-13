@@ -5,4 +5,6 @@ in {
   "tailscale.age".publicKeys = alexghrKeys ++ [hostKey];
   "samba.age".publicKeys = alexghrKeys ++ [hostKey];
   "nix-ssh.age".publicKeys = alexghrKeys ++ [hostKey];
+  "aztec-testnet.age".publicKeys = alexghrKeys ++ [hostKey];
+  "aztec-mainnet.age".publicKeys = alexghrKeys ++ [hostKey];
 }

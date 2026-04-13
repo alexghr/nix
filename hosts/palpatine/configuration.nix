@@ -153,12 +153,14 @@
     docker = {
       enable = true;
       extraOptions = "--registry-mirror https://docker.esrever.uno";
+      package = pkgs.unstable.docker;
     };
 
     oci-containers.backend = "docker";
   };
 
   environment.systemPackages = with pkgs.unstable; [
+    fzf
     neovim
     git
     curl

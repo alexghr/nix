@@ -21,8 +21,8 @@
       package = lib.mkDefault pkgs.nixVersions.stable;
       extraOptions = ''
         experimental-features = nix-command flakes
-         extra-substituters = https://devenv.cachix.org
-         extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+         extra-substituters = https://devenv.cachix.org https://alexghr.cachix.org
+         extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= alexghr.cachix.org-1:F8zCrUqEm3m4ThJWsMe+d2RTXGmGNKpM1anvMTQdBP4=
       '';
 
       gc = {

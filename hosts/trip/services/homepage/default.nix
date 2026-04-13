@@ -5,6 +5,7 @@
 }: {
   services.homepage-dashboard = {
     enable = true;
+    allowedHosts = "trip.spotted-gar.ts.net,localhost:8082,127.0.0.1:8082";
   };
 
   age.secrets.uptimerobot.file = ../../secrets/uptimerobot.age;
@@ -19,9 +20,8 @@
   users.groups.homepage-dashboard = {};
 
   services.caddy.virtualHosts."trip.spotted-gar.ts.net".extraConfig = ''
-    redir / /home html
-    reverse_proxy /home :${builtins.toString config.services.homepage-dashboard.listenPort}
-    reverse_proxy /home/* :${builtins.toString config.services.homepage-dashboard.listenPort}
+    redir /home / 302
+    reverse_proxy :${builtins.toString config.services.homepage-dashboard.listenPort}
   '';
 
   systemd.services.homepage-dashboard = {

@@ -15,6 +15,7 @@
     nixosModules.agenix
     "${modulesPath}/installer/scan/not-detected.nix"
     ./trip.fs.nix
+    ./swap.nix
     ./services
   ];
 
@@ -24,6 +25,8 @@
   i18n.defaultLocale = "en_GB.UTF-8";
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  # Temporary exception until the NixOS 26.05 upgrade.
+  nixpkgs.config.permittedInsecurePackages = ["docker-28.5.2"];
 
   hardware = {
     enableAllFirmware = true;
@@ -79,9 +82,7 @@
     bcachefs-tools
     config.boot.kernelPackages.turbostat
     virt-manager
-    OVMF
     libguestfs
-    OVMFFull
   ];
 
   networking = {
@@ -213,9 +214,6 @@
     };
     libvirtd = {
       enable = true;
-      # Used for UEFI boot of Home Assistant OS guest image
-      qemu.ovmf.enable = true;
-      qemu.ovmf.packages = [pkgs.OVMFFull.fd];
     };
   };
 }

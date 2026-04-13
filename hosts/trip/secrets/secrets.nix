@@ -7,8 +7,13 @@ in {
   "caddy.age".publicKeys = alexghrKeys ++ [hostKey];
   "ghcr.age".publicKeys = alexghrKeys ++ [hostKey];
   "cloudflared.age".publicKeys = alexghrKeys ++ [hostKey];
+  "aztec-testnet-cloudflared.age".publicKeys = alexghrKeys ++ [hostKey];
+  "aztec-next-net-cloudflared.age".publicKeys = alexghrKeys ++ [hostKey];
   "nix-serve-private-key.age".publicKeys = alexghrKeys ++ [hostKey];
   "aztec-alpha-val1.age".publicKeys = alexghrKeys ++ [hostKey];
   "aztec-staging.age".publicKeys = alexghrKeys ++ [hostKey];
+  "sepolia.age".publicKeys = alexghrKeys ++ [hostKey];
   "aztec-mainnet.age".publicKeys = alexghrKeys ++ [hostKey];
+  "mailman-testnet.age".publicKeys = alexghrKeys ++ [hostKey];
+  "webdav_env.age".publicKeys = alexghrKeys ++ [hostKey];
 }

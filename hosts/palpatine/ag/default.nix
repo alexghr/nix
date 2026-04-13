@@ -10,7 +10,18 @@
 }: let
   user = "ag";
   home = "/home/${user}";
-  neovimPkg =  inputs.neovim-nightly.packages.${pkgs.system}.default; #pkgs.neovim-nightly.neovim;
+  system = pkgs.stdenv.hostPlatform.system;
+  unstable = import inputs.nixpkgs-unstable {
+    inherit system;
+    config = {
+      allowUnfree = pkgs.config.allowUnfree or false;
+      # Needed for bitwarden-desktop until nixpkgs moves it off Electron 39.
+      permittedInsecurePackages = (pkgs.config.permittedInsecurePackages or []) ++ [
+        "electron-39.8.10"
+      ];
+    };
+  };
+  neovimPkg = inputs.neovim-nightly.packages.${system}.default; #pkgs.neovim-nightly.neovim;
 in {
   imports = [
     nixosModules.alacritty-theme
@@ -24,7 +35,7 @@ in {
     extraGroups = ["wheel" "pipewire" "audio" "video" "docker" "dialout" "uinput" "input"];
     shell = pkgs.bashInteractive;
     openssh.authorizedKeys.keys = alexghrKeys;
-    packages = with pkgs.unstable; [
+    packages = with unstable; [
       yazi
       btop
       neovimPkg
@@ -34,7 +45,7 @@ in {
       alacritty
       ghostty
       bitwarden-desktop
-      vscode
+      # vscode
 
       firefox
       brave
@@ -79,13 +90,6 @@ in {
     };
   };
 
-  programs.starship = {
-    enable = true;
-    presets = ["pure-preset"];
-    settings = {
-      add_newline = false;
-    };
-  };
   programs.tmux = {
     enable = true;
     terminal = "tmux-direct";

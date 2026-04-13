@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   programs.steam = {
     enable = true;
+    package = pkgs.unstable.steam;
     gamescopeSession.enable = true;
     remotePlay.openFirewall = true;
   };
@@ -9,7 +10,7 @@
 
   environment.systemPackages = with pkgs; [
     mangohud
-    protonup
+    protonup-ng
     lutris
     bottles
   ];
