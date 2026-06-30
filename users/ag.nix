@@ -6,6 +6,7 @@ let
     kubectl
     kubeseal
     neovim
+    fzf
   ] ++ (if pkgs.stdenv.isLinux then [
     v4l-utils
     libguestfs
