@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   username = "ag";
-  packages = with pkgs; [
+  packages = with pkgs.unstable; [
     imagemagick
     kubectl
     kubeseal
