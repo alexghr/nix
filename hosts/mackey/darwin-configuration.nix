@@ -41,17 +41,40 @@ let
   environment.systemPackages = with pkgs; [
     pinentry_mac
     gnupg
-    openssh
-    macos-ssh-askpass
   ];
 
   environment.shells = [pkgs.bashInteractive];
 
-  home-manager.users.ag.programs.bash.bashrcExtra = pkgs.lib.mkAfter ''
-    export PATH="/etc/profiles/per-user/$USER/bin:/Users/$USER/.npm/bin:$PATH"
-    export SSH_ASKPASS="${macos-ssh-askpass}/bin/ssh-askpass";
-    export SSH_ASKPASS_REQUIRE=force
-  '';
+  home-manager.users.ag = {
+    home.packages = [ pkgs.openssh ];
+
+    # Run the nixpkgs ssh-agent as a launchd service owned by this user.
+    services.ssh-agent = {
+      enable = true;
+      package = pkgs.openssh;
+      socket = "ssh-agent";
+    };
+
+    home.sessionVariables = {
+      SSH_ASKPASS = "${macos-ssh-askpass}/bin/ssh-askpass";
+      SSH_ASKPASS_REQUIRE = "force";
+    };
+
+    programs.bash = {
+      # macOS may populate SSH_AUTH_SOCK with its bundled agent before Home
+      # Manager's shell integration runs. Prefer our agent for local shells,
+      # while preserving a forwarded agent in incoming SSH sessions.
+      profileExtra = pkgs.lib.mkAfter ''
+        if [[ -z "''${SSH_CONNECTION:-}" || -z "''${SSH_AUTH_SOCK:-}" ]]; then
+          export SSH_AUTH_SOCK="$(${pkgs.getconf}/bin/getconf DARWIN_USER_TEMP_DIR)/ssh-agent"
+        fi
+      '';
+
+      bashrcExtra = pkgs.lib.mkAfter ''
+        export PATH="/etc/profiles/per-user/$USER/bin:/Users/$USER/.npm/bin:$PATH"
+      '';
+    };
+  };
 
   age.secrets.ag-npmrc = {
     file = ../../secrets/ag.npmrc.age;
