@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   # Create directory for VM images
   systemd.tmpfiles.rules = [
     "d /var/lib/libvirt/images/homeassistant 0755 root libvirtd -"

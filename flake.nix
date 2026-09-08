@@ -12,19 +12,20 @@
     };
 
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:lnl7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    alacritty-theme = {
-      url = "github:alexghr/alacritty-theme.nix";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
     };
 
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.darwin.follows = "nix-darwin";
     };
 
     disko = {
@@ -38,18 +39,9 @@
       imports = [
         ./hosts
         ./modules
-        ./packages
       ];
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
-      perSystem = {
-        config,
-        self',
-        inputs',
-        pkgs,
-        system,
-        ...
-      }: {
-        packages.default = pkgs.hello;
+      systems = ["x86_64-linux" "aarch64-darwin"];
+      perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
       };
       flake = {

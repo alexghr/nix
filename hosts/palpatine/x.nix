@@ -1,10 +1,7 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   services.xserver = {
     enable = true;
+    excludePackages = [pkgs.xterm];
     xkb.layout = "us";
     xkb.options = "compose:menu";
     videoDrivers = ["nvidia"];
@@ -29,7 +26,7 @@
 
         qimgv # image viewer
         llpp # pdf viewer
-        pcmanfm # file pkgs.alacritty-theme.monokai_promanager
+        pcmanfm # file manager
 
         pavucontrol
 
@@ -37,8 +34,6 @@
         kdePackages.kwalletmanager
       ];
     };
-
-    desktopManager.xterm.enable = true;
   };
 
   programs.i3lock.enable = true;
@@ -51,22 +46,6 @@
     enable = true;
     forceRun = true;
     package = pkgs.kdePackages.kwallet-pam;
-  };
-
-  programs.gnupg.agent = {
-    enable = true;
-    settings = {
-      max-cache-ttl = 604800;
-      default-cache-ttl = 604800;
-    };
-    enableExtraSocket = true;
-    enableBrowserSocket = false;
-    #pinentryPackage =
-    #  pkgs.kwalletcli.overrideAttrs
-    #  (finalAttrs: previousAttrs: {
-    #    meta.mainProgram = "pinentry-kwallet";
-    #  });
-    pinentryPackage = pkgs.pinentry-all;
   };
 
   fonts = {

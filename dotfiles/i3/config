@@ -9,7 +9,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 set $lock i3lock --color 002244
-#set $lock loginctl lock-sessions
 
 bindsym $mod+Control+l exec $lock
 bindsym $mod+Control+s exec --no-startup-id $lock && systemctl suspend
@@ -27,7 +26,6 @@ bindsym $mod+Return exec ghostty
 bindsym $mod+Shift+q kill
 
 bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
-#bindsym $mod+F2 exec start_or_focus --no-startup-id -w 5 -c Slack slack
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -55,9 +53,6 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 set $ws1 "1"
 set $ws2 "2"

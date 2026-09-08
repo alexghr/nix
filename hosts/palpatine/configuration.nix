@@ -1,9 +1,7 @@
 {
   config,
   pkgs,
-  packages,
   lib,
-  alexghrKeys,
   modulesPath,
   nixosModules,
   ...
@@ -11,24 +9,21 @@
   imports = [
     nixosModules.systemd-boot
     nixosModules.btrfs
+    nixosModules.zram
     nixosModules.nix
+    nixosModules.system-tools
     nixosModules.agenix
     nixosModules.disko
     "${modulesPath}/installer/scan/not-detected.nix"
     ./disko-config.nix
-    ./swap.nix
     ./x.nix
     ./ag
+    ./vm.nix
   ];
 
   system.stateVersion = "24.05";
-  # inspired from https://github.com/caarlos0/dotfiles/blob/e2cb05d1e381956b7aba4303cc27206695657a0e/machines/shared.nix#L83
-  #nix.extraOptions = ''
-  #  post-build-hook = ${packages.uploadToCache}/bin/upload-to-cache
-  #'';
-
   age.secrets.nix-ssh.file = ./secrets/nix-ssh.age;
-  programs.ssh.extraConfig = ''
+  programs.ssh.extraConfig = lib.optionalString (config.age.secrets ? nix-ssh) ''
     Host nixcache.esrever.uno
     User nix-ssh
     BatchMode yes
@@ -57,12 +52,11 @@
     ledger.enable = true;
 
     enableAllFirmware = true;
-    pulseaudio.enable = false; # uses pipewire instead
     bluetooth.enable = true;
 
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
     };
   };
 
@@ -82,8 +76,6 @@
     firewall = {
       enable = true;
       allowPing = true;
-      allowedTCPPorts = [];
-      allowedUDPPorts = [];
     };
     useDHCP = false;
     dhcpcd.enable = false;
@@ -94,13 +86,6 @@
 
     interfaces.enp6s0 = {
       useDHCP = true;
-      #ipv4.addresses = [
-      #  {
-      #    address = "192.168.1.101";
-      #    # address = "10.2.1.99";
-      #    prefixLength = 24;
-      #  }
-      #];
     };
   };
 
@@ -115,10 +100,12 @@
       enable = true;
       enableSSHSupport = true;
       enableExtraSocket = true;
-    };
-    appimage = {
-      enable = true;
-      binfmt = true;
+      enableBrowserSocket = false;
+      settings = {
+        max-cache-ttl = 604800;
+        default-cache-ttl = 604800;
+      };
+      pinentryPackage = pkgs.pinentry-all;
     };
   };
 
@@ -126,7 +113,6 @@
 
   services = {
     gvfs.enable = true;
-    fstrim.enable = true;
     openssh.enable = true;
     fwupd.enable = true;
     dbus.enable = true;
@@ -143,7 +129,10 @@
       enable = true;
       openFirewall = true;
       useRoutingFeatures = "client";
-      authKeyFile = config.age.secrets.tailscale.path;
+      authKeyFile =
+        if config.age.secrets ? tailscale
+        then config.age.secrets.tailscale.path
+        else null;
     };
   };
 
@@ -159,23 +148,5 @@
     oci-containers.backend = "docker";
   };
 
-  environment.systemPackages = with pkgs.unstable; [
-    fzf
-    neovim
-    git
-    curl
-    powertop
-    lm_sensors
-    pciutils
-    usbutils
-    dnsutils
-    lsof
-    ripgrep
-    bat
-    file
-    ntfs3g
-  ];
-  environment.loginShellInit = ''
-    alias vim=nvim
-  '';
+  environment.systemPackages = [pkgs.ntfs3g];
 }

@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{...}: let
   apiPort = 4000;
 in {
   networking.firewall = {
@@ -34,10 +30,6 @@ in {
       blocking = {
         blackLists.ads = [
           "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
-          # "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-          # "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/pro.txt"
-          # enable this once blocky updates to v0.23
-          # "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt"
         ];
         clientGroupsBlock.default = ["ads"];
       };

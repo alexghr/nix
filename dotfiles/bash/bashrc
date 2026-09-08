@@ -1,0 +1,17 @@
+alias ll='ls -laF'
+alias gti=git
+case "$(uname -s)" in
+  Darwin) alias ls='ls -G' ;;
+  *) alias ls='ls --color=auto' ;;
+esac
+
+if command -v nvim >/dev/null 2>&1; then
+  export EDITOR=nvim
+  alias vim=nvim
+  alias vi=nvim
+fi
+
+if tty -s && command -v gpg-connect-agent >/dev/null 2>&1; then
+  export GPG_TTY="$(tty)"
+  gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+fi

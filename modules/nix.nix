@@ -8,34 +8,35 @@
     nixpkgs.overlays = [
       (final: prev: {
         unstable = import inputs.nixpkgs-unstable {
-          system = prev.system;
-          config.allowUnfree = prev.config.allowUnfree;
+          system = prev.stdenv.hostPlatform.system;
+          inherit (prev) config;
         };
-	neovim-nightly = import inputs.neovim-nightly {
-          system = prev.system;
-          config.allowUnfree = prev.config.allowUnfree;
-	};
+        neovim-nightly = inputs.neovim-nightly.packages.${prev.stdenv.hostPlatform.system}.default;
       })
     ];
     nix = {
       package = lib.mkDefault pkgs.nixVersions.stable;
-      extraOptions = ''
-        experimental-features = nix-command flakes
-         extra-substituters = https://devenv.cachix.org https://alexghr.cachix.org
-         extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= alexghr.cachix.org-1:F8zCrUqEm3m4ThJWsMe+d2RTXGmGNKpM1anvMTQdBP4=
-      '';
+      settings = {
+        experimental-features = ["nix-command" "flakes"];
+        extra-substituters = ["https://devenv.cachix.org" "https://alexghr.cachix.org"];
+        extra-trusted-public-keys = [
+          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+          "alexghr.cachix.org-1:F8zCrUqEm3m4ThJWsMe+d2RTXGmGNKpM1anvMTQdBP4="
+        ];
+      };
+      registry = {
+        nixpkgs.flake = inputs.nixpkgs;
+        nixpkgs-unstable.flake = inputs.nixpkgs-unstable;
+      };
 
       gc = {
         automatic = true;
         options = "--delete-older-than 30d";
       };
-
-      #settings.substituters = ["https://nixcache.esrever.uno"];
-      #settings.trusted-public-keys = ["nixcache.esrever.uno:CyCbXQKNkoSsPISjnHaVY2ag6ZmL0q/8saSdnqEUdFk="];
     };
   };
 in {
-  flake.nixosModules.nix = {pkgs, ...}: {
+  flake.nixosModules.nix = {...}: {
     imports = [module];
     nix.gc.dates = "monthly";
     nix.nixPath = [
@@ -48,7 +49,7 @@ in {
       "L+ /etc/nixpkgs/channels/nixpkgs-unstable - - - - ${inputs.nixpkgs-unstable}"
     ];
   };
-  flake.darwinModules.nix = {pkgs, ...}: {
+  flake.darwinModules.nix = {...}: {
     imports = [module];
     nix.gc.interval = {
       Hour = 12;

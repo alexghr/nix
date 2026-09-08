@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   services.loki = {
     enable = true;
     configuration = {
@@ -47,7 +43,6 @@
         metric_aggregation.loki_address = "127.0.0.1:3100";
       };
 
-      ruler.alertmanager_url = "http://127.0.0.1:9093";
       frontend.encoding = "protobuf";
     };
   };

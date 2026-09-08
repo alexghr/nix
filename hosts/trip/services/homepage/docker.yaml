@@ -1,2 +1,2 @@
-trip-podman:
-  socket: /run/podman/podman.sock
+# Keep this file managed so activation replaces the old Podman connection.
+{}

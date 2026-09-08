@@ -2,6 +2,6 @@
   imports = [
     ./trip
     ./palpatine
-    ./iso.nix
+    ./mackey
   ];
 }

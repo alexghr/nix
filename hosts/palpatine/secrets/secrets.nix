@@ -3,8 +3,5 @@ let
   hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpV8CNp//6m5XzzdxV7p9kTHnQi3hR5Yp9UVPL821CH";
 in {
   "tailscale.age".publicKeys = alexghrKeys ++ [hostKey];
-  "samba.age".publicKeys = alexghrKeys ++ [hostKey];
   "nix-ssh.age".publicKeys = alexghrKeys ++ [hostKey];
-  "aztec-testnet.age".publicKeys = alexghrKeys ++ [hostKey];
-  "aztec-mainnet.age".publicKeys = alexghrKeys ++ [hostKey];
 }

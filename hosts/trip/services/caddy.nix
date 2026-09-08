@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  packages,
-  ...
-}: {
+{config, ...}: {
   # let caddy reuse certificates from tailscale
   services.tailscale.permitCertUid = builtins.toString config.users.users.caddy.uid;
   networking.firewall.allowedTCPPorts = [80 443];
@@ -20,8 +14,6 @@
   services.caddy = {
     enable = true;
     email = "{env.ADMIN_EMAIL}";
-    globalConfig = ''
-    '';
 
     virtualHosts = {
       "trip.spotted-gar.ts.net" = {};

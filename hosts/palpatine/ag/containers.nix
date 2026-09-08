@@ -1,7 +1,5 @@
 {...}: {
   virtualisation.oci-containers = {
-    backend = "docker";
-
     containers.aztec-sysbox = {
       image = "ghcr.io/alexghr/sysbox:latest";
       hostname = "aztec-sysbox";
