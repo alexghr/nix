@@ -1,5 +1,27 @@
 alias ll='ls -laF'
 alias gti=git
+
+if [[ $- == *i* ]]; then
+  _ag_set_ps1() {
+    local prompt_info=''
+    if [[ -n ${IN_NIX_SHELL:-} ]]; then
+      prompt_info+='\[\e[97m\](\[\e[96m\]nix\[\e[97m\])'
+    fi
+
+    _ag_prompt_git_branch=$(git branch --show-current 2>/dev/null) || _ag_prompt_git_branch=''
+    if [[ -n $_ag_prompt_git_branch ]]; then
+      # Expand the branch variable when displaying the prompt, so branch names
+      # containing shell syntax are displayed as text rather than executed.
+      prompt_info+='\[\e[97m\](\[\e[96m\]${_ag_prompt_git_branch}\[\e[97m\])'
+    fi
+    PS1='\[\e[1;32m\][\t]\[\e[0m\]\[\e[1;35m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]'
+    PS1+="$prompt_info"'\[\e[0m\]\$ '
+  }
+
+  PROMPT_COMMAND=(_ag_set_ps1)
+  _ag_set_ps1
+fi
+
 case "$(uname -s)" in
   Darwin) alias ls='ls -G' ;;
   *) alias ls='ls --color=auto' ;;
