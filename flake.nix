@@ -36,24 +36,6 @@
     (builtins.attrNames (builtins.readDir ./modules)));
 
     nixosConfigurations = {
-      hk47 = let system = "aarch64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          { imports = builtins.attrValues self.nixosModules; }
-          home-manager.nixosModules.default
-          agenix.nixosModules.default
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-            nixpkgs.overlays = [
-              alacritty-theme.overlays.default
-            ];
-          })
-          ./hosts/hk47/configuration.nix
-          ./users/ag.nix
-        ];
-      };
-
-
       palpatine = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
@@ -91,33 +73,6 @@
               parted
             ];
           })
-        ];
-      };
-
-      b1 =  nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = attrs;
-        modules = [
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-          })
-          self.nixosModules.tailscale
-          disko.nixosModules.disko
-          agenix.nixosModules.default
-          ./hosts/b1/configuration.nix
-        ];
-      };
-
-      r5d4 =  nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = attrs;
-        modules = [
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-          })
-          self.nixosModules.tailscale
-          agenix.nixosModules.default
-          (import ./hosts/r5d4/configuration.nix { nixpkgsFlakePath = nixpkgs; })
         ];
       };
     };
