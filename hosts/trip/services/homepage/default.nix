@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -34,6 +35,7 @@
     serviceConfig = {
       User = "homepage-dashboard";
       Group = "homepage-dashboard";
+      ProcSubset = lib.mkForce "all";
 
       # load agenix secrets as credentials into systemd services
       # https://dee.underscore.world/blog/systemd-credentials-nixos-containers/
@@ -46,11 +48,11 @@
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "L+ /var/lib/homepage-dashboard/settings.yaml - - - - ${./settings.yaml}"
-    "L+ /var/lib/homepage-dashboard/services.yaml - - - - ${./services.yaml}"
-    "L+ /var/lib/homepage-dashboard/bookmarks.yaml - - - - ${./bookmarks.yaml}"
-    "L+ /var/lib/homepage-dashboard/widgets.yaml - - - - ${./widgets.yaml}"
-    "L+ /var/lib/homepage-dashboard/docker.yaml - - - - ${./docker.yaml}"
-  ];
+  environment.etc = {
+    "homepage-dashboard/settings.yaml".source = lib.mkForce ./settings.yaml;
+    "homepage-dashboard/services.yaml".source = lib.mkForce ./services.yaml;
+    "homepage-dashboard/bookmarks.yaml".source = lib.mkForce ./bookmarks.yaml;
+    "homepage-dashboard/widgets.yaml".source = lib.mkForce ./widgets.yaml;
+    "homepage-dashboard/docker.yaml".source = lib.mkForce ./docker.yaml;
+  };
 }
