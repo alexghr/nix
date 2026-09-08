@@ -25,8 +25,6 @@
   i18n.defaultLocale = "en_GB.UTF-8";
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  # Temporary exception until the NixOS 26.05 upgrade.
-  nixpkgs.config.permittedInsecurePackages = ["docker-28.5.2"];
 
   hardware = {
     enableAllFirmware = true;
@@ -67,8 +65,6 @@
   networking = {
     hostName = "trip";
     networkmanager.enable = true;
-    wireless.enable = false;
-
     firewall = {
       enable = true;
       allowPing = true;

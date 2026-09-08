@@ -18,6 +18,10 @@
       serve_from_sub_path = true;
     };
 
+    # Grafana gives no way to rotate and this was the default key that was setup by previous NixOS versions
+    # upgrade notes https://nixos.org/manual/nixos/stable/release-notes#sec-release-26.05-incompatibilities
+    settings.security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
+
     settings.panels.disable_sanitize_html = true;
   };
 

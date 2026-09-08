@@ -64,7 +64,6 @@
   networking = {
     hostName = "palpatine";
     networkmanager.enable = true;
-    wireless.enable = false;
     firewall = {
       enable = true;
       allowPing = true;
