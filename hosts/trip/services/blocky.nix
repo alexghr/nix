@@ -52,12 +52,11 @@ in {
           "home" = "localdomain";
         };
         mapping = {
-          "mackey.localdomain" = "10.1.1.116";
-          "palpatine.localdomain" = "10.1.1.105";
-          "trip.localdomain" = "10.1.1.110";
-          "unifi.localdomain" = "10.1.1.1";
-          "pizero.localdomain" = "10.1.102.206";
-          "esrever.uno" = "10.1.1.110";
+          "homeassistant.localdomain" = "192.168.1.54";
+          "palpatine.localdomain" = "192.168.1.42";
+          "trip.localdomain" = "192.168.1.48";
+          "unifi.localdomain" = "192.168.1.1";
+          "pizero.localdomain" = "192.168.1.75";
         };
       };
     };

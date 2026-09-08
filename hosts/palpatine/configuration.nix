@@ -22,14 +22,6 @@
   ];
 
   system.stateVersion = "24.05";
-  age.secrets.nix-ssh.file = ./secrets/nix-ssh.age;
-  programs.ssh.extraConfig = lib.optionalString (config.age.secrets ? nix-ssh) ''
-    Host nixcache.esrever.uno
-    User nix-ssh
-    BatchMode yes
-    IdentitiesOnly yes
-    IdentityFile ${config.age.secrets.nix-ssh.path}
-  '';
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -141,7 +133,6 @@
   virtualisation = {
     docker = {
       enable = true;
-      extraOptions = "--registry-mirror https://docker.esrever.uno";
       package = pkgs.unstable.docker;
     };
 

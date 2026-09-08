@@ -1,4 +1,10 @@
 {config, ...}: {
+  systemd.services.tempo = {
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
+    serviceConfig.RestartSec = "10s";
+  };
+
   services.tempo = {
     enable = true;
     settings = {
