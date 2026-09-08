@@ -14,7 +14,7 @@
     APPLESCRIPT
   '';
 in {
-  home.packages = with pkgs; [openssh ghostty-bin gnupg nr];
+  home.packages = with pkgs; [openssh ghostty-bin gnupg];
   services.ssh-agent = {
     enable = true;
     package = pkgs.openssh;
