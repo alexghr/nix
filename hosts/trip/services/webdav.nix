@@ -1,8 +1,4 @@
-{
-  config,
-  ...
-}:
-{
+{config, ...}: {
   age.secrets.webdav_env.file = ../secrets/webdav_env.age;
   services.webdav = {
     enable = true;

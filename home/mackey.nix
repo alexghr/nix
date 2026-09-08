@@ -13,12 +13,6 @@
     end run
     APPLESCRIPT
   '';
-  nr = pkgs.writeShellScriptBin "nr" ''
-    set -euo pipefail
-    program="''${1:?Usage: nr PACKAGE [ARGUMENTS...]}"
-    shift
-    exec nix run "github:nixos/nixpkgs/nixpkgs-unstable#$program" -- "$@"
-  '';
 in {
   home.packages = with pkgs; [openssh ghostty-bin gnupg nr];
   services.ssh-agent = {

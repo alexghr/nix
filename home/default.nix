@@ -1,8 +1,16 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  nr = pkgs.writeShellScriptBin "nr" ''
+    set -euo pipefail
+    program="''${1:?Usage: nr PACKAGE [ARGUMENTS...]}"
+    shift
+    exec nix run "github:nixos/nixpkgs/nixpkgs-unstable#$program" -- "$@"
+  '';
+in {
   home.stateVersion = "21.11";
   xdg.enable = true;
 
   home.packages = with pkgs; [
+    nr
     git
     bat
     tree
