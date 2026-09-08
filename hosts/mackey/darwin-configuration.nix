@@ -18,6 +18,12 @@ let
       end run
       APPLESCRIPT
     '';
+    nr = pkgs.writeShellScriptBin "nr" ''
+      set -euo pipefail
+      program="$1"
+      shift
+      exec nix run github:nixos/nixpkgs/nixpkgs-unstable#$program -- $@
+    '';
   in
 
 {
@@ -46,7 +52,7 @@ let
   environment.shells = [pkgs.bashInteractive];
 
   home-manager.users.ag = {
-    home.packages = [ pkgs.openssh ];
+    home.packages = [ pkgs.openssh nr ];
 
     # Run the nixpkgs ssh-agent as a launchd service owned by this user.
     services.ssh-agent = {
