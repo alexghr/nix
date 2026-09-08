@@ -8,7 +8,6 @@
     run ${pkgs.bash}/bin/bash ${../scripts/migrate-tmpfiles.sh} "$HOME"
   '';
   home.packages = with pkgs.unstable; [
-    pkgs.neovim-nightly
     lua-language-server
     ghostty
     bitwarden-desktop
@@ -19,7 +18,6 @@
     gimp-with-plugins
     inkscape
     vlc
-    devenv
   ];
   xdg.configFile = {
     "i3/config".source = ../dotfiles/i3/config;

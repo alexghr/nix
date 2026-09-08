@@ -20,7 +20,7 @@
     exec nix run "github:nixos/nixpkgs/nixpkgs-unstable#$program" -- "$@"
   '';
 in {
-  home.packages = with pkgs; [openssh kubectl kubeseal ngrok vscode ghostty-bin gnupg nr unstable.neovim];
+  home.packages = with pkgs; [openssh ghostty-bin gnupg nr];
   services.ssh-agent = {
     enable = true;
     package = pkgs.openssh;

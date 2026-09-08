@@ -4,7 +4,6 @@
 
   home.packages = with pkgs; [
     git
-    wget
     bat
     tree
     unzip
@@ -14,6 +13,7 @@
     btop
     tmux
     nix-index
+    neovim-nightly
     imagemagick
   ];
 
@@ -25,10 +25,6 @@
   programs.bash = {
     enable = true;
     bashrcExtra = builtins.readFile ../dotfiles/bash/bashrc;
-  };
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
   };
 
   xdg.configFile = {
