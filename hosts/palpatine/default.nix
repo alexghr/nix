@@ -13,7 +13,7 @@
           inherit system;
 
           specialArgs = {
-            alexghrKeys = self.alexghrKeys;
+            alexghrKeys = import ../../alexghr.keys.nix;
             nixosModules = self.nixosModules;
           };
 

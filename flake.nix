@@ -48,7 +48,6 @@
         nixosModules.agenix = inputs.agenix.nixosModules.default;
         nixosModules.disko = inputs.disko.nixosModules.default;
         darwinModules.agenix = inputs.agenix.darwinModules.default;
-        alexghrKeys = import ./alexghr.keys.nix;
       };
     };
 }
