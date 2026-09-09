@@ -30,8 +30,4 @@ in {
     export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
     ${builtins.readFile ../dotfiles/bash/mackey-profile}
   '';
-  programs.zsh = {
-    enable = true;
-    initContent = builtins.readFile ../dotfiles/bash/mackey-profile;
-  };
 }
