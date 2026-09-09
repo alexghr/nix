@@ -127,5 +127,5 @@ for_window [instance="crx_cinhimbnkkaeohfgghhklpknlkffjgod"] floating enable
 for_window [class="TelegramDesktop"] floating enable
 for_window [class="Pcmanfm"] floating enable
 for_window [class="steam"] floating enable
-for_window [class="Bitwarden"] floating enable
+for_window [class="(?i)^bitwarden$"] floating enable
 for_window [class="kwalletmanager5"] floating enable
