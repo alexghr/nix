@@ -14,12 +14,10 @@
     APPLESCRIPT
   '';
 in {
-  home.packages = with pkgs; [openssh ghostty-bin gnupg];
-  services.ssh-agent = {
-    enable = true;
-    package = pkgs.openssh;
-    socket = "ssh-agent";
-  };
+  home.packages = with pkgs; [openssh ghostty-bin];
+  targets.darwin.defaults."org.gpgtools.pinentry-mac".UseKeychain = true;
+  services.gpg-agent.pinentry.package = pkgs.pinentry_mac;
+  programs.ssh.settings.alexg-box.RemoteForward = "/run/user/30038/gnupg/S.gpg-agent.fwd /Users/ag/.gnupg/S.gpg-agent.extra";
   home.sessionVariables = {
     SSH_ASKPASS = "${askpass}/bin/ssh-askpass";
     SSH_ASKPASS_REQUIRE = "force";

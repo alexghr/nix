@@ -17,6 +17,5 @@
   environment.shells = [pkgs.bashInteractive];
   programs.bash.completion.enable = true;
   fonts.packages = [pkgs.monaspace];
-  environment.systemPackages = [pkgs.pinentry_mac];
   home-manager.users.ag.imports = [../../home/mackey.nix];
 }
