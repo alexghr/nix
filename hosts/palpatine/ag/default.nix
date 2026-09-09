@@ -6,7 +6,6 @@
 }: {
   imports = [
     nixosModules.home-manager
-    ./containers.nix
     ./steam.nix
   ];
 
