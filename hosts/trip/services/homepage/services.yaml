@@ -1,0 +1,22 @@
+---
+- Network:
+  - Unifi:
+      href: https://unifi.home
+      description: Unifi Controller
+      ping: 10.1.1.1
+      siteMonitor: https://unifi.home
+  - Hasivo:
+      href: http://10.1.1.104/
+      description: Core switch
+      ping: 10.1.1.104
+      siteMonitor: http://10.1.1.104
+- Services: []
+- Misc:
+    - Uptime Robot:
+        href: https://uptimerobot.com/
+        description: Uptime monitoring
+        siteMonitor: https://uptimerobot.com/
+        widget:
+            type: uptimerobot
+            url: https://api.uptimerobot.com
+            key: "{{HOMEPAGE_FILE_UPTIMEROBOT_API_KEY}}"

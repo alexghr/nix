@@ -1,0 +1,28 @@
+---
+- resources:
+    label: System
+    cpu: true
+    cputemp: true
+    memory: true
+
+- resources:
+    label: Storage
+    disk: /
+
+- search:
+    provider: duckduckgo
+    target: _blank
+
+- datetime:
+    text_size: xl
+    format:
+      dateStyle: short
+      timeStyle: short
+
+- openmeteo:
+    label: London, UK
+    latitude: 51.5074
+    longitude: 0.1278
+    timezone: Europe/London
+    units: metric
+    cache: 5

@@ -1,105 +1,54 @@
 {
-  description = "Manage my Nix-based machines";
+  description = "alexghr's nix configuration";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
-  inputs.disko.url = "github:nix-community/disko";
-  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.11";
-  inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.home-manager.url = "github:nix-community/home-manager/release-25.11";
-  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.agenix.url = "github:ryantm/agenix";
-  inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.agenix.inputs.home-manager.follows = "home-manager";
-  inputs.agenix.inputs.darwin.follows = "darwin";
-
-  inputs.alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
-
-  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager, agenix, alacritty-theme, disko }@attrs: {
-
-    overlays.unstable = final: prev: {
-      unstable = import nixpkgs-unstable {
-        system = prev.system;
-        config.allowUnfree = prev.config.allowUnfree;
-      };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    neovim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixosModules =  builtins.listToAttrs (map (x: {
-      name = x;
-      value = import (./modules + "/${x}");
-    })
-    (builtins.attrNames (builtins.readDir ./modules)));
-
-    nixosConfigurations = {
-      palpatine = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          # https://nixos.wiki/wiki/Flakes#Importing_packages_from_multiple_channels
-          ({ config, pkgs, ...}: {
-            nixpkgs.overlays = [
-              self.overlays.unstable
-              alacritty-theme.overlays.default
-            ];
-          })
-          home-manager.nixosModules.default
-          agenix.nixosModules.default
-          { imports = builtins.attrValues self.nixosModules; }
-          (import ./hosts/palpatine/configuration.nix { nixpkgsFlakePath = nixpkgs; })
-          ./users/ag.nix
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-            fonts.packages= [pkgs.victor-mono];
-          })
-        ];
-      };
-
-      nixosIso = let system = "x86_64-linux"; in nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          ({ pkgs, ... }:
-          {
-            networking.networkmanager.enable = true;
-            networking.wireless.enable = false;
-            environment.systemPackages = with pkgs; [
-              git
-              vim
-              file
-              parted
-            ];
-          })
-        ];
-      };
+    nix-darwin = {
+      url = "github:lnl7/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    darwinConfigurations = {
-      mackey = let system = "aarch64-darwin"; in darwin.lib.darwinSystem {
-        inherit system;
-        modules = [
-          ({ config, pkgs, ...}: {
-            nixpkgs.overlays = [
-              self.overlays.unstable
-              alacritty-theme.overlays.default
-            ];
-          })
-          home-manager.darwinModules.default
-          agenix.darwinModules.default
-          ./modules/home-manager
-          ./modules/cachix
-          ./modules/system
-          ./hosts/mackey/darwin-configuration.nix
-          ./users/ag.nix
-          ({ pkgs, ... }: {
-            nix.registry.nixpkgs.flake = nixpkgs;
-            fonts.packages = [pkgs.victor-mono];
-          })
-        ];
-      };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.darwin.follows = "nix-darwin";
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        ./hosts
+        ./modules
+      ];
+      systems = ["x86_64-linux" "aarch64-darwin"];
+      perSystem = {pkgs, ...}: {
+        formatter = pkgs.alejandra;
+      };
+      flake = {
+        nixosModules.agenix = inputs.agenix.nixosModules.default;
+        nixosModules.disko = inputs.disko.nixosModules.default;
+        darwinModules.agenix = inputs.agenix.darwinModules.default;
+        alexghrKeys = import ./alexghr.keys.nix;
+      };
+    };
 }

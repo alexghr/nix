@@ -5,21 +5,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
+  update:
     runs-on: ubuntu-latest
-    env:
-      CACHE_NAME: ${{ github.actor }}
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-    - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v20
+    - uses: actions/checkout@v7
+    - uses: cachix/install-nix-action@v31
     - name: update flake inputs
       run: nix flake update
+    - name: Evaluate updated Linux and macOS configurations
+      run: nix flake check --all-systems --no-build
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v8
       with:
         title: "build(flake): update flake inputs"
         reviewers: "alexghr"
         labels: "dependencies,automerge"
         commit-message: "build(flake): update flake inputs"
         delete-branch: true
-
+        add-paths: flake.lock

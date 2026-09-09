@@ -1,0 +1,4 @@
+# Prefer the nixpkgs agent locally while preserving forwarded SSH agents.
+if [ -z "${SSH_CONNECTION:-}" ] || [ -z "${SSH_AUTH_SOCK:-}" ]; then
+  export SSH_AUTH_SOCK="$(getconf DARWIN_USER_TEMP_DIR)/ssh-agent"
+fi

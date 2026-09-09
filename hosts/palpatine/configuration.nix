@@ -1,297 +1,142 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ nixpkgsFlakePath }:
-{ config, pkgs, lib, ... }: let username = "ag"; in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  nixosModules,
+  ...
+}: {
+  imports = [
+    nixosModules.systemd-boot
+    nixosModules.btrfs
+    nixosModules.zram
+    nixosModules.nix
+    nixosModules.system-tools
+    nixosModules.agenix
+    nixosModules.disko
+    "${modulesPath}/installer/scan/not-detected.nix"
+    ./disko-config.nix
+    ./x.nix
+    ./ag
+    ./vm.nix
+  ];
+
+  system.stateVersion = "24.05";
 
   hardware = {
-    enableAllFirmware = true;
-    pulseaudio.enable = false; # uses pipewire instead
-    bluetooth.enable = true;
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+    keyboard.qmk.enable = true;
 
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
+      open = false;
       powerManagement.enable = true;
       nvidiaSettings = true;
       modesetting.enable = true;
-      open = true;
-    };
-
-    opengl = {
-      enable = true;
-      driSupport32Bit = true;
     };
 
     logitech.wireless = {
       enable = true;
       enableGraphical = true;
     };
+
+    ledger.enable = true;
+
+    enableAllFirmware = true;
+    bluetooth.enable = true;
+
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  powerManagement.cpuFreqGovernor = "ondemand";
 
-  time.timeZone = "Europe/London";
-  i18n.defaultLocale = "en_GB.UTF-8";
-
-  # Use the systemd-boot EFI boot loader.
   boot = {
-    loader.systemd-boot = {
-      enable = true;
-      memtest86.enable = true;
-    };
-
-    loader.efi.canTouchEfiVariables = true;
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "uinput"];
+    kernelPackages = pkgs.linuxPackages;
+    kernelModules = ["kvm-amd"];
     loader.efi.efiSysMountPoint = "/boot/efi";
-
-    kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = [ "btrfs" ];
-    enableContainers = true;
-
-    # enable IP forwarding so this machine can be a Tailscale exit node
-    kernel.sysctl = {
-      "net.ipv4.ip_forward" = 1;
-
-      # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
-      "vm.swappiness" = 180;
-      "vm.watermark_boost_factor" = 0;
-      "vm.watermark_scale_factor" = 125;
-      "vm.page-cluster" = 0;
-    };
-
-    #binfmt.emulatedSystems = ["aarch64-linux"];
   };
 
   networking = {
     hostName = "palpatine";
     networkmanager.enable = true;
-    wireless.enable = false;
-
     firewall = {
       enable = true;
-      allowedUDPPorts = [ config.services.tailscale.port];
+      allowPing = true;
     };
-  };
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "electron-24.8.6"
-    ];
-  };
-
-  nix = {
-    package = pkgs.nixVersions.stable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-    gc = {
-      automatic = true;
-      dates = "monthly";
-      options = "--delete-older-than 30d";
-    };
-
-    settings = {
-      extra-trusted-users = ["ag"];
-    };
-
-    nixPath = [
-      "nixpkgs=/etc/nixpkgs/channels/nixpkgs"
-      "/nix/var/nix/profiles/per-user/root/channels"
-    ];
-  };
-
-  systemd.tmpfiles.rules = [
-    "L+ /etc/nixpkgs/channels/nixpkgs - - - - ${nixpkgsFlakePath}"
-  ];
-
-  programs.dconf.enable = true;
-  programs.nm-applet.enable = true;
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    enableExtraSocket = true;
-  };
-
-  programs.ssh = {
-    extraConfig = ''
-      Host *.alexghr.me
-        ForwardAgent yes
-        RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
-
-      Host *.home
-        ForwardAgent yes
-        RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent.extra
-    '';
-  };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-  };
-
-  programs.adb.enable = true;
-  users.users.ag.extraGroups = ["adbusers"];
-
-  environment.systemPackages = with pkgs; [
-    pinentry-qt
-    ntfs3g
-    lm_sensors
-    yubikey-manager
-    gamemode
-    dxvk
-    xwayland
-    pkgs.unstable.ledger-live-desktop
-    tailscale
-    sshfs
-    protontricks
-    nnn
-    file
-    cifs-utils
-    samba
-    earthly
-    btop
-  ];
-
-  services.gvfs.enable = true;
-  services.dbus.enable = true;
-  services.avahi = {
-    enable = true;
-    allowInterfaces = ["eth0"];
-    publish = {
-      workstation = true;
-    };
-  };
-
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.options="compose:menu";
-    videoDrivers = [ "nvidia" ];
-    enable = true;
-    screenSection = ''
-      Option "metamodes" "3840x1600_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNCCompatible=On}"
-    '';
-    windowManager.i3 = {
+    useDHCP = false;
+    dhcpcd.enable = false;
+    interfaces.enp5s0.wakeOnLan = {
       enable = true;
-      extraPackages = with pkgs; [
-        qimgv
-        llpp
-        dmenu
-        i3status
-        i3lock
-        dunst
-        maim
-        dex
-        simplescreenrecorder
-        rofi
-        rofi-calc
-        pcmanfm
-      ];
+      policy = ["magic"];
     };
 
-    desktopManager.xterm.enable = true;
-  };
-  
-  services.displayManager.sddm.enable = true;
-  services.displayManager.defaultSession = "none+i3";
-
-  zramSwap.enable = true;
-
-  systemd.oomd = {
-    enable = lib.mkForce true;
+    interfaces.enp6s0 = {
+      useDHCP = true;
+    };
   };
 
-  # apply diff from https://github.com/NixOS/nixpkgs/pull/273921
-  systemd.slices."-".sliceConfig = {
-    ManagedOOMMemoryPressure = "kill";
-    ManagedOOMMemoryPressureLimit = "80%";
+  time.timeZone = "Europe/London";
+  i18n.defaultLocale = "en_GB.UTF-8";
+
+  programs = {
+    dconf.enable = true;
+    nm-applet.enable = true;
+
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      enableExtraSocket = true;
+      enableBrowserSocket = false;
+      settings = {
+        max-cache-ttl = 604800;
+        default-cache-ttl = 604800;
+      };
+      pinentryPackage = pkgs.pinentry-all;
+    };
   };
 
-  systemd.slices."system".sliceConfig = {
-    ManagedOOMMemoryPressure = "kill";
-    ManagedOOMMemoryPressureLimit = "80%";
+  age.secrets.tailscale.file = ./secrets/tailscale.age;
+
+  services = {
+    gvfs.enable = true;
+    openssh.enable = true;
+    fwupd.enable = true;
+    dbus.enable = true;
+
+    pipewire = {
+      enable = true;
+      audio.enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+      useRoutingFeatures = "client";
+      authKeyFile =
+        if config.age.secrets ? tailscale
+        then config.age.secrets.tailscale.path
+        else null;
+    };
   };
-
-  systemd.slices."user-".sliceConfig = {
-    ManagedOOMMemoryPressure = "kill";
-    ManagedOOMMemoryPressureLimit = "80%";
-  };
-
-  systemd.user.units."slice" = {
-    text = ''
-      ManagedOOMMemoryPressure=kill
-      ManagedOOMMemoryPressureLimit=80%
-    '';
-    overrideStrategy = "asDropin";
-  };
-
-  services.udev.packages = [
-    pkgs.unstable.ledger-udev-rules
-  ];
-
-  services.btrfs.autoScrub = {
-    enable = true;
-    fileSystems = [ "/" ];
-    interval = "daily";
-  };
-
-  services.fstrim.enable = true;
-  services.openssh.enable = true;
 
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    audio.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      package = pkgs.unstable.docker;
+    };
+
+    oci-containers.backend = "docker";
   };
 
-  services.pcscd.enable = true;
-
-  services.fwupd.enable = true;
-
-  virtualisation.docker.enable = true;
-
-  # age.secrets.restic-b2-password.file = ../../secrets/vader.restic-b2-password.age;
-  # alexghr.b2-backup = {
-  #   enable = true;
-  #   passwordFile = config.age.secrets.restic-b2-password.path;
-  #   bucket = "alexghr-backup";
-  #   when = "09:00";
-  # };
-
-  # age.secrets.ag-npmrc = {
-  #   file = ../../secrets/ag.npmrc.age;
-  #   owner = "ag";
-  #   group = "users";
-  # };
-
-  # alexghr.nodejs.ag = {
-  #   npmrc = config.age.secrets.ag-npmrc.path;
-  # };
-
-  age.secrets.tailscale.file = ../../secrets/palpatine.tailscale.age;
-
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-    useRoutingFeatures = "client";
-    authKeyFile = config.age.secrets.tailscale.path;
-  };
-
-  age.secrets.ag-samba.file = ../../secrets/ag.samba.age;
+  environment.systemPackages = [pkgs.ntfs3g];
 }
-

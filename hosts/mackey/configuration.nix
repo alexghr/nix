@@ -1,0 +1,21 @@
+{
+  pkgs,
+  darwinModules,
+  ...
+}: {
+  imports = [darwinModules.nix darwinModules.system-tools darwinModules.home-manager];
+
+  networking.hostName = "mackey";
+  system.primaryUser = "ag";
+  system.stateVersion = 4;
+  nix.settings.trusted-users = ["ag"];
+
+  users.users.ag = {
+    home = "/Users/ag";
+    shell = pkgs.bashInteractive;
+  };
+  environment.shells = [pkgs.bashInteractive];
+  programs.bash.completion.enable = true;
+  fonts.packages = [pkgs.monaspace];
+  home-manager.users.ag.imports = [../../home/mackey.nix];
+}
