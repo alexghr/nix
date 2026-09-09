@@ -1,12 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
-  # Home Manager will not back up the old tmpfiles symlinks itself.
-  home.activation.migrateTmpfiles = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
-    run ${pkgs.bash}/bin/bash ${../scripts/migrate-tmpfiles.sh} "$HOME"
-  '';
+{pkgs, ...}: {
   home.packages = with pkgs.unstable; [
     lua-language-server
     ghostty
