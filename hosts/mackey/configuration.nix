@@ -8,7 +8,6 @@
   networking.hostName = "mackey";
   system.primaryUser = "ag";
   system.stateVersion = 4;
-  nix.settings.trusted-users = ["ag"];
 
   users.users.ag = {
     home = "/Users/ag";
