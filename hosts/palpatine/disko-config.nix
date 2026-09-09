@@ -3,7 +3,7 @@
     disk = {
       disk0 = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7DNNJ0WC66120W";
         content = {
           type = "gpt";
           partitions = {
@@ -28,7 +28,7 @@
       };
       disk1 = {
         type = "disk";
-        device = "/dev/nvme1n1";
+        device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0RA73700J";
         content = {
           type = "gpt";
           partitions = {
