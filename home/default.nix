@@ -15,6 +15,7 @@ in {
 
   home.packages = with pkgs; [
     agents.codex
+    yubikey-manager
     nr
     git
     bat

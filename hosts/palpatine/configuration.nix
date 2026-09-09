@@ -87,17 +87,7 @@
     dconf.enable = true;
     nm-applet.enable = true;
 
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      enableExtraSocket = true;
-      enableBrowserSocket = false;
-      settings = {
-        max-cache-ttl = 604800;
-        default-cache-ttl = 604800;
-      };
-      pinentryPackage = pkgs.pinentry-all;
-    };
+    ssh.askPassword = "${pkgs.openssh-askpass}/libexec/gtk-ssh-askpass";
   };
 
   age.secrets.tailscale.file = ./secrets/tailscale.age;
@@ -107,6 +97,7 @@
     openssh.enable = true;
     fwupd.enable = true;
     dbus.enable = true;
+    dbus.packages = [pkgs.gcr];
 
     pipewire = {
       enable = true;
