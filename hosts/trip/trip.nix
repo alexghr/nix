@@ -151,6 +151,8 @@
     oci-containers.backend = "docker";
     libvirtd = {
       enable = true;
+      onBoot = "ignore";
+      onShutdown = "shutdown";
     };
   };
 }
