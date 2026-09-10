@@ -25,7 +25,7 @@ in {
     btop
     tmux
     nix-index
-    neovim-nightly
+    unstable.neovim
     imagemagick
   ];
 
