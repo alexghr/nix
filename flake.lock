@@ -27,6 +27,26 @@
         "type": "github"
       }
     },
+    "agents": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789057098,
+        "narHash": "sha256-gL5aDMxES2Kfznf2Cpk3w3Uqen//du1RwFCxU2WqFMg=",
+        "owner": "alexghr",
+        "repo": "agents.nix",
+        "rev": "e5f26dbab35b272c6280ef39244b3ba0d7dcfccb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexghr",
+        "repo": "agents.nix",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -216,6 +236,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "agents": "agents",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

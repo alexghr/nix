@@ -14,6 +14,7 @@ in {
   xdg.enable = true;
 
   home.packages = with pkgs; [
+    agents.codex
     nr
     git
     bat
