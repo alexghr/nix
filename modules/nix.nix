@@ -13,6 +13,7 @@
         };
         neovim-nightly = inputs.neovim-nightly.packages.${prev.stdenv.hostPlatform.system}.default;
         agents = inputs.agents.packages.${prev.stdenv.hostPlatform.system};
+        agenix = inputs.agenix.packages.${prev.stdenv.hostPlatform.system}.default;
       })
     ];
     nix = {

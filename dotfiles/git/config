@@ -17,9 +17,6 @@
   st = "status --short --branch"
   staged = "diff --cached"
 
-[commit]
-  gpgsign = true
-
 [init]
   defaultBranch = "main"
 
@@ -29,8 +26,16 @@
 [rerere]
   enabled = true
 
+[color]
+  ui="auto"
+
 [user]
   name = "Alex Gherghisan"
   email = "alexghr@users.noreply.github.com"
-[color]
-  ui="auto"
+  signingkey = "~/.ssh/git-signing.pub"
+
+[commit]
+  gpgsign = true
+
+[gpg]
+  format = "ssh"

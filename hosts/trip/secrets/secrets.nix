@@ -1,5 +1,5 @@
 let
-  alexghrKeys = import ../../../alexghr.keys.nix;
+  alexghrKeys = (import ../../../alexghr.keys.nix).ssh;
   hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKyf9c+3WI1bIG0w1o83UCSE4lbhpUEqahjZUPTJKgoL";
 in {
   "tailscale.age".publicKeys = alexghrKeys ++ [hostKey];

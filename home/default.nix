@@ -14,6 +14,7 @@ in {
   xdg.enable = true;
 
   home.packages = with pkgs; [
+    agenix
     agents.codex
     yubikey-manager
     nr
@@ -101,6 +102,8 @@ in {
     enableSshSupport = false;
     noAllowExternalCache = false;
   };
+
+  home.file.".ssh/git-signing.pub".text = (import ../alexghr.keys.nix).gitSigning + "\n";
 
   xdg.configFile = {
     "git/config".source = ../dotfiles/git/config;
