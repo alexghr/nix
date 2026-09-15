@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -26,6 +27,22 @@
     SSH_ASKPASS = "${askpass}/bin/ssh-askpass";
     SSH_ASKPASS_REQUIRE = "force";
   };
+  loadSshKeys = pkgs.writeShellScript "ssh-add-keys" ''
+    export SSH_AUTH_SOCK="$(${pkgs.getconf}/bin/getconf DARWIN_USER_TEMP_DIR)/${config.services.ssh-agent.socket}"
+
+    # launchd starts the loader and agent independently; wait for the agent.
+    for attempt in {1..60}; do
+      ${pkgs.openssh}/bin/ssh-add -l >/dev/null 2>&1
+      status=$?
+      if [ "$status" -eq 0 ] || [ "$status" -eq 1 ]; then
+        exec ${pkgs.openssh}/bin/ssh-add "$HOME/.ssh/id_ed25519_sk" "$HOME/.ssh/git-signing"
+      fi
+      ${pkgs.coreutils}/bin/sleep 0.5
+    done
+
+    echo "SSH agent did not become available for key loading" >&2
+    exit 1
+  '';
 in {
   home.packages = with pkgs; [ghostty-bin];
   targets.darwin.defaults."org.gpgtools.pinentry-mac".UseKeychain = true;
@@ -33,6 +50,16 @@ in {
   home.sessionVariables = askpassEnvironment;
   # launchd agents do not inherit the shell's session variables.
   launchd.agents.ssh-agent.config.EnvironmentVariables = askpassEnvironment;
+  launchd.agents.ssh-add-keys = {
+    enable = true;
+    config = {
+      ProgramArguments = ["${loadSshKeys}"];
+      EnvironmentVariables = askpassEnvironment;
+      LimitLoadToSessionType = "Aqua";
+      ProcessType = "Interactive";
+      RunAtLoad = true;
+    };
+  };
   home.sessionPath = ["$HOME/.npm/bin" "$HOME/.npm-packages/bin" "$HOME/.corepack"];
   programs.bash.profileExtra = lib.mkAfter ''
     # fix macOS path_helper putting system binaries first
