@@ -17,8 +17,6 @@
     calibre
   ];
 
-  programs.ssh.settings.alexg-box.RemoteForward = "/run/user/30038/gnupg/S.gpg-agent.fwd /run/user/1000/gnupg/S.gpg-agent.extra";
-
   systemd.user.services.ssh-agent.Service.Environment = [
     "SSH_ASKPASS=${osConfig.programs.ssh.askPassword}"
   ];

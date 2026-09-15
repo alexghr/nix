@@ -1,0 +1,30 @@
+# Local overrides take precedence over the shared settings.
+Include ~/.ssh/config.local
+
+Host trip
+  User root
+
+Host *alexg-box
+  Tag alexg-box
+
+Match tagged alexg-box
+  ProxyJump bastion
+  User alexg
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+
+Host alexg-box
+  ForwardAgent yes
+
+# Port forwarding.
+Host pf-alexg-box
+  LocalForward 8080 localhost:8080
+  LocalForward 8000 localhost:8000
+  LocalForward 3000 0.0.0.0:3000
+  LocalForward 8545 localhost:8545
+
+# Copy files without disturbing forwarded agents.
+Host nf-alexg-box
+  ForwardAgent no
+  ForwardX11 no
+  ClearAllForwardings yes

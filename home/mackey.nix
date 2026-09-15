@@ -27,10 +27,9 @@
     SSH_ASKPASS_REQUIRE = "force";
   };
 in {
-  home.packages = with pkgs; [openssh ghostty-bin];
+  home.packages = with pkgs; [ghostty-bin];
   targets.darwin.defaults."org.gpgtools.pinentry-mac".UseKeychain = true;
   services.gpg-agent.pinentry.package = pkgs.pinentry_mac;
-  programs.ssh.settings.alexg-box.RemoteForward = "/run/user/30038/gnupg/S.gpg-agent.fwd /Users/ag/.gnupg/S.gpg-agent.extra";
   home.sessionVariables = askpassEnvironment;
   # launchd agents do not inherit the shell's session variables.
   launchd.agents.ssh-agent.config.EnvironmentVariables = askpassEnvironment;
