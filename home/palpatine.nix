@@ -14,6 +14,7 @@
     gimp-with-plugins
     inkscape
     vlc
+    calibre
   ];
 
   programs.ssh.settings.alexg-box.RemoteForward = "/run/user/30038/gnupg/S.gpg-agent.fwd /run/user/1000/gnupg/S.gpg-agent.extra";
