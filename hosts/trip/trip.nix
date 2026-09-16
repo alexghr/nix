@@ -57,6 +57,7 @@
 
   environment.systemPackages = with pkgs; [
     git
+    wakeonlan
     config.boot.kernelPackages.turbostat
     virt-manager
     libguestfs

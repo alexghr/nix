@@ -4,6 +4,14 @@
   lib,
   ...
 }: let
+  wakePalpatine = pkgs.writeShellApplication {
+    name = "wake-palpatine";
+    runtimeInputs = [pkgs.openssh];
+    text = ''
+      exec ssh -o ConnectTimeout=10 trip \
+        'wakeonlan 30:52:5a:00:36:5e'
+    '';
+  };
   askpass = pkgs.writeShellScriptBin "ssh-askpass" ''
     # OpenSSH uses this hint for informational prompts that need no response.
     if [ "''${SSH_ASKPASS_PROMPT:-}" = "none" ]; then
@@ -44,7 +52,7 @@
     exit 1
   '';
 in {
-  home.packages = with pkgs; [ghostty-bin];
+  home.packages = with pkgs; [ghostty-bin wakePalpatine];
   targets.darwin.defaults."org.gpgtools.pinentry-mac".UseKeychain = true;
   services.gpg-agent.pinentry.package = pkgs.pinentry_mac;
   home.sessionVariables = askpassEnvironment;
