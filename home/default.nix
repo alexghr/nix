@@ -12,6 +12,7 @@ in {
   home.packages = with pkgs; [
     agenix
     agents.codex
+    agents.pi
     yubikey-manager
     nr
     git
