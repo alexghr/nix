@@ -22,6 +22,7 @@ Host pf-alexg-box
   LocalForward 8000 localhost:8000
   LocalForward 3000 0.0.0.0:3000
   LocalForward 8545 localhost:8545
+  LocalForward 34367 localhost:34367 # codex MCP login
 
 # Copy files without disturbing forwarded agents.
 Host nf-alexg-box
