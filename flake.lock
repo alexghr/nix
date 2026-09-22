@@ -243,7 +243,8 @@
         "neovim-nightly": "neovim-nightly",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "website": "website"
       }
     },
     "systems": {
@@ -259,6 +260,23 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
+      }
+    },
+    "website": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790057084,
+        "narHash": "sha256-C+uhfGqAKxuW4jWoGZmgJxssFVFxx5rs9a8EN7qzB3s=",
+        "ref": "main",
+        "rev": "383269a6111d8804411a5c70022ba437a284482f",
+        "revCount": 137,
+        "type": "git",
+        "url": "ssh://git@github.com/alexghr/alexghr.me"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/alexghr/alexghr.me"
       }
     }
   },

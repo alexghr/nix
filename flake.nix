@@ -37,6 +37,11 @@
       url = "github:alexghr/agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    website = {
+      url = "git+ssh://git@github.com/alexghr/alexghr.me?ref=main";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -52,6 +57,7 @@
       flake = {
         nixosModules.agenix = inputs.agenix.nixosModules.default;
         nixosModules.disko = inputs.disko.nixosModules.default;
+        nixosModules.alexghr-me = import "${inputs.website}/nix/module.nix";
         darwinModules.agenix = inputs.agenix.darwinModules.default;
       };
     };

@@ -14,6 +14,7 @@
     nixosModules.nix
     nixosModules.system-tools
     nixosModules.agenix
+    nixosModules.alexghr-me
     "${modulesPath}/installer/scan/not-detected.nix"
     ./trip.fs.nix
     ./services
@@ -90,6 +91,7 @@
   };
 
   services = {
+    alexghr-me.enable = true;
     openssh.enable = true;
     fwupd.enable = true;
     thermald.enable = true;
