@@ -9,5 +9,6 @@
     ./loki.nix
     ./tempo.nix
     ./webdav.nix
+    ./cloudflared.nix
   ];
 }

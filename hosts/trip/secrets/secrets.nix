@@ -6,4 +6,5 @@ in {
   "uptimerobot.age".publicKeys = alexghrKeys ++ [hostKey];
   "caddy.age".publicKeys = alexghrKeys ++ [hostKey];
   "webdav_env.age".publicKeys = alexghrKeys ++ [hostKey];
+  "cloudflare-tunnel.age".publicKeys = alexghrKeys ++ [hostKey];
 }
