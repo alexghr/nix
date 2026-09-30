@@ -10,5 +10,6 @@
     ./tempo.nix
     ./webdav.nix
     ./cloudflared.nix
+    ./website.nix
   ];
 }

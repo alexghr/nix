@@ -7,4 +7,5 @@ in {
   "caddy.age".publicKeys = alexghrKeys ++ [hostKey];
   "webdav_env.age".publicKeys = alexghrKeys ++ [hostKey];
   "cloudflare-tunnel.age".publicKeys = alexghrKeys ++ [hostKey];
+  "website_env.age".publicKeys = alexghrKeys ++ [hostKey];
 }

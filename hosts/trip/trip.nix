@@ -91,7 +91,6 @@
   };
 
   services = {
-    alexghr-me.enable = true;
     openssh.enable = true;
     fwupd.enable = true;
     thermald.enable = true;
