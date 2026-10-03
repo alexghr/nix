@@ -63,7 +63,6 @@ in
   '';
 
   services.caddy.virtualHosts."trip.spotted-gar.ts.net".extraConfig = ''
-    # Retain the private endpoint for the runner's existing connection.
     redir /forgejo /forgejo/ 302
     handle_path /forgejo/* {
       reverse_proxy 127.0.0.1:${builtins.toString config.services.forgejo.settings.server.HTTP_PORT}

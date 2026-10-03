@@ -12,7 +12,7 @@
     };
     host.workdir_parent = "${runnerHome}/work";
     server.connections.trip = {
-      url = "https://trip.spotted-gar.ts.net/forgejo/";
+      url = "https://forge.alexghr.me/";
       uuid = "64343335-3032-3064-3135-353836366432";
       token_url = "file:$CREDENTIALS_DIRECTORY/runner-token";
     };
