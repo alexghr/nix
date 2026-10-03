@@ -16,6 +16,7 @@
     inkscape
     vlc
     calibre
+    forgejo-cli
   ];
 
   systemd.user.services.ssh-agent.Service.Environment = [
