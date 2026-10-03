@@ -11,5 +11,6 @@
     ./webdav.nix
     ./cloudflared.nix
     ./website.nix
+    ./forgejo.nix
   ];
 }
