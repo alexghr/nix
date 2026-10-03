@@ -28,6 +28,8 @@
     programs.ssh.extraConfig = lib.mkForce "";
     services.tailscale.enable = lib.mkForce false;
     services.tailscale.authKeyFile = lib.mkForce null;
+    systemd.services.forgejo-runner.enable = lib.mkForce false;
+    systemd.services.forgejo-runner-vm.enable = lib.mkForce false;
 
     # Local serial-console access only; no host ports are forwarded.
     users.users.root.initialHashedPassword = lib.mkForce "";

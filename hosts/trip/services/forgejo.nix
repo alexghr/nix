@@ -7,6 +7,7 @@ in
   services.forgejo = {
     enable = true;
     settings = {
+      actions.ENABLED = true;
       session.COOKIE_SECURE = true;
       server = {
         ROOT_URL = "https://trip.spotted-gar.ts.net/forgejo/";

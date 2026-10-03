@@ -19,6 +19,7 @@
     ./x.nix
     ./ag
     ./vm.nix
+    ./forgejo-runner.nix
   ];
 
   system.stateVersion = "24.05";
