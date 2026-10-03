@@ -52,6 +52,7 @@ in {
           "home" = "localdomain";
         };
         mapping = {
+          "forge.alexghr.me" = "192.168.1.48";
           "homeassistant.localdomain" = "192.168.1.54";
           "palpatine.localdomain" = "192.168.1.42";
           "trip.localdomain" = "192.168.1.48";

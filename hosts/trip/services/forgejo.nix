@@ -25,8 +25,7 @@ in
       server = {
         ROOT_URL = "https://forge.alexghr.me/";
         DOMAIN = "forge.alexghr.me";
-        # SSH remains accessible over Tailscale, not the public HTTP tunnel.
-        SSH_DOMAIN = "trip.spotted-gar.ts.net";
+        SSH_DOMAIN = "forge.alexghr.me";
         HTTP_ADDR = "127.0.0.1";
         HTTP_PORT = 7823;
         PROTOCOL = "http";
@@ -39,7 +38,7 @@ in
     wantedBy = ["multi-user.target"];
     after = ["network.target" "forgejo.service"];
     serviceConfig = {
-      ExecStart = "${pkgs.unstable.forgejo-mcp}/bin/forgejo-mcp --transport http --host ${mcpHttpAddr} --http-port ${mcpHttpPort} --allowed-hosts trip.spotted-gar.ts.net --url http://127.0.0.1:${builtins.toString config.services.forgejo.settings.server.HTTP_PORT}";
+      ExecStart = "${pkgs.unstable.forgejo-mcp}/bin/forgejo-mcp --transport http --host ${mcpHttpAddr} --http-port ${mcpHttpPort} --allowed-hosts trip.spotted-gar.ts.net,forge.alexghr.me --url http://127.0.0.1:${builtins.toString config.services.forgejo.settings.server.HTTP_PORT}";
       DynamicUser = true;
       Restart = "on-failure";
       RestartSec = "5s";
@@ -49,6 +48,19 @@ in
       ProtectHome = true;
     };
   };
+
+  services.caddy.virtualHosts."forge.alexghr.me".extraConfig = ''
+    tls {
+      dns cloudflare {env.CF_DNS_API_TOKEN}
+      resolvers 1.1.1.1 1.0.0.1
+    }
+    handle /mcp {
+      reverse_proxy 127.0.0.1:${mcpHttpPort}
+    }
+    handle {
+      reverse_proxy 127.0.0.1:${builtins.toString config.services.forgejo.settings.server.HTTP_PORT}
+    }
+  '';
 
   services.caddy.virtualHosts."trip.spotted-gar.ts.net".extraConfig = ''
     # Retain the private endpoint for the runner's existing connection.
