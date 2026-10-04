@@ -4,6 +4,14 @@ let
   mcpHttpPort = "7824";
 in
 {
+  services.openssh.extraConfig = ''
+    Match User forgejo
+      AuthenticationMethods publickey
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+    Match all
+  '';
+
   services.forgejo = {
     enable = true;
     settings = {
