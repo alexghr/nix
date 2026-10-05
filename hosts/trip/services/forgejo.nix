@@ -1,7 +1,9 @@
-{config, pkgs, ...}:
+{config, lib, pkgs, ...}:
 let
   mcpHttpAddr = "127.0.0.1";
   mcpHttpPort = "7824";
+  signingDir = "${config.services.forgejo.stateDir}/signing";
+  signingKey = "${signingDir}/ed25519";
 in
 {
   services.openssh.extraConfig = ''
@@ -17,6 +19,16 @@ in
     settings = {
       actions.ENABLED = true;
       session.COOKIE_SECURE = true;
+      "repository.signing" = {
+        FORMAT = "ssh";
+        SIGNING_KEY = "${signingKey}.pub";
+        SIGNING_NAME = "Forgejo";
+        SIGNING_EMAIL = "forgejo@forge.alexghr.me";
+        INITIAL_COMMIT = "always";
+        WIKI = "always";
+        CRUD_ACTIONS = "always";
+        MERGES = "always";
+      };
       service = {
         DISABLE_REGISTRATION = true;
         SHOW_REGISTRATION_BUTTON = false;
@@ -39,6 +51,24 @@ in
         PROTOCOL = "http";
       };
     };
+  };
+
+  systemd.services.forgejo = {
+    path = [pkgs.openssh];
+    preStart = lib.mkBefore ''
+      (
+        umask 077
+        mkdir -p '${signingDir}'
+        chmod 700 '${signingDir}'
+        if [ ! -e '${signingKey}' ]; then
+          ${pkgs.openssh}/bin/ssh-keygen -q -t ed25519 -N "" \
+            -C 'Forgejo commit signing' -f '${signingKey}'
+        fi
+        chmod 600 '${signingKey}'
+        ${pkgs.openssh}/bin/ssh-keygen -y -f '${signingKey}' > '${signingKey}.pub'
+        chmod 644 '${signingKey}.pub'
+      )
+    '';
   };
 
   systemd.services.forgejo-mcp = {
