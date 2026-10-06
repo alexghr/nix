@@ -1,11 +1,15 @@
-{config, lib, pkgs, ...}:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  forgejo-mcp = pkgs.unstable.callPackage ../../../packages/forgejo-mcp.nix {};
   mcpHttpAddr = "127.0.0.1";
   mcpHttpPort = "7824";
   signingDir = "${config.services.forgejo.stateDir}/signing";
   signingKey = "${signingDir}/ed25519";
-in
-{
+in {
   services.openssh.extraConfig = ''
     Match User forgejo
       AuthenticationMethods publickey
@@ -76,7 +80,7 @@ in
     wantedBy = ["multi-user.target"];
     after = ["network.target" "forgejo.service"];
     serviceConfig = {
-      ExecStart = "${pkgs.unstable.forgejo-mcp}/bin/forgejo-mcp --transport http --host ${mcpHttpAddr} --http-port ${mcpHttpPort} --allowed-hosts trip.spotted-gar.ts.net,forge.alexghr.me --url http://127.0.0.1:${builtins.toString config.services.forgejo.settings.server.HTTP_PORT}";
+      ExecStart = "${forgejo-mcp}/bin/forgejo-mcp --transport http --host ${mcpHttpAddr} --http-port ${mcpHttpPort} --allowed-hosts trip.spotted-gar.ts.net,forge.alexghr.me --url http://127.0.0.1:${builtins.toString config.services.forgejo.settings.server.HTTP_PORT}";
       DynamicUser = true;
       Restart = "on-failure";
       RestartSec = "5s";
