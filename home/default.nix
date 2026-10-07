@@ -28,6 +28,7 @@ in {
     nix-index
     unstable.neovim
     imagemagick
+    glow
   ];
 
   home.sessionVariables = {
