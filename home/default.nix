@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   nr = pkgs.writeShellScriptBin "nr" ''
     set -euo pipefail
     program="''${1:?Usage: nr PACKAGE [ARGUMENTS...]}"
@@ -16,7 +20,7 @@ in {
     yubikey-manager
     nr
     git
-    openssh
+    config.services.ssh-agent.package
     bat
     tree
     unzip

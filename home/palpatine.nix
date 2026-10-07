@@ -40,7 +40,7 @@
         "SSH_ASKPASS_REQUIRE=force"
       ];
       # Load the PIN-protected key first, then prompt to decrypt the Git stub.
-      ExecStart = "${pkgs.openssh}/bin/ssh-add %h/.ssh/id_ed25519_sk %h/.ssh/git-signing";
+      ExecStart = "${config.services.ssh-agent.package}/bin/ssh-add %h/.ssh/id_ed25519_sk_rk %h/.ssh/git-signing";
     };
     Install.WantedBy = ["graphical-session.target"];
   };

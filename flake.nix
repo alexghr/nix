@@ -5,6 +5,8 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    # Last working libfido2 build for Palpatine's resident SSH keys.
+    nixpkgs-fido.url = "github:NixOS/nixpkgs/7fc6f2c20af09cdcaf48b92ec3121860139ec668";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
