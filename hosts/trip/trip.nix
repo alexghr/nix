@@ -62,6 +62,7 @@
     config.boot.kernelPackages.turbostat
     virt-manager
     libguestfs
+    sqlite
   ];
 
   networking = {
