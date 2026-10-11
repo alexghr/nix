@@ -3,5 +3,8 @@
   services.alexghr-me = {
     enable = true;
     environmentFile = config.age.secrets.website_env.path;
+    environment = {
+      PUBLIC_URL = "https://www.alexghr.me";
+    };
   };
 }
