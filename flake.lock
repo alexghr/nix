@@ -260,11 +260,11 @@
     "website": {
       "flake": false,
       "locked": {
-        "lastModified": 1791719284,
-        "narHash": "sha256-vIaftKoRPUqle4BtMpgSE0kVzutAFdnPpMVnPExrrk4=",
+        "lastModified": 1791755055,
+        "narHash": "sha256-016WYmJMV4J0oJUxX9Kbo68KcQhPGsUS6zUmQQwkp8M=",
         "ref": "main",
-        "rev": "23c5375ee009bd1e77bc69ea040c5d227b4b75c3",
-        "revCount": 173,
+        "rev": "c2e597e282f4786542c6b6467bfe86b89d463bb7",
+        "revCount": 174,
         "type": "git",
         "url": "ssh://git@github.com/alexghr/alexghr.me"
       },
