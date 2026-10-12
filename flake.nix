@@ -39,7 +39,7 @@
     };
 
     website = {
-      url = "git+ssh://git@github.com/alexghr/alexghr.me?ref=main";
+      url = "github:alexghr/alexghr.me?ref=main";
       flake = false;
     };
   };
