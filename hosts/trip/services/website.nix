@@ -7,4 +7,8 @@
       PUBLIC_URL = "https://www.alexghr.me";
     };
   };
+
+  environment.systemPackages = [
+    config.services.alexghr-me.package # add mkpost
+  ];
 }
