@@ -13,7 +13,7 @@
     host.workdir_parent = "${runnerHome}/work";
     server.connections.trip = {
       url = "https://forge.alexghr.me/";
-      uuid = "64343335-3032-3064-3135-353836366432";
+      uuid = "9d95fc06-9075-4819-bd45-177c0d83e88b";
       token_url = "file:$CREDENTIALS_DIRECTORY/runner-token";
     };
   };
