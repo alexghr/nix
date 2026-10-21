@@ -15,7 +15,6 @@
     gimp-with-plugins
     inkscape
     vlc
-    calibre
     forgejo-cli
   ];
 
