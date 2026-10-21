@@ -14,6 +14,7 @@
     nixosModules.system-tools
     nixosModules.agenix
     nixosModules.disko
+    nixosModules.ca
     "${modulesPath}/installer/scan/not-detected.nix"
     ./disko-config.nix
     ./x.nix

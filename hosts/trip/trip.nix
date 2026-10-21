@@ -15,6 +15,7 @@
     nixosModules.system-tools
     nixosModules.agenix
     nixosModules.alexghr-me
+    nixosModules.ca
     "${modulesPath}/installer/scan/not-detected.nix"
     ./trip.fs.nix
     ./services

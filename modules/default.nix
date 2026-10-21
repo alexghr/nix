@@ -8,5 +8,6 @@
     ./systemd-boot.nix
     ./system-tools.nix
     ./home-manager.nix
+    ./ca.nix
   ];
 }
