@@ -71,7 +71,7 @@ in {
   home.sessionPath = ["$HOME/.npm/bin" "$HOME/.npm-packages/bin" "$HOME/.corepack"];
   programs.bash.profileExtra = lib.mkAfter ''
     # fix macOS path_helper putting system binaries first
-    export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
+    export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
     ${builtins.readFile ../dotfiles/bash/mackey-profile}
   '';
 }
