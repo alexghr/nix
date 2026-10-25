@@ -38,6 +38,9 @@ if tty -s && command -v gpg-connect-agent >/dev/null 2>&1; then
   gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
+alias gn=graphene
+
 # Machine-local settings and credentials
 if [[ -r "$HOME/.bashrc.local" ]]; then
   source "$HOME/.bashrc.local"

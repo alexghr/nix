@@ -38,7 +38,6 @@ in {
   home.sessionVariables = {
     EDITOR = "nvim";
     FLAKE = "$HOME/code/alexghr/nix";
-    PATH = "$HOME/.local/bin:$PATH";
   };
 
   programs.bash = {
