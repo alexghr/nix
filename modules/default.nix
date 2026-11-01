@@ -9,5 +9,6 @@
     ./system-tools.nix
     ./home-manager.nix
     ./ca.nix
+    ./go-vanity.nix
   ];
 }

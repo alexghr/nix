@@ -8,12 +8,13 @@ in {
     tunnels.${tunnelId} = {
       credentialsFile = config.age.secrets.cloudflare-tunnel.path;
       ingress."www.alexghr.me" = "http://${config.services.alexghr-me.listenAddress}";
+      ingress.${config.services.goVanity.domain} = "http://127.0.0.1:${toString config.services.goVanity.port}";
       default = "http_status:404";
     };
   };
 
   systemd.services."cloudflared-tunnel-${tunnelId}" = {
-    wants = ["alexghr-me.service"];
-    after = ["alexghr-me.service"];
+    wants = ["alexghr-me.service" "caddy.service"];
+    after = ["alexghr-me.service" "caddy.service"];
   };
 }
