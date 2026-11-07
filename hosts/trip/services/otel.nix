@@ -15,7 +15,7 @@
 
   services.opentelemetry-collector = {
     enable = true;
-    package = pkgs.unstable.opentelemetry-collector-contrib;
+    package = pkgs.opentelemetry-collector-contrib;
     settings = {
       receivers = {
         otlp.protocols.http.endpoint = "0.0.0.0:4318";

@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  forgejo-mcp = pkgs.unstable.callPackage ../../../packages/forgejo-mcp.nix {};
+  forgejo-mcp = pkgs.callPackage ../../../packages/forgejo-mcp.nix {};
   mcpHttpAddr = "127.0.0.1";
   mcpHttpPort = "7824";
   signingDir = "${config.services.forgejo.stateDir}/signing";

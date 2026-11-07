@@ -125,7 +125,7 @@
   virtualisation = {
     docker = {
       enable = true;
-      package = pkgs.unstable.docker;
+      package = pkgs.docker;
     };
 
     oci-containers.backend = "docker";

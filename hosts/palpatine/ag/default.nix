@@ -21,8 +21,6 @@
     home.packages = [(pkgs.callPackage ./bin/i3_window.nix {})];
   };
 
-  # Needed for bitwarden-desktop in the pinned unstable package set.
-  nixpkgs.config.permittedInsecurePackages = ["electron-39.8.10"];
   fonts.packages = [pkgs.monaspace];
   fonts.fontconfig.defaultFonts.monospace = ["Monaspace Neon" "DejaVu Sans Mono"];
   programs.bash.completion.enable = true;

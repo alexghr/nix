@@ -4,7 +4,7 @@
   osConfig,
   ...
 }: {
-  home.packages = with pkgs.unstable; [
+  home.packages = with pkgs; [
     lua-language-server
     ghostty
     bitwarden-desktop

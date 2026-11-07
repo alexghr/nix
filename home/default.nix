@@ -30,7 +30,7 @@ in {
     btop
     tmux
     nix-index
-    unstable.neovim
+    neovim
     imagemagick
     glow
   ];
