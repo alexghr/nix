@@ -6,13 +6,13 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "forgejo-mcp";
-  version = "3.4.0";
+  version = "3.4.1";
 
   src = fetchFromGitHub {
     owner = "goern";
     repo = "forgejo-mcp";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-V/8+/sJT8ZCzlSQE2POm4CKhpTqYmduhn1WVqbHrOe8=";
+    hash = "sha256-01u88pwaAyy+wg4YhCeHQqoODNeUonhkRiH1pGDhkK0=";
   };
 
   vendorHash = "sha256-pz0K4AMoUJjbVjVjOI9mbR1P+8rolehijF1x+3YP6VI=";
