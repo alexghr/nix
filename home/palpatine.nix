@@ -5,6 +5,7 @@
   ...
 }: {
   home.packages = with pkgs; [
+    libreoffice
     lua-language-server
     ghostty
     bitwarden-desktop
