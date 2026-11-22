@@ -7,6 +7,7 @@ in {
     enable = true;
     tunnels.${tunnelId} = {
       credentialsFile = config.age.secrets.cloudflare-tunnel.path;
+      ingress."alexghr.me" = "http://${config.services.alexghr-me.listenAddress}";
       ingress."www.alexghr.me" = "http://${config.services.alexghr-me.listenAddress}";
       ingress.${config.services.goVanity.domain} = "http://127.0.0.1:${toString config.services.goVanity.port}";
       default = "http_status:404";
